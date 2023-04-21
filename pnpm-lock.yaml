@@ -1,0 +1,22 @@
+lockfileVersion: '6.0'
+
+devDependencies:
+  git-format-staged:
+    specifier: ^3.0.0
+    version: 3.0.0
+  husky:
+    specifier: ^8.0.3
+    version: 8.0.3
+
+packages:
+
+  /git-format-staged@3.0.0:
+    resolution: {integrity: sha512-cdDJxV06qY8ucBsW/uIFR4PYN/kDHl43nG8yg+VPPaDeLAf8hEPhEIJTeJ+yRClxcDSpoTmDPiFZUoxFx1wPCg==}
+    hasBin: true
+    dev: true
+
+  /husky@8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true

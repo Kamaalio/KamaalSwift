@@ -1,0 +1,16 @@
+{
+  "name": "kamaalswift",
+  "version": "1.0.0",
+  "description": "A description of this package.",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "Kamaal",
+  "license": "ISC",
+  "devDependencies": {
+    "git-format-staged": "^3.0.0",
+    "husky": "^8.0.3"
+  }
+}
