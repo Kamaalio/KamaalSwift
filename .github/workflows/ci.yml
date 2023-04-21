@@ -1,12 +1,29 @@
 name: CI
 on: push
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  buildAndTest:
-    name: build and test
+  quality:
+    name: quality
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: taiki-e/install-action@just
-      - name: Build and Test
+      - name: SwiftLint
+        run: |
+          just lint
+
+  test:
+    name: test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: taiki-e/install-action@just
+      - name: Test
         run: |
           just test
