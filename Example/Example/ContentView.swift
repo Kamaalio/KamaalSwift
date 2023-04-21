@@ -7,16 +7,23 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalLogger
 import KamaalExtensions
+
+private let logger = KamaalLogger(from: ContentView.self)
 
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .kBold()
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!1111".digits)
+            Button(action: { logger.info("Logged stuff") }) {
+                Image(systemName: "globe")
+                    .kBold()
+                    .imageScale(.large)
+                    .foregroundColor(.accentColor)
+                Text("Hello, world!1111".digits)
+                    .foregroundColor(.accentColor)
+            }
+            .buttonStyle(.plain)
         }
         .padding()
     }

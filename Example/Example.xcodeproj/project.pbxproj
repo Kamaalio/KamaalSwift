@@ -13,6 +13,7 @@
 		2CFA195F29F2CD7000FC3700 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA195E29F2CD7000FC3700 /* Preview Assets.xcassets */; };
 		2CFA196729F2CD9500FC3700 /* KamaalUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196629F2CD9500FC3700 /* KamaalUI */; };
 		2CFA196929F2D5AC00FC3700 /* KamaalExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196829F2D5AC00FC3700 /* KamaalExtensions */; };
+		2CFA196B29F2DD7F00FC3700 /* KamaalLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196A29F2DD7F00FC3700 /* KamaalLogger */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			files = (
 				2CFA196729F2CD9500FC3700 /* KamaalUI in Frameworks */,
 				2CFA196929F2D5AC00FC3700 /* KamaalExtensions in Frameworks */,
+				2CFA196B29F2DD7F00FC3700 /* KamaalLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +102,7 @@
 			packageProductDependencies = (
 				2CFA196629F2CD9500FC3700 /* KamaalUI */,
 				2CFA196829F2D5AC00FC3700 /* KamaalExtensions */,
+				2CFA196A29F2DD7F00FC3700 /* KamaalLogger */,
 			);
 			productName = Example;
 			productReference = 2CFA195329F2CD6B00FC3700 /* Example.app */;
@@ -379,6 +382,10 @@
 		2CFA196829F2D5AC00FC3700 /* KamaalExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KamaalExtensions;
+		};
+		2CFA196A29F2DD7F00FC3700 /* KamaalLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KamaalLogger;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,0 +1,79 @@
+//
+//  LogHolder.swift
+//
+//
+//  Created by Kamaal M Farah on 20/09/2022.
+//
+
+import SwiftUI
+import KamaalStructures
+
+/// Actor class that holds all the logs.
+public actor LogHolder {
+    private var items: Queue<HoldedLog>
+
+    /// Initializer.
+    /// - Parameter max: Maximum amount of logs to hold.
+    public init(max: Int? = 100) {
+        self.items = .init(max: max)
+    }
+
+    /// Computed array of logs.
+    public var logs: [HoldedLog] {
+        items.array
+    }
+
+    func addLog(_ log: HoldedLog) {
+        items.enqueue(log)
+    }
+
+    /// Singleton of ``LogHolder`` to be used globally.
+    public static let shared = LogHolder()
+}
+
+/// An representation of a log.
+public struct HoldedLog: Hashable {
+    /// The label of the log.
+    public let label: String
+    /// The type of the log as ``LogTypes``.
+    public let type: LogTypes
+    /// The message that was logged.
+    public let message: String
+    /// The time the log has been logged.
+    public let timestamp: Date
+
+    /// Memberwise initializer.
+    /// - Parameters:
+    ///   - label: The label of the log.
+    ///   - type: The type of the log as ``LogTypes``.
+    ///   - message: The message that was logged.
+    ///   - timestamp: The time the log has been logged.
+    public init(label: String, type: LogTypes, message: String, timestamp: Date) {
+        self.label = label
+        self.type = type
+        self.message = message
+        self.timestamp = timestamp
+    }
+
+    /// The different kind of logs.
+    public enum LogTypes: String {
+        case error
+        case warning
+        case info
+        case debug
+
+        /// Representation color.
+        public var color: Color {
+            switch self {
+            case .info:
+                return .green
+            case .warning:
+                return .yellow
+            case .error:
+                return .red
+            case .debug:
+                return .gray
+            }
+        }
+    }
+}
