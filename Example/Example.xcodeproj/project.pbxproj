@@ -12,6 +12,7 @@
 		2CFA195B29F2CD7000FC3700 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA195A29F2CD7000FC3700 /* Assets.xcassets */; };
 		2CFA195F29F2CD7000FC3700 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA195E29F2CD7000FC3700 /* Preview Assets.xcassets */; };
 		2CFA196729F2CD9500FC3700 /* KamaalUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196629F2CD9500FC3700 /* KamaalUI */; };
+		2CFA196929F2D5AC00FC3700 /* KamaalExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196829F2D5AC00FC3700 /* KamaalExtensions */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CFA196729F2CD9500FC3700 /* KamaalUI in Frameworks */,
+				2CFA196929F2D5AC00FC3700 /* KamaalExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,8 +41,8 @@
 			isa = PBXGroup;
 			children = (
 				2CFA195529F2CD6B00FC3700 /* Example */,
-				2CFA195429F2CD6B00FC3700 /* Products */,
 				2CFA196529F2CD9500FC3700 /* Frameworks */,
+				2CFA195429F2CD6B00FC3700 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +99,7 @@
 			name = Example;
 			packageProductDependencies = (
 				2CFA196629F2CD9500FC3700 /* KamaalUI */,
+				2CFA196829F2D5AC00FC3700 /* KamaalExtensions */,
 			);
 			productName = Example;
 			productReference = 2CFA195329F2CD6B00FC3700 /* Example.app */;
@@ -372,6 +375,10 @@
 		2CFA196629F2CD9500FC3700 /* KamaalUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KamaalUI;
+		};
+		2CFA196829F2D5AC00FC3700 /* KamaalExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KamaalExtensions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

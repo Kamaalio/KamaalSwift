@@ -13,16 +13,31 @@ let package = Package(
             name: "KamaalUI",
             targets: ["KamaalUI"]
         ),
+        .library(
+            name: "KamaalExtensions",
+            targets: ["KamaalExtensions"]
+        ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/Quick/Quick.git", "4.0.0" ..< "5.0.0"),
+        .package(url: "https://github.com/Quick/Nimble.git", "9.0.0" ..< "10.0.0"),
+    ],
     targets: [
         .target(
             name: "KamaalUI",
             dependencies: []
         ),
+        .target(
+            name: "KamaalExtensions",
+            dependencies: []
+        ),
         .testTarget(
             name: "KamaalUITests",
             dependencies: ["KamaalUI"]
+        ),
+        .testTarget(
+            name: "KamaalExtensionsTests",
+            dependencies: ["KamaalExtensions", "Quick", "Nimble"]
         ),
     ]
 )

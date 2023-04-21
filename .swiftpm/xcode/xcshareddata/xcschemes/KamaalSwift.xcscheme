@@ -54,7 +54,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -63,6 +64,16 @@
                BlueprintIdentifier = "KamaalUITests"
                BuildableName = "KamaalUITests"
                BlueprintName = "KamaalUITests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "KamaalExtensionsTests"
+               BuildableName = "KamaalExtensionsTests"
+               BlueprintName = "KamaalExtensionsTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

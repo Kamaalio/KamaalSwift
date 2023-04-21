@@ -7,6 +7,7 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalExtensions
 
 struct ContentView: View {
     var body: some View {
@@ -15,7 +16,7 @@ struct ContentView: View {
                 .kBold()
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("Hello, world!1111".digits)
         }
         .padding()
     }
