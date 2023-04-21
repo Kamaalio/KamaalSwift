@@ -14,6 +14,7 @@
 		2CFA196729F2CD9500FC3700 /* KamaalUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196629F2CD9500FC3700 /* KamaalUI */; };
 		2CFA196929F2D5AC00FC3700 /* KamaalExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196829F2D5AC00FC3700 /* KamaalExtensions */; };
 		2CFA196B29F2DD7F00FC3700 /* KamaalLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196A29F2DD7F00FC3700 /* KamaalLogger */; };
+		2CFA196D29F2F62500FC3700 /* KamaalNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2CFA196C29F2F62500FC3700 /* KamaalNavigation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 				2CFA196729F2CD9500FC3700 /* KamaalUI in Frameworks */,
 				2CFA196929F2D5AC00FC3700 /* KamaalExtensions in Frameworks */,
 				2CFA196B29F2DD7F00FC3700 /* KamaalLogger in Frameworks */,
+				2CFA196D29F2F62500FC3700 /* KamaalNavigation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +92,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2CFA196229F2CD7000FC3700 /* Build configuration list for PBXNativeTarget "Example" */;
 			buildPhases = (
+				2CFA196E29F2F79400FC3700 /* Pre Compile */,
 				2CFA194F29F2CD6B00FC3700 /* Sources */,
 				2CFA195029F2CD6B00FC3700 /* Frameworks */,
 				2CFA195129F2CD6B00FC3700 /* Resources */,
@@ -103,6 +106,7 @@
 				2CFA196629F2CD9500FC3700 /* KamaalUI */,
 				2CFA196829F2D5AC00FC3700 /* KamaalExtensions */,
 				2CFA196A29F2DD7F00FC3700 /* KamaalLogger */,
+				2CFA196C29F2F62500FC3700 /* KamaalNavigation */,
 			);
 			productName = Example;
 			productReference = 2CFA195329F2CD6B00FC3700 /* Example.app */;
@@ -152,6 +156,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2CFA196E29F2F79400FC3700 /* Pre Compile */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Compile";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nif which swiftlint >/dev/null; then\n    swiftlint lint --quiet $@ | sed 's/error: /warning: /g'\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2CFA194F29F2CD6B00FC3700 /* Sources */ = {
@@ -386,6 +412,10 @@
 		2CFA196A29F2DD7F00FC3700 /* KamaalLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KamaalLogger;
+		};
+		2CFA196C29F2F62500FC3700 /* KamaalNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KamaalNavigation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
