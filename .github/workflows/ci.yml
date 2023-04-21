@@ -29,7 +29,7 @@ jobs:
           echo "listing available Xcode versions:"
           ls -d /Applications/Xcode*
 
-          sudo xcode-select --switch /Applications/Xcode_14.0.app/Contents/Developer
+          sudo xcode-select --switch /Applications/Xcode_14.2.app/Contents/Developer
       - name: Test
         run: |
           just test

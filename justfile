@@ -1,6 +1,8 @@
 set export
 
 test:
+    swift --version
+
     swift test
 
 format:
