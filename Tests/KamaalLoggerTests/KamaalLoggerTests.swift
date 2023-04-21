@@ -68,11 +68,14 @@ final class KamaalLoggerTests: XCTestCase {
     }
 
     private func getLog() async throws -> HoldedLog {
-        var log: HoldedLog!
-        try await expectToEventually({
+        var log: HoldedLog?
+        let timeoutDate = Date(timeIntervalSinceNow: 0.5)
+        repeat {
             log = await logger.holder?.logs.first
-            return log != nil
-        }, timeout: 0.5, message: "Getting log")
+        } while log == nil && Date().compare(timeoutDate) == .orderedAscending
+
+        guard let log else { throw TestError.test }
+
         return log
     }
 }
@@ -82,25 +85,5 @@ enum TestError: LocalizedError {
 
     public var errorDescription: String? {
         "something horrible happened"
-    }
-}
-
-extension XCTestCase {
-    func expectToEventually(_ test: () async -> Bool, timeout: TimeInterval = 1, message: String = "") async throws {
-        let timeoutDate = Date(timeIntervalSinceNow: timeout)
-        repeat {
-            let condition = await test()
-            if condition {
-                return
-            }
-
-            if #available(iOS 16.0, macOS 13.0, *) {
-                try await Task.sleep(for: .milliseconds(100))
-            } else {
-                XCTFail("can't test on this version")
-            }
-        } while Date().compare(timeoutDate) == .orderedAscending
-
-        XCTFail(message)
     }
 }
