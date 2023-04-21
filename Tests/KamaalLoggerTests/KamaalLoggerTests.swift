@@ -8,7 +8,7 @@
 import XCTest
 @testable import KamaalLogger
 
-@available(iOS 14, *)
+@available(iOS 14, macOS 11, *)
 final class KamaalLoggerTests: XCTestCase {
     var logger: KamaalLogger!
 
