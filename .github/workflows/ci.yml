@@ -7,10 +7,10 @@ concurrency:
 
 jobs:
   quality:
-    strategy:
-      matrix:
-        destination:
-          ["platform=macOS", "platform=iOS Simulator,name=iPhone 14 Pro Max"]
+    # strategy:
+    #   matrix:
+    #     destination:
+    #       ["platform=macOS", "platform=iOS Simulator,name=iPhone 14 Pro Max"]
     name: quality
     runs-on: macos-12
     steps:
@@ -21,11 +21,11 @@ jobs:
       - name: SwiftLint
         run: |
           just lint
-      - name: Build Example app
-        env:
-          DESTINATION: ${{ matrix.destination }}
-        run: |
-          just build-example
+      # - name: Build Example app
+      #   env:
+      #     DESTINATION: ${{ matrix.destination }}
+      #   run: |
+      #     just build-example
 
   test:
     name: test

@@ -31,7 +31,7 @@ struct HomeScreen: View {
     var body: some View {
         VStack {
             Button(action: { logger.info("Logging something") }) {
-                Text("Loggin")
+                Text("Loggin11111".digits)
             }
             StackNavigationLink(
                 destination: Screens.other,
