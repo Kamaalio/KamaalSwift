@@ -1,6 +1,6 @@
 //
 //  KDeletableView.swift
-//  
+//
 //
 //  Created by Kamaal M Farah on 03/10/2021.
 //
@@ -32,7 +32,7 @@ public struct KDeletableView<Content: View>: View {
 
     public var body: some View {
         HStack {
-            if enabled && !isDeleting {
+            if enabled, !isDeleting {
                 Button(action: { withAnimation { isDeleting = true } }) {
                     Image(systemName: "minus.circle.fill")
                         .foregroundColor(.red)
@@ -42,7 +42,7 @@ public struct KDeletableView<Content: View>: View {
                 .transition(.move(edge: .leading))
             }
             content()
-            if enabled && isDeleting {
+            if enabled, isDeleting {
                 Spacer()
                 Button(action: _onDelete) {
                     ZStack {
@@ -77,9 +77,9 @@ public struct KDeletableView<Content: View>: View {
     }
 }
 
-public extension View {
+extension View {
     @available(macOS 11.0, *)
-    func kDeletableView(isDeleting: Binding<Bool>, enabled: Bool, onDelete: @escaping () -> Void) -> some View {
+    public func kDeletableView(isDeleting: Binding<Bool>, enabled: Bool, onDelete: @escaping () -> Void) -> some View {
         KDeletableView(isDeleting: isDeleting, enabled: enabled, onDelete: onDelete, content: { self })
     }
 }

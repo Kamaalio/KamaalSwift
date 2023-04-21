@@ -1,6 +1,6 @@
 //
 //  String+extensions.swift
-//  
+//
 //
 //  Created by Kamaal M Farah on 30/12/2022.
 //
@@ -9,7 +9,7 @@ import Foundation
 
 extension String {
     var sanitizedDouble: Double {
-        let splittedString = self.split(separator: ".", omittingEmptySubsequences: false)
+        let splittedString = split(separator: ".", omittingEmptySubsequences: false)
         guard !splittedString.isEmpty else { return 0 }
 
         var processedFirstComponent = splittedString[0].filter(\.isNumber)

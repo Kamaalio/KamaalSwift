@@ -10,7 +10,6 @@ import SwiftUI
 import MessageUI
 #endif
 
-
 #if !os(macOS)
 public struct KMailView: UIViewControllerRepresentable {
     @Binding public var isShowing: Bool
@@ -23,7 +22,8 @@ public struct KMailView: UIViewControllerRepresentable {
         isShowing: Binding<Bool>,
         result: Binding<Result<MFMailComposeResult, Error>?>,
         emailAddress: String,
-        emailSubject: String) {
+        emailSubject: String
+    ) {
         self._isShowing = isShowing
         self._result = result
         self.emailAddress = emailAddress
@@ -35,15 +35,16 @@ public struct KMailView: UIViewControllerRepresentable {
         @Binding public var result: Result<MFMailComposeResult, Error>?
 
         public init(isShowing: Binding<Bool>,
-             result: Binding<Result<MFMailComposeResult, Error>?>) {
+                    result: Binding<Result<MFMailComposeResult, Error>?>) {
             _isShowing = isShowing
             _result = result
         }
 
         public func mailComposeController(
-            _ controller: MFMailComposeViewController,
+            _: MFMailComposeViewController,
             didFinishWith result: MFMailComposeResult,
-            error: Error?) {
+            error: Error?
+        ) {
             defer {
                 isShowing = false
             }
@@ -59,7 +60,8 @@ public struct KMailView: UIViewControllerRepresentable {
         Coordinator(isShowing: $isShowing, result: $result)
     }
 
-    public func makeUIViewController(context: UIViewControllerRepresentableContext<KMailView>) -> MFMailComposeViewController {
+    public func makeUIViewController(context: UIViewControllerRepresentableContext<KMailView>)
+        -> MFMailComposeViewController {
         let viewController = MFMailComposeViewController()
         viewController.mailComposeDelegate = context.coordinator
         viewController.setToRecipients([emailAddress])
@@ -68,7 +70,8 @@ public struct KMailView: UIViewControllerRepresentable {
     }
 
     public func updateUIViewController(
-        _ uiViewController: MFMailComposeViewController,
-        context: UIViewControllerRepresentableContext<KMailView>) { }
+        _: MFMailComposeViewController,
+        context _: UIViewControllerRepresentableContext<KMailView>
+    ) { }
 }
 #endif

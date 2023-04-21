@@ -1,6 +1,6 @@
 //
 //  KCircularProgressBar.swift
-//  
+//
 //
 //  Created by Kamaal Farah on 29/10/2020.
 //

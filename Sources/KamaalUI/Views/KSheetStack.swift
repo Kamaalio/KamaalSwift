@@ -18,8 +18,8 @@ public struct KSheetStack<LeadingNavButton: View, TrailingNavButton: View, Conte
 
     public init(title: String = "",
                 horizontalPadding: CGFloat = 32,
-                leadingNavigationButton:  @escaping () -> LeadingNavButton,
-                trailingNavigationButton:  @escaping () -> TrailingNavButton,
+                leadingNavigationButton: @escaping () -> LeadingNavButton,
+                trailingNavigationButton: @escaping () -> TrailingNavButton,
                 content: @escaping () -> Content) {
         self.title = title
         self.leadingNavigationButton = leadingNavigationButton

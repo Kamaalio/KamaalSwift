@@ -1,6 +1,6 @@
 //
 //  KTitledView.swift
-//  
+//
 //
 //  Created by Kamaal M Farah on 02/04/2023.
 //

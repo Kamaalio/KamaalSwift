@@ -20,7 +20,8 @@ public struct KFloatingTextField: View {
         title: String,
         textFieldType: TextFieldType = .text,
         onEditingChanged: @escaping (_ changed: Bool) -> Void = { _ in },
-        onCommit: @escaping () -> Void = { }) {
+        onCommit: @escaping () -> Void = { }
+    ) {
         self._text = text
         self.title = title
         self.textFieldType = textFieldType

@@ -30,7 +30,7 @@ public struct KLabeledTextField: View {
     public var body: some View {
         HStack {
             Text(label)
-                .frame(minWidth: 75 , maxWidth: 75, minHeight: 40, maxHeight: 40)
+                .frame(minWidth: 75, maxWidth: 75, minHeight: 40, maxHeight: 40)
                 .foregroundColor(disableTextField ? .secondary : .primary)
             TextField(placeholder, text: value)
                 .disabled(disableTextField)

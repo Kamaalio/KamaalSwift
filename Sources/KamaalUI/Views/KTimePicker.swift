@@ -12,7 +12,7 @@ public struct KTimePicker: View {
     public var selection: Binding<Int>
     public var steps: Int
     public var range: Range<Int>
-    
+
     public init(selection: Binding<Int>, steps: Int, range: Range<Int>) {
         self.selection = selection
         self.steps = steps

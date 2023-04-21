@@ -1,6 +1,6 @@
 //
 //  FloatingFieldWrapper.swift
-//  
+//
 //
 //  Created by Kamaal M Farah on 31/03/2022.
 //
@@ -56,7 +56,7 @@ struct FloatingFieldWrapper_Previews: PreviewProvider {
 
     static let data: [PreviewData] = [
         .init(text: "text", title: "Title"),
-        .init(text: "", title: "Title")
+        .init(text: "", title: "Title"),
     ]
 
     struct FloatingFieldWrapperData: Hashable {

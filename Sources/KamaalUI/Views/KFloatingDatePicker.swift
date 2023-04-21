@@ -19,12 +19,13 @@ public struct KFloatingDatePicker: View {
         value: Binding<Date>,
         title: String,
         displayedComponents: DatePicker.Components = .date,
-        onChange: @escaping (_ newValue: Date) -> Void = { _ in }) {
-            self._value = value
-            self.title = title
-            self.displayedComponents = displayedComponents
-            self.onChange = onChange
-        }
+        onChange: @escaping (_ newValue: Date) -> Void = { _ in }
+    ) {
+        self._value = value
+        self.title = title
+        self.displayedComponents = displayedComponents
+        self.onChange = onChange
+    }
 
     public var body: some View {
         ZStack(alignment: .leading) {

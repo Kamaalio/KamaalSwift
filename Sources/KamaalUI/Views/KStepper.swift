@@ -1,6 +1,6 @@
 //
 //  KStepper.swift
-//  
+//
 //
 //  Created by Kamaal Farah on 29/10/2020.
 //
@@ -64,6 +64,7 @@ public struct KStepper: View {
         }
         .foregroundColor(.accentColor)
     }
+
     #elseif targetEnvironment(macCatalyst)
     public var body: some View {
         HStack {
@@ -81,6 +82,7 @@ public struct KStepper: View {
             .disabled(disableIncrement)
         }
     }
+
     #elseif os(macOS)
     public var body: some View {
         HStack {

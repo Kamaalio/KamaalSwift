@@ -8,20 +8,20 @@
 import SwiftUI
 
 #if !os(macOS)
-public extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape(RoundedCorner(radius: radius, corners: corners) )
+extension View {
+    public func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners))
     }
 }
 #endif
 
-public extension View {
-    func ktakeSizeEagerly(alignment: Alignment = .center) -> some View {
-        self.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
+extension View {
+    public func ktakeSizeEagerly(alignment: Alignment = .center) -> some View {
+        frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
     }
 
-    func ktakeWidthEagerly(alignment: Alignment = .center) -> some View {
-        self.frame(maxWidth: .infinity, alignment: alignment)
+    public func ktakeWidthEagerly(alignment: Alignment = .center) -> some View {
+        frame(maxWidth: .infinity, alignment: alignment)
     }
 }
 
@@ -34,7 +34,8 @@ private struct RoundedCorner: Shape {
         let path = UIBezierPath(
             roundedRect: rect,
             byRoundingCorners: corners,
-            cornerRadii: CGSize(width: radius, height: radius))
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
         return Path(path.cgPath)
     }
 }

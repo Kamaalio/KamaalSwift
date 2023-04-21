@@ -1,15 +1,15 @@
 //
 //  KBindToFrameSize.swift
-//  
+//
 //
 //  Created by Kamaal M Farah on 03/10/2021.
 //
 
 import SwiftUI
 
-public extension View {
-    func kBindToFrameSize(_ size: Binding<CGSize>) -> some View {
-        self.modifier(KBindToFrameSize(size: size))
+extension View {
+    public func kBindToFrameSize(_ size: Binding<CGSize>) -> some View {
+        modifier(KBindToFrameSize(size: size))
     }
 }
 

@@ -1,6 +1,6 @@
 //
 //  AdaptiveForegroundColorModifier.swift
-//  
+//
 //
 //  Created by Kamaal M Farah on 03/10/2021.
 //
@@ -26,8 +26,8 @@ private struct AdaptiveForegroundColorModifier: ViewModifier {
     }
 }
 
-public extension View {
-    func foregroundColor(light lightModeColor: Color, dark darkModeColor: Color) -> some View {
+extension View {
+    public func foregroundColor(light lightModeColor: Color, dark darkModeColor: Color) -> some View {
         modifier(AdaptiveForegroundColorModifier(lightModeColor: lightModeColor, darkModeColor: darkModeColor))
     }
 }

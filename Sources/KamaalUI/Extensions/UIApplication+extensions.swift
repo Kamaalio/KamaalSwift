@@ -8,16 +8,16 @@
 import SwiftUI
 
 #if !os(macOS)
-public extension UIApplication {
-    func endEditing() {
+extension UIApplication {
+    public func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 #endif
 
 #if os(macOS)
-public extension NSApplication {
-    func endEditing() {
+extension NSApplication {
+    public func endEditing() {
         sendAction(#selector(NSResponder.resignFirstResponder), to: nil, from: nil)
     }
 }

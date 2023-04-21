@@ -18,7 +18,7 @@ final class StringTests: XCTestCase {
             (".12.22", 0.12),
             ("12.12.22", 12.12),
             ("12..22", 12),
-            ("12.G", 12)
+            ("12.G", 12),
         ]
         for (input, expected) in cases {
             XCTAssertEqual(input.sanitizedDouble, expected)

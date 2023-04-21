@@ -1,6 +1,6 @@
 //
 //  KDeletableForEach.swift
-//  
+//
 //
 //  Created by Kamaal M Farah on 03/10/2021.
 //
@@ -22,15 +22,16 @@ struct KDeletableForEach<Data: RandomAccessCollection, ID: Hashable, Content: Vi
                 isDeleting: .constant(false),
                 enabled: isEditing,
                 deleteText: deleteText,
-                onDelete: { onDelete(element) }) {
-                    content(element)
-                }
+                onDelete: { onDelete(element) }
+            ) {
+                content(element)
+            }
         }
     }
 }
 
-//struct KDeletableForEach_Previews: PreviewProvider {
+// struct KDeletableForEach_Previews: PreviewProvider {
 //    static var previews: some View {
 //        KDeletableForEach()
 //    }
-//}
+// }

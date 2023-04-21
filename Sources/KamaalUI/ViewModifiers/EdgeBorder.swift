@@ -1,14 +1,14 @@
 //
 //  EdgeBorder.swift
-//  
+//
 //
 //  Created by Kamaal M Farah on 17/04/2021.
 //
 
 import SwiftUI
 
-public extension View {
-    func kborder(width: CGFloat, edges: [Edge], color: Color) -> some View {
+extension View {
+    public func kborder(width: CGFloat, edges: [Edge], color: Color) -> some View {
         overlay(EdgeBorder(width: width, edges: edges).foregroundColor(color))
     }
 }
@@ -52,7 +52,6 @@ struct EdgeBorder: Shape {
         return path
     }
 }
-
 
 struct EdgeBorder_Previews: PreviewProvider {
     static var previews: some View {

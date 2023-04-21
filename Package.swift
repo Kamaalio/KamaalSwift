@@ -11,15 +11,18 @@ let package = Package(
     products: [
         .library(
             name: "KamaalUI",
-            targets: ["KamaalUI"]),
+            targets: ["KamaalUI"]
+        ),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "KamaalUI",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "KamaalUITests",
-            dependencies: ["KamaalUI"]),
+            dependencies: ["KamaalUI"]
+        ),
     ]
 )
