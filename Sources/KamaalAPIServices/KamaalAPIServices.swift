@@ -9,4 +9,6 @@ import Foundation
 
 public struct KamaalAPIServices {
     public let gitHub = GitHubClient()
+
+    public init() { }
 }

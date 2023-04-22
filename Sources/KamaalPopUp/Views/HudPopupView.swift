@@ -69,7 +69,6 @@ struct HudPopupView: View {
     private static let imageSize = CGSize(width: 14, height: 14)
 }
 
-@available(macOS 11.0, *)
 struct HudPopupView_Previews: PreviewProvider {
     static var previews: some View {
         HudPopupView(

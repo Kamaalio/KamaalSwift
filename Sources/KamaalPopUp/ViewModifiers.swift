@@ -9,7 +9,6 @@ import SwiftUI
 import KamaalUI
 
 extension View {
-    @available(macOS 11.0, *)
     public func withKPopUp(@ObservedObject _ manager: KPopUpManager) -> some View {
         ktakeSizeEagerly()
             .kPopUp(
@@ -21,7 +20,6 @@ extension View {
             .environmentObject(manager)
     }
 
-    @available(macOS 11.0, iOS 14, *)
     public func kPopUpLite(
         isPresented: Binding<Bool>,
         style: KPopUpStyles,
@@ -37,7 +35,6 @@ extension View {
             ))
     }
 
-    @available(macOS 11.0, iOS 14, *)
     public func kPopUpLite(
         isPresented: Binding<Bool>,
         style: KPopUpStyles,
@@ -46,7 +43,6 @@ extension View {
         kPopUpLite(isPresented: isPresented, style: style, backgroundColor: backgroundColor, onClose: { })
     }
 
-    @available(macOS 11.0, *)
     fileprivate func kPopUp(
         isPresented: Binding<Bool>,
         style: KPopUpStyles,
@@ -62,7 +58,6 @@ extension View {
     }
 }
 
-@available(macOS 11.0, iOS 14, *)
 struct KPopUpLiteModifier: ViewModifier {
     @State private var definitiveIsPresented: Bool
 
@@ -124,7 +119,6 @@ struct KPopUpLiteModifier: ViewModifier {
     }
 }
 
-@available(macOS 11.0, *)
 struct KPopUpViewModifier: ViewModifier {
     @Binding var isPresented: Bool
 

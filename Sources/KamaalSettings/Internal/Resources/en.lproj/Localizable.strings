@@ -1,0 +1,39 @@
+/*
+  Localizable.strings
+  SettingsUI
+
+  Created by Kamaal Farah on 18/12/2022.
+  Copyright © 2022 Kamaal. All rights reserved.
+*/
+
+"Support Author" = "Support Author";
+"Buy me coffee" = "Buy me coffee";
+"Settings" = "Settings";
+"Buy me a %@" = "Buy me a %@"; // %@ as in the item to buy
+"Purchasing" = "Purchasing";
+"Sorry, something went wrong" = "Sorry, something went wrong";
+"Failed to make purchase" = "Failed to make purchase";
+"Feedback" = "Feedback";
+"Feature request" = "Feature request";
+"Report bug" = "Report bug";
+"Other feedback" = "Other feedback";
+"Title" = "Title";
+"Description" = "Description";
+"Send" = "Send";
+"Feedback sent" = "Feedback sent";
+"Could not send feedback" = "Could not send feedback";
+"Personalization" = "Personalization";
+"App colors" = "App colors";
+"Colors" = "Colors";
+"Features" = "Features";
+"Miscellaneous" = "Miscellaneous";
+"Logs" = "Logs";
+"Close"= "Close";
+"About" = "About";
+"Version" = "Version";
+"Contributors" = "Contributors";
+"Packages" = "Packages";
+"App icon" = "App icon";
+"Icons" = "Icons";
+"Preferences" = "Preferences";
+"No logs available" = "No logs available";

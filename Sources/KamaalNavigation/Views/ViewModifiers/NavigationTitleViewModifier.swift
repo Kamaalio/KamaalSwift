@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(macOS 11.0, iOS 14.0, *)
 extension View {
     public func navigationTitle(title: String, displayMode: DisplayMode) -> some View {
         modifier(NavigationTitleViewModifier(title: title, displayMode: displayMode))
@@ -30,7 +29,6 @@ public enum DisplayMode {
     #endif
 }
 
-@available(macOS 11.0, iOS 14.0, *)
 private struct NavigationTitleViewModifier: ViewModifier {
     let title: String
     let displayMode: DisplayMode

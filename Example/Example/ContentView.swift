@@ -10,6 +10,7 @@ import KamaalUI
 import KamaalPopUp
 import KamaalLogger
 import KamaalBrowser
+import KamaalSettings
 import KamaalExtensions
 import KamaalNavigation
 
@@ -105,6 +106,8 @@ struct MainView: View {
                 HomeScreen()
             case .other:
                 OtherScreen()
+            case .settings:
+                SettingsScreen(configuration: .init())
             }
         }
         .navigationTitle(title: screen.title, displayMode: displayMode)
@@ -145,6 +148,7 @@ struct Sidebar: View {
 enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
     case home
     case other
+    case settings
 
     var title: String {
         switch self {
@@ -152,6 +156,8 @@ enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
             return "Home"
         case .other:
             return "Other"
+        case .settings:
+            return "Settings"
         }
     }
 
@@ -159,6 +165,8 @@ enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
         switch self {
         case .home:
             return "house.fill"
+        case .settings:
+            return "gear"
         default:
             return ""
         }
@@ -166,7 +174,7 @@ enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
 
     var isTabItem: Bool {
         switch self {
-        case .home:
+        case .home, .settings:
             return true
         case .other:
             return false
@@ -175,7 +183,7 @@ enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
 
     var isSidebarItem: Bool {
         switch self {
-        case .home:
+        case .home, .settings:
             return true
         case .other:
             return false

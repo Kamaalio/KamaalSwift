@@ -128,9 +128,7 @@ fileprivate struct InAppBrowserRepresentable: UIViewControllerRepresentable {
         let safariViewController = SFSafariViewController(url: url, configuration: configuaration)
         safariViewController.dismissButtonStyle = .close
         safariViewController.preferredBarTintColor = .systemBackground
-        if #available(iOS 14.0, *) {
-            safariViewController.preferredControlTintColor = UIColor(tintColor)
-        }
+        safariViewController.preferredControlTintColor = UIColor(tintColor)
         return safariViewController
     }
 

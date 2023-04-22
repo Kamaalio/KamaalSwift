@@ -28,6 +28,16 @@ extension Array where Element: Hashable {
     }
 }
 
+extension Array where Element: Identifiable {
+    public var mappedByID: [Element.ID: Element] {
+        reduce([:]) {
+            var result = $0
+            result[$1.id] = $1
+            return result
+        }
+    }
+}
+
 extension Array {
     /// Transforms `Array` to an `NSSet`
     public var asNSSet: NSSet {

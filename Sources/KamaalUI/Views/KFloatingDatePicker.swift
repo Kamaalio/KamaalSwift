@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(macOS 11.0, iOS 14.0, *)
 public struct KFloatingDatePicker: View {
     @Binding public var value: Date
 
@@ -42,7 +41,6 @@ public struct KFloatingDatePicker: View {
     }
 }
 
-@available(macOS 11.0, iOS 14.0, *)
 struct KFloatingDatePicker_Previews: PreviewProvider {
     static var previews: some View {
         KFloatingDatePicker(value: .constant(Date()), title: "Date", onChange: { _ in })

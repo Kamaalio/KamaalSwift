@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C387AD829F4618D0024FCD1 /* KamaalSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 2C387AD729F4618D0024FCD1 /* KamaalSettings */; };
+		2C387ADA29F475EA0024FCD1 /* Donations.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 2C387AD929F475EA0024FCD1 /* Donations.storekit */; };
 		2CEFF99429F41E050042908B /* KamaalBrowser in Frameworks */ = {isa = PBXBuildFile; productRef = 2CEFF99329F41E050042908B /* KamaalBrowser */; };
 		2CEFF99629F425630042908B /* KamaalPopUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2CEFF99529F425630042908B /* KamaalPopUp */; };
 		2CEFF99829F42E950042908B /* KamaalNetworker in Frameworks */ = {isa = PBXBuildFile; productRef = 2CEFF99729F42E950042908B /* KamaalNetworker */; };
@@ -22,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C387AD929F475EA0024FCD1 /* Donations.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Donations.storekit; sourceTree = "<group>"; };
 		2CFA195329F2CD6B00FC3700 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CFA195629F2CD6B00FC3700 /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		2CFA195829F2CD6B00FC3700 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -37,6 +40,7 @@
 			files = (
 				2CEFF99629F425630042908B /* KamaalPopUp in Frameworks */,
 				2CFA196729F2CD9500FC3700 /* KamaalUI in Frameworks */,
+				2C387AD829F4618D0024FCD1 /* KamaalSettings in Frameworks */,
 				2CFA196929F2D5AC00FC3700 /* KamaalExtensions in Frameworks */,
 				2CEFF99829F42E950042908B /* KamaalNetworker in Frameworks */,
 				2CFA196B29F2DD7F00FC3700 /* KamaalLogger in Frameworks */,
@@ -70,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				2CFA195C29F2CD7000FC3700 /* Example.entitlements */,
+				2C387AD929F475EA0024FCD1 /* Donations.storekit */,
 				2CFA195829F2CD6B00FC3700 /* ContentView.swift */,
 				2CFA195629F2CD6B00FC3700 /* ExampleApp.swift */,
 				2CFA195A29F2CD7000FC3700 /* Assets.xcassets */,
@@ -119,6 +124,7 @@
 				2CEFF99529F425630042908B /* KamaalPopUp */,
 				2CEFF99729F42E950042908B /* KamaalNetworker */,
 				2CEFF99929F433F80042908B /* KamaalAPIServices */,
+				2C387AD729F4618D0024FCD1 /* KamaalSettings */,
 			);
 			productName = Example;
 			productReference = 2CFA195329F2CD6B00FC3700 /* Example.app */;
@@ -163,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CFA195F29F2CD7000FC3700 /* Preview Assets.xcassets in Resources */,
+				2C387ADA29F475EA0024FCD1 /* Donations.storekit in Resources */,
 				2CFA195B29F2CD7000FC3700 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +426,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2C387AD729F4618D0024FCD1 /* KamaalSettings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KamaalSettings;
+		};
 		2CEFF99329F41E050042908B /* KamaalBrowser */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KamaalBrowser;

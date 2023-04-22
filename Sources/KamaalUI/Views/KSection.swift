@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@available(macOS 12.0, *)
 public struct KSection<Content: View>: View {
     public let header: String?
     public let content: Content
@@ -52,7 +51,6 @@ public struct KSection<Content: View>: View {
     }
 }
 
-@available(macOS 12.0, *)
 struct KSection_Previews: PreviewProvider {
     static var previews: some View {
         KSection(header: "Header") {

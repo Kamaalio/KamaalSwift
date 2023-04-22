@@ -9,7 +9,6 @@ import OSLog
 import Foundation
 
 /// Utility library to handle logging.
-@available(macOS 11, iOS 14, *)
 public struct KamaalLogger {
     private let logger: Logger
     let label: String

@@ -5,8 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "KamaalSwift",
+    defaultLocalization: "en",
     platforms: [
-        .macOS(.v10_15), .iOS(.v13),
+        .macOS(.v12), .iOS(.v15),
     ],
     products: [
         .library(
@@ -45,10 +46,15 @@ let package = Package(
             name: "KamaalAPIServices",
             targets: ["KamaalAPIServices"]
         ),
+        .library(
+            name: "KamaalSettings",
+            targets: ["KamaalSettings"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", "4.0.0" ..< "5.0.0"),
         .package(url: "https://github.com/Quick/Nimble.git", "9.0.0" ..< "10.0.0"),
+        .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "1.0.0" ..< "2.0.0"),
     ],
     targets: [
         .target(
@@ -88,6 +94,22 @@ let package = Package(
             name: "KamaalAPIServices",
             dependencies: ["KamaalNetworker", "KamaalExtensions"]
         ),
+        .target(
+            name: "KamaalSettings",
+            dependencies: [
+                "KamaalExtensions",
+                "KamaalStructures",
+                "KamaalLogger",
+                "KamaalUI",
+                "KamaalBrowser",
+                "KamaalNavigation",
+                "KamaalAPIServices",
+                "ConfettiSwiftUI",
+            ],
+            resources: [
+                .process("Internal/Resources"),
+            ]
+        ),
         .testTarget(
             name: "KamaalUITests",
             dependencies: ["KamaalUI"]
@@ -115,6 +137,10 @@ let package = Package(
         .testTarget(
             name: "KamaalAPIServicesTests",
             dependencies: ["KamaalAPIServices", "Quick", "Nimble"]
+        ),
+        .testTarget(
+            name: "KamaalSettingsTests",
+            dependencies: ["KamaalSettings"]
         ),
     ]
 )

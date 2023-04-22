@@ -1,0 +1,63 @@
+{
+  "identifier" : "9C934DEE",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6A0E1F6C",
+      "localizations" : [
+        {
+          "description" : "Good for the eyes",
+          "displayName" : "Carrot",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.kamaal.Example.Carrot",
+      "referenceName" : "Carrot",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "496000000.00",
+      "familyShareable" : false,
+      "internalID" : "C553B268",
+      "localizations" : [
+        {
+          "description" : "Just 1 please",
+          "displayName" : "Ship",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.kamaal.Example.Ship",
+      "referenceName" : "Ship",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "1000000.00",
+      "familyShareable" : false,
+      "internalID" : "A7334C1A",
+      "localizations" : [
+        {
+          "description" : "House, Tree, Pet (Woof)",
+          "displayName" : "House",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "io.kamaal.Example.House",
+      "referenceName" : "House",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}
