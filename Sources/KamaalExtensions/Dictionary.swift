@@ -26,4 +26,9 @@ extension Dictionary {
     public func has(key: Key) -> Bool {
         index(forKey: key) != nil
     }
+
+    public var asData: Data? {
+        guard !isEmpty else { return nil }
+        return try? JSONSerialization.data(withJSONObject: self)
+    }
 }

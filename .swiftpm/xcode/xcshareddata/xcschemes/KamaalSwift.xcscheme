@@ -34,20 +34,6 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "KamaalSwift"
-               BuildableName = "KamaalSwift"
-               BlueprintName = "KamaalSwift"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -104,6 +90,16 @@
                BlueprintIdentifier = "KamaalNavigationTests"
                BuildableName = "KamaalNavigationTests"
                BlueprintName = "KamaalNavigationTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "KamaalNetworkerTests"
+               BuildableName = "KamaalNetworkerTests"
+               BlueprintName = "KamaalNetworkerTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
