@@ -27,7 +27,6 @@ struct AcknowledgementsScreen: View {
                 }
             }
         }
-        .navigationTitle(localizedTitle: "Acknowledgements", comment: "", displayMode: .inline)
         .accentColor(settingsConfiguration.currentColor)
         .kBrowser($selectedPackageURL,
                   fallbackURL: URL(staticString: "https://kamaal.io"),

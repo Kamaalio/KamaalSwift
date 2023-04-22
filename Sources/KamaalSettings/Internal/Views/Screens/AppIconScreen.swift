@@ -8,6 +8,7 @@
 import SwiftUI
 import KamaalUI
 import KamaalLogger
+import KamaalNavigation
 
 private let logger = KamaalLogger(from: AppIconScreen.self)
 
@@ -15,7 +16,7 @@ struct AppIconScreen: View {
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
 
-    @EnvironmentObject private var navigator: Navigator
+    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
 
     var body: some View {
         SelectionScreenWrapper(

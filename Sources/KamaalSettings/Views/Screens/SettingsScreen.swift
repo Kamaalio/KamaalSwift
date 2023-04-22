@@ -7,6 +7,7 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalNavigation
 
 public struct SettingsScreen: View {
     @StateObject private var store: Store
@@ -19,39 +20,11 @@ public struct SettingsScreen: View {
     }
 
     public var body: some View {
-        NavigationStackView {
-            KScrollableForm {
-                if configuration.donationsIsConfigured && store.hasDonations {
-                    SupportAuthorSection()
-                        .padding(.horizontal, .medium)
-                }
-                if configuration.feedbackIsConfigured {
-                    FeedbackSection()
-                        .padding(.horizontal, .medium)
-                }
-                if configuration.personalizationIsConfigured {
-                    PersonalizationSection()
-                        .padding(.horizontal, .medium)
-                }
-                if configuration.preferencesIsConfigured {
-                    PreferencesSection()
-                        .padding(.horizontal, .medium)
-                }
-                if configuration.featuresIsConfigured {
-                    FeaturesSection()
-                        .padding(.horizontal, .medium)
-                }
-                if configuration.showLogs {
-                    MiscellaneousSection()
-                        .padding(.horizontal, .medium)
-                }
-                if versionText != nil || configuration.acknowledgementsAreConfigured {
-                    AboutSection(versionText: versionText, buildNumber: buildNumber)
-                        .padding(.horizontal, .medium)
-                }
-            }
-            .navigationTitle(localizedTitle: "Settings", comment: "", displayMode: .large)
-        }
+        NavigationStackView(
+            stackWithoutNavigationStack: [] as [ScreenSelection],
+            root: { screen in MainView(screen: screen) },
+            subView: { screen in MainView(screen: screen) }
+        )
         .environmentObject(store)
         .accentColor(configuration.currentColor)
         .onAppear(perform: handleOnAppear)
@@ -61,14 +34,6 @@ public struct SettingsScreen: View {
             .ktakeSizeEagerly(alignment: .topLeading)
         #endif
             .frame(minWidth: 250)
-    }
-
-    private var versionText: String? {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-    }
-
-    private var buildNumber: String? {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
 
     private func handleOnAppear() {

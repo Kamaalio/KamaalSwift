@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
+import KamaalNavigation
 
 struct NavigationLinkRow<Value: View>: View {
-    @EnvironmentObject private var navigator: Navigator
     @EnvironmentObject private var store: Store
 
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
@@ -22,19 +22,13 @@ struct NavigationLinkRow<Value: View>: View {
     }
 
     var body: some View {
-        #if os(macOS)
-        AppButton(action: { navigator.navigate(to: destination) }) {
+        StackNavigationLink(
+            destination: destination,
+            nextView: { screen in MainView(screen: screen) }
+        ) {
             valueView
         }
-        #else
-        NavigationLink(destination: {
-            MainView(screen: destination)
-                .environment(\.settingsConfiguration, settingsConfiguration)
-                .environmentObject(store)
-        }) {
-            valueView
-        }
-        #endif
+        .buttonStyle(.plain)
     }
 
     private var valueView: some View {

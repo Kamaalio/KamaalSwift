@@ -50,7 +50,6 @@ struct SelectionScreenWrapper<Row: View, Item: Hashable & Identifiable>: View {
             #endif
         }
         .ktakeSizeEagerly(alignment: .topLeading)
-        .navigationTitle(title: navigationTitle, displayMode: .inline)
         .accentColor(settingsConfiguration.currentColor)
     }
 }

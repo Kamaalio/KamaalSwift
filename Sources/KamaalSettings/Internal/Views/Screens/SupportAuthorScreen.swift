@@ -10,9 +10,10 @@ import KamaalUI
 import KamaalPopUp
 import KamaalLogger
 import ConfettiSwiftUI
+import KamaalNavigation
 
 struct SupportAuthorScreen: View {
-    @EnvironmentObject private var navigator: Navigator
+    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
     @EnvironmentObject private var store: Store
 
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
@@ -48,7 +49,6 @@ struct SupportAuthorScreen: View {
             }
             .padding(.all, .medium)
         }
-        .navigationTitle(localizedTitle: "Support Author", comment: "", displayMode: .inline)
         .ktakeSizeEagerly(alignment: .topLeading)
         .onAppear(perform: handleAppear)
         .confettiCannon(

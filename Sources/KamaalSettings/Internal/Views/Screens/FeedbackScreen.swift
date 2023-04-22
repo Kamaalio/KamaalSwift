@@ -10,6 +10,7 @@ import KamaalUI
 import KamaalPopUp
 import KamaalLogger
 import KamaalExtensions
+import KamaalNavigation
 import KamaalAPIServices
 
 private let logger = KamaalLogger(from: FeedbackScreen.self)
@@ -19,7 +20,7 @@ struct FeedbackScreen: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
-    @EnvironmentObject private var navigator: Navigator
+    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
 
     @ObservedObject private var viewModel: ViewModel
 
@@ -50,7 +51,6 @@ struct FeedbackScreen: View {
             .disabled(viewModel.disableSubmit)
         }
         .padding(.all, .medium)
-        .navigationTitle(title: viewModel.style.title, displayMode: .inline)
         .kPopUpLite(isPresented: $viewModel.showToast,
                     style: viewModel.lastToastType?.pupUpStyle ?? .bottom(title: "", type: .warning, description: nil),
                     backgroundColor: colorScheme == .dark ? .black : .white)

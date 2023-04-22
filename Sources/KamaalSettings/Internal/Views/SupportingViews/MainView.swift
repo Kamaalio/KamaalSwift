@@ -6,25 +6,32 @@
 //
 
 import SwiftUI
+import KamaalUI
+import KamaalNavigation
 
 struct MainView: View {
     let screen: ScreenSelection
 
     var body: some View {
-        switch screen {
-        case .acknowledgements:
-            AcknowledgementsScreen()
-        case .appColor:
-            AppColorScreen()
-        case .appIcon:
-            AppIconScreen()
-        case let .feedback(style, description):
-            FeedbackScreen(style: style, description: description)
-        case .logs:
-            LogsScreen()
-        case .supportAuthor:
-            SupportAuthorScreen()
+        KJustStack {
+            switch screen {
+            case .acknowledgements:
+                AcknowledgementsScreen()
+            case .appColor:
+                AppColorScreen()
+            case .appIcon:
+                AppIconScreen()
+            case let .feedback(style, description):
+                FeedbackScreen(style: style, description: description)
+            case .logs:
+                LogsScreen()
+            case .supportAuthor:
+                SupportAuthorScreen()
+            case .root:
+                RootSettingsScreen()
+            }
         }
+        .navigationTitle(title: screen.title, displayMode: screen == .root ? .large : .inline)
     }
 }
 

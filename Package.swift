@@ -98,13 +98,13 @@ let package = Package(
             name: "KamaalSettings",
             dependencies: [
                 "KamaalExtensions",
-                "KamaalStructures",
                 "KamaalLogger",
                 "KamaalUI",
                 "KamaalBrowser",
                 "KamaalNavigation",
                 "KamaalAPIServices",
                 "ConfettiSwiftUI",
+                "KamaalPopUp",
             ],
             resources: [
                 .process("Internal/Resources"),

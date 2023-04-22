@@ -8,9 +8,10 @@
 import SwiftUI
 import KamaalUI
 import KamaalLogger
+import KamaalNavigation
 
 struct LogsScreen: View {
-    @EnvironmentObject private var navigator: Navigator
+    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
 
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
 
@@ -58,7 +59,6 @@ struct LogsScreen: View {
             }
             .ktakeSizeEagerly(alignment: .topLeading)
         }
-        .navigationTitle(localizedTitle: "Logs", comment: "", displayMode: .inline)
         .onAppear(perform: handleOnAppear)
         .onChange(of: showSelectedLogSheet, perform: onShowSelectedLogSheetChange)
         .sheet(isPresented: $showSelectedLogSheet, content: {
