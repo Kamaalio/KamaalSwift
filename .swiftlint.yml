@@ -53,3 +53,4 @@ identifier_name:
 excluded:
   - .build
   - Tests
+  - Example
