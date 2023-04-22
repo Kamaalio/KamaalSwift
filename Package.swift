@@ -41,6 +41,10 @@ let package = Package(
             name: "KamaalNetworker",
             targets: ["KamaalNetworker"]
         ),
+        .library(
+            name: "KamaalAPIServices",
+            targets: ["KamaalAPIServices"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", "4.0.0" ..< "5.0.0"),
@@ -80,6 +84,10 @@ let package = Package(
             name: "KamaalNetworker",
             dependencies: ["KamaalExtensions"]
         ),
+        .target(
+            name: "KamaalAPIServices",
+            dependencies: ["KamaalNetworker", "KamaalExtensions"]
+        ),
         .testTarget(
             name: "KamaalUITests",
             dependencies: ["KamaalUI"]
@@ -103,6 +111,10 @@ let package = Package(
         .testTarget(
             name: "KamaalNetworkerTests",
             dependencies: ["KamaalNetworker", "Quick", "Nimble"]
+        ),
+        .testTarget(
+            name: "KamaalAPIServicesTests",
+            dependencies: ["KamaalAPIServices", "Quick", "Nimble"]
         ),
     ]
 )

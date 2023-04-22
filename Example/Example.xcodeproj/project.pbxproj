@@ -10,6 +10,7 @@
 		2CEFF99429F41E050042908B /* KamaalBrowser in Frameworks */ = {isa = PBXBuildFile; productRef = 2CEFF99329F41E050042908B /* KamaalBrowser */; };
 		2CEFF99629F425630042908B /* KamaalPopUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2CEFF99529F425630042908B /* KamaalPopUp */; };
 		2CEFF99829F42E950042908B /* KamaalNetworker in Frameworks */ = {isa = PBXBuildFile; productRef = 2CEFF99729F42E950042908B /* KamaalNetworker */; };
+		2CEFF99A29F433F80042908B /* KamaalAPIServices in Frameworks */ = {isa = PBXBuildFile; productRef = 2CEFF99929F433F80042908B /* KamaalAPIServices */; };
 		2CFA195729F2CD6B00FC3700 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFA195629F2CD6B00FC3700 /* ExampleApp.swift */; };
 		2CFA195929F2CD6B00FC3700 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFA195829F2CD6B00FC3700 /* ContentView.swift */; };
 		2CFA195B29F2CD7000FC3700 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA195A29F2CD7000FC3700 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 				2CEFF99829F42E950042908B /* KamaalNetworker in Frameworks */,
 				2CFA196B29F2DD7F00FC3700 /* KamaalLogger in Frameworks */,
 				2CFA196D29F2F62500FC3700 /* KamaalNavigation in Frameworks */,
+				2CEFF99A29F433F80042908B /* KamaalAPIServices in Frameworks */,
 				2CEFF99429F41E050042908B /* KamaalBrowser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,6 +118,7 @@
 				2CEFF99329F41E050042908B /* KamaalBrowser */,
 				2CEFF99529F425630042908B /* KamaalPopUp */,
 				2CEFF99729F42E950042908B /* KamaalNetworker */,
+				2CEFF99929F433F80042908B /* KamaalAPIServices */,
 			);
 			productName = Example;
 			productReference = 2CFA195329F2CD6B00FC3700 /* Example.app */;
@@ -427,6 +430,10 @@
 		2CEFF99729F42E950042908B /* KamaalNetworker */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KamaalNetworker;
+		};
+		2CEFF99929F433F80042908B /* KamaalAPIServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KamaalAPIServices;
 		};
 		2CFA196629F2CD9500FC3700 /* KamaalUI */ = {
 			isa = XCSwiftPackageProductDependency;
