@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CEFF99429F41E050042908B /* KamaalBrowser in Frameworks */ = {isa = PBXBuildFile; productRef = 2CEFF99329F41E050042908B /* KamaalBrowser */; };
 		2CFA195729F2CD6B00FC3700 /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFA195629F2CD6B00FC3700 /* ExampleApp.swift */; };
 		2CFA195929F2CD6B00FC3700 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFA195829F2CD6B00FC3700 /* ContentView.swift */; };
 		2CFA195B29F2CD7000FC3700 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA195A29F2CD7000FC3700 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 				2CFA196929F2D5AC00FC3700 /* KamaalExtensions in Frameworks */,
 				2CFA196B29F2DD7F00FC3700 /* KamaalLogger in Frameworks */,
 				2CFA196D29F2F62500FC3700 /* KamaalNavigation in Frameworks */,
+				2CEFF99429F41E050042908B /* KamaalBrowser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +109,7 @@
 				2CFA196829F2D5AC00FC3700 /* KamaalExtensions */,
 				2CFA196A29F2DD7F00FC3700 /* KamaalLogger */,
 				2CFA196C29F2F62500FC3700 /* KamaalNavigation */,
+				2CEFF99329F41E050042908B /* KamaalBrowser */,
 			);
 			productName = Example;
 			productReference = 2CFA195329F2CD6B00FC3700 /* Example.app */;
@@ -407,6 +410,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2CEFF99329F41E050042908B /* KamaalBrowser */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KamaalBrowser;
+		};
 		2CFA196629F2CD9500FC3700 /* KamaalUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KamaalUI;

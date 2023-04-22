@@ -29,6 +29,10 @@ let package = Package(
             name: "KamaalNavigation",
             targets: ["KamaalNavigation"]
         ),
+        .library(
+            name: "KamaalBrowser",
+            targets: ["KamaalBrowser"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", "4.0.0" ..< "5.0.0"),
@@ -54,6 +58,10 @@ let package = Package(
         .target(
             name: "KamaalNavigation",
             dependencies: ["KamaalStructures", "KamaalUI"]
+        ),
+        .target(
+            name: "KamaalBrowser",
+            dependencies: []
         ),
         .testTarget(
             name: "KamaalUITests",

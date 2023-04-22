@@ -8,6 +8,7 @@
 import SwiftUI
 import KamaalUI
 import KamaalLogger
+import KamaalBrowser
 import KamaalExtensions
 import KamaalNavigation
 
@@ -28,10 +29,15 @@ struct ContentView: View {
 }
 
 struct HomeScreen: View {
+    @State private var showBrowser = false
+
     var body: some View {
         VStack {
             Button(action: { logger.info("Logging something") }) {
                 Text("Loggin11111".digits)
+            }
+            Button(action: { showBrowser = true }) {
+                Text("Show Browser")
             }
             StackNavigationLink(
                 destination: Screens.other,
@@ -40,6 +46,7 @@ struct HomeScreen: View {
                 Text("Go to other screen")
             }
         }
+        .kBrowser(isPresented: $showBrowser, url: URL(staticString: "https://kamaal.io"), color: .red)
     }
 }
 
