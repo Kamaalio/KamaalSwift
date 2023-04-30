@@ -96,7 +96,7 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
             #else
             if UIDevice.current.userInterfaceIdiom == .pad {
                 NavigationView {
-                    sidebar()
+                    AnyView(sidebar())
                     root(navigator.currentStack)
                 }
                 .environmentObject(navigator)
