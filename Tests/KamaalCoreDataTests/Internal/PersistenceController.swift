@@ -70,6 +70,18 @@ class Item: NSManagedObject, ManuallyManagedObject, Identifiable {
             relationshipType: .toMany
         ),
     ]
+
+    static func create(context: NSManagedObjectContext, save: Bool = true) throws -> Item {
+        let item = Item(context: context)
+        item.timestamp = Date()
+        item.id = UUID()
+
+        if save {
+            try context.save()
+        }
+
+        return item
+    }
 }
 
 @objc(Child)

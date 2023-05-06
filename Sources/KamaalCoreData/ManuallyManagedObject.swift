@@ -51,13 +51,14 @@ public protocol ManuallyManagedObject: NSManagedObject {
 }
 
 extension ManuallyManagedObject {
+    /// The relationships of this object.
     public static var _relationships: [_RelationshipConfiguration] { [] }
 }
 
 extension ManuallyManagedObject {
     /// Deletes the managed object.
     /// - Parameter save: whether to commit deletion or not.
-    public func delete(save: Bool = true) throws {
+    public func delete(save: Bool) throws {
         guard let context = managedObjectContext else { return }
 
         context.delete(self)
@@ -65,6 +66,11 @@ extension ManuallyManagedObject {
         if save {
             try context.save()
         }
+    }
+
+    /// Deletes the managed object.
+    public func delete() throws {
+        try delete(save: true)
     }
 
     /// A description of an entity in Core Data.
@@ -128,6 +134,19 @@ extension ManuallyManagedObject {
     /// - Returns: An found item in CoreData store.
     public static func find(by predicate: NSPredicate, from context: NSManagedObjectContext) throws -> Self? {
         try filter(by: predicate, limit: 1, from: context).first
+    }
+
+    /// Delete multiple objects by the given predicate.
+    /// - Parameters:
+    ///   - predicate: The query predicate.
+    ///   - context: An object space to manipulate and track changes to managed objects.
+    public static func batchDelete(by predicate: NSPredicate, in context: NSManagedObjectContext) throws {
+        guard let request = fetchRequest() as? NSFetchRequest<NSFetchRequestResult> else { return }
+
+        request.predicate = predicate
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        try context.execute(deleteRequest)
+        try context.save()
     }
 
     static func clear(in context: NSManagedObjectContext) throws {

@@ -116,7 +116,7 @@ let package = Package(
         ),
         .target(
             name: "KamaalCoreData",
-            dependencies: []
+            dependencies: ["KamaalExtensions"]
         ),
         .testTarget(
             name: "KamaalUITests",
@@ -152,7 +152,7 @@ let package = Package(
         ),
         .testTarget(
             name: "KamaalCoreDataTests",
-            dependencies: ["KamaalCoreData"]
+            dependencies: ["KamaalCoreData", "KamaalExtensions"]
         ),
     ]
 )
