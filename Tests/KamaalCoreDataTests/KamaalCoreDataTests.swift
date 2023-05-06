@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import KamaalExtensions
 @testable import KamaalCoreData
 
 final class KamaalCoreDataTests: XCTestCase {
@@ -16,20 +17,14 @@ final class KamaalCoreDataTests: XCTestCase {
     }
 
     func testItemGetsCreated() throws {
-        let item = Item(context: viewContext)
-        item.timestamp = Date()
-        item.id = UUID()
-        try viewContext.save()
+        _ = try Item.create(context: viewContext, save: true)
 
         let items = try Item.list(from: viewContext)
         XCTAssertEqual(items.count, 1)
     }
 
     func testItemIsDeleted() throws {
-        let item = Item(context: viewContext)
-        item.timestamp = Date()
-        item.id = UUID()
-        try viewContext.save()
+        let item = try Item.create(context: viewContext, save: true)
 
         try item.delete()
         let items = try Item.list(from: viewContext)
@@ -37,60 +32,61 @@ final class KamaalCoreDataTests: XCTestCase {
     }
 
     func testCorrectItemsGetFiltered() throws {
-        let item1 = Item(context: viewContext)
-        item1.timestamp = Date()
-        item1.id = UUID()
-        let item2 = Item(context: viewContext)
-        item2.timestamp = Date()
-        item2.id = UUID()
-        let item3 = Item(context: viewContext)
-        item3.timestamp = Date()
-        item3.id = UUID()
-        try viewContext.save()
+        let items = try createItems(amount: 3)
 
-        let itemsToSearchFor = [item1, item3]
-        let predicate = NSPredicate(format: "id IN %@", itemsToSearchFor.map { NSString(string: $0.id.uuidString) })
+        let itemsToSearchFor = [items[0], items[2]]
+        let predicate = NSPredicate(format: "id IN %@", itemsToSearchFor.map(\.id.nsString))
         let limit = 3
-        let items = try Item.filter(by: predicate, limit: limit, from: viewContext)
+        let filteredItems = try Item.filter(by: predicate, limit: limit, from: viewContext)
 
-        XCTAssertEqual(items.count, itemsToSearchFor.count)
-        XCTAssertNotEqual(items.count, limit)
-        XCTAssert(items.allSatisfy { itemsToSearchFor.contains($0) })
+        XCTAssertEqual(filteredItems.count, itemsToSearchFor.count)
+        XCTAssertNotEqual(filteredItems.count, limit)
+        XCTAssert(filteredItems.allSatisfy { itemsToSearchFor.contains($0) })
     }
 
     func testFoundItem() throws {
-        let item1 = Item(context: viewContext)
-        item1.timestamp = Date()
-        item1.id = UUID()
-        let item2 = Item(context: viewContext)
-        item2.timestamp = Date()
-        item2.id = UUID()
-        let item3 = Item(context: viewContext)
-        item3.timestamp = Date()
-        item3.id = UUID()
-        try viewContext.save()
+        let items = try createItems(amount: 3)
 
-        let predicate = NSPredicate(format: "id = %@", NSString(string: item2.id.uuidString))
+        let predicate = NSPredicate(format: "id = %@", items[1].id.nsString)
         let foundItem = try Item.find(by: predicate, from: viewContext)
 
-        XCTAssertEqual(foundItem, item2)
+        XCTAssertEqual(foundItem, items[1])
     }
 
     func testItemNotFound() throws {
-        let item1 = Item(context: viewContext)
-        item1.timestamp = Date()
-        item1.id = UUID()
-        let item2 = Item(context: viewContext)
-        item2.timestamp = Date()
-        item2.id = UUID()
-        let item3 = Item(context: viewContext)
-        item3.timestamp = Date()
-        item3.id = UUID()
-        try viewContext.save()
+        _ = try createItems(amount: 3)
 
-        let predicate = NSPredicate(format: "id = %@", NSString(string: UUID().uuidString))
+        let predicate = NSPredicate(format: "id = %@", UUID().nsString)
         let foundItem = try Item.find(by: predicate, from: viewContext)
 
         XCTAssertNil(foundItem)
+    }
+
+    func testBatchDelete() throws {
+        let items = try createItems(amount: 3)
+
+        let itemsToDeleteIDs = [items[0], items[2]].map(\.id.nsString)
+        let predicate = NSPredicate(format: "id IN %@", itemsToDeleteIDs)
+        try Item.batchDelete(by: predicate, in: viewContext)
+
+        for id in itemsToDeleteIDs {
+            let predicate = NSPredicate(format: "id = %@", id)
+            let itemThatShouldNotBeFound = try Item.find(by: predicate, from: viewContext)
+            XCTAssertNil(itemThatShouldNotBeFound)
+        }
+
+        let predicateForItemThatIsNotDeleted = NSPredicate(format: "id = %@", items[1].id.nsString)
+        let foundItem = try Item.find(by: predicateForItemThatIsNotDeleted, from: viewContext)
+
+        XCTAssertEqual(foundItem, items[1])
+    }
+
+    func createItems(amount: Int) throws -> [Item] {
+        var items: [Item] = []
+        for i in 0 ..< amount {
+            let item = try Item.create(context: viewContext, save: i == (amount - 1))
+            items = items.appended(item)
+        }
+        return items
     }
 }
