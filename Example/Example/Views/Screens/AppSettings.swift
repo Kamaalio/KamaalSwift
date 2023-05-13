@@ -17,7 +17,7 @@ struct AppSettings: View {
     }
 
     private var configuration: SettingsConfiguration {
-        .init(color: .init(colors: appColors, currentColor: appColor))
+        .init(donations: donations, color: .init(colors: appColors, currentColor: appColor))
     }
 
     private func handleOnAppColorChange(_ appColor: AppColor) {
@@ -34,6 +34,12 @@ private let appColors: [AppColor] = [
     .init(id: UUID(uuidString: "ab3aa7c5-c9e3-45a9-a2ef-f82603f11eab")!, name: "Orange", color: .orange),
     .init(id: UUID(uuidString: "0125142b-4a50-4f7f-b02c-a4963a6e4633")!, name: "Red", color: .red),
     .init(id: UUID(uuidString: "eb82e779-a7ba-4c75-a6e2-53d35332b940")!, name: "Blue", color: .blue),
+]
+
+let donations: [StoreKitDonation] = [
+    .init(id: "io.kamaal.Example.Carrot", emoji: "🥕", weight: 1),
+    .init(id: "io.kamaal.Example.House", emoji: "🏡", weight: 20),
+    .init(id: "io.kamaal.Example.Ship", emoji: "🚢", weight: 69),
 ]
 
 struct AppSettings_Previews: PreviewProvider {

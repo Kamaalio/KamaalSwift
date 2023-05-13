@@ -141,6 +141,9 @@
             ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <StoreKitConfigurationFileReference
+         identifier = "../Example/Example/Donations.storekit">
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -24,7 +24,11 @@ struct NavigationLinkRow<Value: View>: View {
     var body: some View {
         StackNavigationLink(
             destination: destination,
-            nextView: { screen in MainView(screen: screen).environment(\.settingsConfiguration, settingsConfiguration) }
+            nextView: { screen in
+                MainView(screen: screen)
+                    .environment(\.settingsConfiguration, settingsConfiguration)
+                    .environmentObject(store)
+            }
         ) {
             valueView
         }
