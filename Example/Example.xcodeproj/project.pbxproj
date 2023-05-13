@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C387AD829F4618D0024FCD1 /* KamaalSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 2C387AD729F4618D0024FCD1 /* KamaalSettings */; };
 		2C387ADA29F475EA0024FCD1 /* Donations.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 2C387AD929F475EA0024FCD1 /* Donations.storekit */; };
+		2C60B9A22A0FB559004EEA81 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C60B9A12A0FB559004EEA81 /* AppSettings.swift */; };
 		2CC7610429F57CCE009629B2 /* KamaalCoreData in Frameworks */ = {isa = PBXBuildFile; productRef = 2CC7610329F57CCE009629B2 /* KamaalCoreData */; };
 		2CC7610629F57F5E009629B2 /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC7610529F57F5E009629B2 /* Screens.swift */; };
 		2CC7610829F57F9C009629B2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC7610729F57F9C009629B2 /* Persistence.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		2C387AD929F475EA0024FCD1 /* Donations.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Donations.storekit; sourceTree = "<group>"; };
+		2C60B9A12A0FB559004EEA81 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		2CC7610529F57F5E009629B2 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		2CC7610729F57F9C009629B2 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2CD2E50029FACEDC00DEAA95 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		2CD2E50929FAD01000DEAA95 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				2C60B9A12A0FB559004EEA81 /* AppSettings.swift */,
 				2CD2E50E29FAD19800DEAA95 /* CoreDataScreen.swift */,
 				2CD2E50429FACF3D00DEAA95 /* HomeScreen.swift */,
 				2CD2E50A29FAD02500DEAA95 /* OtherScreen.swift */,
@@ -269,6 +272,7 @@
 				2CC7610829F57F9C009629B2 /* Persistence.swift in Sources */,
 				2CFA195929F2CD6B00FC3700 /* ContentView.swift in Sources */,
 				2CD2E50F29FAD19800DEAA95 /* CoreDataScreen.swift in Sources */,
+				2C60B9A22A0FB559004EEA81 /* AppSettings.swift in Sources */,
 				2CD2E50B29FAD02500DEAA95 /* OtherScreen.swift in Sources */,
 				2CD2E50D29FAD06B00DEAA95 /* Sidebar.swift in Sources */,
 				2CFA195729F2CD6B00FC3700 /* ExampleApp.swift in Sources */,

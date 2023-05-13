@@ -27,7 +27,7 @@ struct MainView: View {
             case .other:
                 OtherScreen()
             case .settings:
-                SettingsScreen(configuration: .init())
+                AppSettings()
             case .coreData:
                 CoreDataScreen()
             case let .coreDataChild(parentID):
