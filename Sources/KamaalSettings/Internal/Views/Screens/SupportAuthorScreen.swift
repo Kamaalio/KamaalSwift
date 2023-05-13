@@ -22,9 +22,9 @@ struct SupportAuthorScreen: View {
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
-        KScrollableForm {
-            ZStack {
-                VStack {
+        ZStack {
+            KScrollableForm {
+                KJustStack {
                     if store.isLoading, !store.hasDonations {
                         KLoading()
                             .ktakeSizeEagerly()
@@ -37,17 +37,21 @@ struct SupportAuthorScreen: View {
                         .disabled(!store.canMakePayments)
                     }
                 }
-                if store.isPurchasing {
-                    HStack {
-                        KLoading()
-                        AppText(localizedString: "Purchasing", comment: "")
-                            .font(.headline)
-                            .bold()
-                    }
-                    .ktakeSizeEagerly()
-                }
+                .padding(.all, .medium)
             }
-            .padding(.all, .medium)
+            if store.isLoading, !store.hasDonations {
+                KLoading()
+                    .ktakeSizeEagerly()
+            }
+            if store.isPurchasing {
+                HStack {
+                    KLoading()
+                    AppText(localizedString: "Purchasing", comment: "")
+                        .font(.headline)
+                        .bold()
+                }
+                .ktakeSizeEagerly()
+            }
         }
         .ktakeSizeEagerly(alignment: .topLeading)
         .onAppear(perform: handleAppear)
