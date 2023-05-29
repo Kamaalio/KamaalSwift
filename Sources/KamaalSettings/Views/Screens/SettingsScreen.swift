@@ -21,7 +21,7 @@ public struct SettingsScreen: View {
 
     public var body: some View {
         NavigationStackView(
-            stackWithoutNavigationStack: [] as [ScreenSelection],
+            stackWithoutNavigationStack: [ScreenSelection](),
             root: { screen in MainView(screen: screen) },
             subView: { screen in MainView(screen: screen) }
         )

@@ -17,7 +17,14 @@ struct PreferencesSection: View {
     var body: some View {
         KSection(header: "Preferences".localized(comment: "")) {
             ForEach(settingsConfiguration.preferences) { preference in
-                PreferenceRow(preference: preference, onChange: onPreferenceChange)
+                NavigationLinkValueRow(
+                    label: preference.label,
+                    destination: .preferenceOptions(preference: preference)
+                ) {
+                    AppText(string: preference.selectedOption.label)
+                        .bold()
+                        .foregroundColor(.accentColor)
+                }
             }
         }
     }

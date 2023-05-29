@@ -29,6 +29,8 @@ struct MainView: View {
                 SupportAuthorScreen()
             case .root:
                 RootSettingsScreen()
+            case let .preferenceOptions(preference):
+                PreferenceOptionsScreen(preference: preference)
             }
         }
         .navigationTitle(title: screen.title, displayMode: screen == .root ? .large : .inline)

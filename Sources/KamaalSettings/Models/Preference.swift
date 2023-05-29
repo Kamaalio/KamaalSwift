@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Preference: Hashable, Identifiable {
+public struct Preference: Hashable, Identifiable, Codable {
     public let id: UUID
     public let label: String
     public let selectedOption: Option
@@ -20,7 +20,7 @@ public struct Preference: Hashable, Identifiable {
         self.options = options
     }
 
-    public struct Option: Hashable, Identifiable {
+    public struct Option: Hashable, Identifiable, Codable {
         public let id: UUID
         public let label: String
 
@@ -32,5 +32,9 @@ public struct Preference: Hashable, Identifiable {
 
     var optionsContainSelectedOption: Bool {
         options.contains(selectedOption)
+    }
+
+    func setOption(_ option: Option) -> Preference {
+        .init(id: id, label: label, selectedOption: option, options: options)
     }
 }
