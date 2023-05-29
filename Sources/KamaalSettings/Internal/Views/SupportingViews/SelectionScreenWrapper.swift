@@ -11,11 +11,16 @@ import KamaalUI
 struct SelectionScreenWrapper<Row: View, Item: Hashable & Identifiable>: View {
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
 
+    @State private var searchText = ""
+
     let navigationTitle: String
     let sectionTitle: String
     let items: [Item]
+    let searchFilter: (_ item: Item, _ searchTerm: String) -> Bool
     let onItemPress: (_ item: Item) -> Void
     let row: (Item) -> Row
+
+    private let searchable: Bool
 
     init(
         navigationTitle: String,
@@ -29,17 +34,36 @@ struct SelectionScreenWrapper<Row: View, Item: Hashable & Identifiable>: View {
         self.items = items
         self.onItemPress = onItemPress
         self.row = row
+        self.searchFilter = { _, _ in true }
+        self.searchable = false
+    }
+
+    init(
+        navigationTitle: String,
+        sectionTitle: String,
+        items: [Item],
+        searchFilter: @escaping (Item, String) -> Bool,
+        onItemPress: @escaping (Item) -> Void,
+        @ViewBuilder row: @escaping (Item) -> Row
+    ) {
+        self.navigationTitle = navigationTitle
+        self.sectionTitle = sectionTitle
+        self.items = items
+        self.onItemPress = onItemPress
+        self.row = row
+        self.searchFilter = searchFilter
+        self.searchable = true
     }
 
     var body: some View {
         KScrollableForm {
             KSection(header: sectionTitle) {
-                ForEach(items) { item in
+                ForEach(filteredItems) { item in
                     AppButton(action: { onItemPress(item) }) {
                         row(item)
                     }
                     #if os(macOS)
-                    if item != items.last {
+                    if item != filteredItems.last {
                         Divider()
                     }
                     #endif
@@ -51,6 +75,13 @@ struct SelectionScreenWrapper<Row: View, Item: Hashable & Identifiable>: View {
         }
         .ktakeSizeEagerly(alignment: .topLeading)
         .accentColor(settingsConfiguration.currentColor)
+        .searchable(text: $searchText)
+    }
+
+    private var filteredItems: [Item] {
+        guard searchable else { return items }
+
+        return items.filter { searchFilter($0, searchText) }
     }
 }
 

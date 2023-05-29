@@ -16,6 +16,7 @@ enum ScreenSelection: Codable, Hashable, CaseIterable, NavigatorStackValue {
     case feedback(style: FeedbackStyles, description: String)
     case logs
     case supportAuthor
+    case preferenceOptions(preference: Preference)
 
     var isTabItem: Bool {
         false
@@ -41,6 +42,8 @@ enum ScreenSelection: Codable, Hashable, CaseIterable, NavigatorStackValue {
             return "Logs".localized(comment: "")
         case .supportAuthor:
             return "Support Author".localized(comment: "")
+        case let .preferenceOptions(preference):
+            return preference.label
         }
     }
 

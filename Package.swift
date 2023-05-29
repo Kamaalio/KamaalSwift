@@ -54,6 +54,10 @@ let package = Package(
             name: "KamaalCoreData",
             targets: ["KamaalCoreData"]
         ),
+        .library(
+            name: "KamaalAlgorithms",
+            targets: ["KamaalAlgorithms"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", "4.0.0" ..< "5.0.0"),
@@ -109,6 +113,7 @@ let package = Package(
                 "KamaalAPIServices",
                 "ConfettiSwiftUI",
                 "KamaalPopUp",
+                "KamaalAlgorithms",
             ],
             resources: [
                 .process("Internal/Resources"),
@@ -117,6 +122,10 @@ let package = Package(
         .target(
             name: "KamaalCoreData",
             dependencies: ["KamaalExtensions"]
+        ),
+        .target(
+            name: "KamaalAlgorithms",
+            dependencies: []
         ),
         .testTarget(
             name: "KamaalUITests",

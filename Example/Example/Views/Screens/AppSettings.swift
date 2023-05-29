@@ -10,20 +10,43 @@ import KamaalSettings
 
 struct AppSettings: View {
     @State private var appColor = appColors[6]
+    @State private var selectedLanguageOption = languageOptions[0]
 
     var body: some View {
         SettingsScreen(configuration: configuration)
             .onAppColorChange(handleOnAppColorChange)
+            .onSettingsPreferenceChange(handlePreferenceChange)
     }
 
     private var configuration: SettingsConfiguration {
-        .init(donations: donations, color: .init(colors: appColors, currentColor: appColor))
+        .init(donations: donations, color: .init(colors: appColors, currentColor: appColor), preferences: preferences)
+    }
+
+    var preferences: [Preference] {
+        [
+            .init(
+                id: UUID(uuidString: "66971130-a466-44cc-83f6-4759b51e7789")!,
+                label: "Language",
+                selectedOption: selectedLanguageOption,
+                options: languageOptions
+            ),
+        ]
     }
 
     private func handleOnAppColorChange(_ appColor: AppColor) {
         self.appColor = appColor
     }
+
+    private func handlePreferenceChange(_ preference: Preference) {
+        selectedLanguageOption = preference.selectedOption
+    }
 }
+
+private let languageOptions: [Preference.Option] = [
+    .init(id: UUID(uuidString: "067fb9e5-af94-4425-965b-ebd70e7f9e56")!, label: "English"),
+    .init(id: UUID(uuidString: "37c735d7-0804-469b-9219-ece30b0cbe4a")!, label: "Dutch"),
+    .init(id: UUID(uuidString: "0a8db1a5-fe1c-44cf-ba66-15ce2da1fab3")!, label: "French"),
+]
 
 private let appColors: [AppColor] = [
     .init(id: UUID(uuidString: "1f6f9ac4-1ca6-4f77-880b-01580881a9b4")!, name: "Default", color: Color("AccentColor")),
