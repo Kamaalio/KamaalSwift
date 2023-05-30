@@ -28,3 +28,4 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace/
+coverage.lcov
