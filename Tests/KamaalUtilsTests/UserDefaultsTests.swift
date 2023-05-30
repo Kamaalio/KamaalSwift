@@ -64,7 +64,3 @@ final class UserDefaultsTests: XCTestCase {
         XCTAssertNil(Self.testObject)
     }
 }
-
-struct TestObject: Codable, Equatable {
-    let value: String
-}

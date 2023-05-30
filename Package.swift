@@ -169,7 +169,8 @@ let package = Package(
         ),
         .testTarget(
             name: "KamaalUtilsTests",
-            dependencies: ["KamaalUtils"]
+            dependencies: ["KamaalUtils"],
+            resources: [.process("Internal/Resources")]
         ),
     ]
 )
