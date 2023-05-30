@@ -45,11 +45,16 @@ jobs:
         run: |
           just test
 
+      - name: Export coverage
+        run: |
+          just export-code-coverage
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./.build/x86_64-apple-macosx/debug/codecov/KamaalSwift.json
+          # files: ./.build/x86_64-apple-macosx/debug/codecov/KamaalSwift.json
+          files: ./coverage.lcov
           fail_ci_if_error: true
           swift: true
           # verbose: true

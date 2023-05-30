@@ -13,7 +13,7 @@ final class KamaalLoggerTests: XCTestCase {
 
     override func setUpWithError() throws {
         let holder = LogHolder(max: 1)
-        logger = .init(subsystem: "io.kamaal.Testing", from: KamaalLoggerTests.self, holder: holder)
+        logger = .init(subsystem: "io.kamaal.Testing.One", from: KamaalLoggerTests.self, holder: holder)
     }
 
     func testErrorLogged() async throws {
