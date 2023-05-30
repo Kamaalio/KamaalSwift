@@ -19,6 +19,7 @@ final class KamaalNavigationTests: XCTestCase {
         XCTAssertNil(stack.currentScreen)
     }
 
+    #if os(macOS)
     func testNavigate() async {
         let stack = Navigator<PreviewScreenType>(stack: [.sub, .screen])
         await stack.navigate(to: .screen)
@@ -38,4 +39,5 @@ final class KamaalNavigationTests: XCTestCase {
         await stack.navigate(to: .sub)
         XCTAssertEqual(stack.currentScreen, .sub)
     }
+    #endif
 }

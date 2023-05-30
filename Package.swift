@@ -121,7 +121,8 @@ let package = Package(
         ),
         .target(
             name: "KamaalCoreData",
-            dependencies: ["KamaalExtensions"]
+            dependencies: ["KamaalExtensions"],
+            exclude: ["README.md"]
         ),
         .target(
             name: "KamaalAlgorithms",

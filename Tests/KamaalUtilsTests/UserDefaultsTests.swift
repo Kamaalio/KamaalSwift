@@ -15,7 +15,7 @@ final class UserDefaultsTests: XCTestCase {
     @UserDefaultsObject(key: "test_object")
     static var testObject: TestObject?
 
-    override class func setUp() {
+    override func setUp() {
         Self._testValue.removeValue()
         Self._testObject.removeValue()
     }

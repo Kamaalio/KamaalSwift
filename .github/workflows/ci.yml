@@ -7,20 +7,19 @@ concurrency:
 
 jobs:
   quality:
-    # strategy:
-    #   matrix:
-    #     destination:
-    #       ["platform=macOS", "platform=iOS Simulator,name=iPhone 14 Pro Max"]
     name: quality
     runs-on: macos-12
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+
       - uses: taiki-e/install-action@just
+
       - name: SwiftLint
         run: |
           just lint
+
       # - name: Build Example app
       #   env:
       #     DESTINATION: ${{ matrix.destination }}
@@ -32,13 +31,26 @@ jobs:
     runs-on: macos-12
     steps:
       - uses: actions/checkout@v3
+
       - uses: taiki-e/install-action@just
+
       - name: Select Xcode version
         run: |
           echo "listing available Xcode versions:"
           ls -d /Applications/Xcode*
 
           sudo xcode-select --switch /Applications/Xcode_14.2.app/Contents/Developer
+
       - name: Test
         run: |
           just test
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./.build/x86_64-apple-macosx/debug/codecov/KamaalSwift.json
+          fail_ci_if_error: true
+          swift: true
+          # verbose: true
+          swift_project: KamaalSwift
