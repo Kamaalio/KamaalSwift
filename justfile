@@ -12,8 +12,8 @@ test:
 export-code-coverage:
     #!/bin/sh
 
-    APP_PATH=".build/x86_64-apple-macosx/debug/KamaalSwiftPackageTests.xctest/Contents/MacOS/KamaalSwiftPackageTests"
-    PROFILE_PATH=".build/x86_64-apple-macosx/debug/codecov/default.profdata"
+    APP_PATH=".build/debug/KamaalSwiftPackageTests.xctest/Contents/MacOS/KamaalSwiftPackageTests"
+    PROFILE_PATH=".build/debug/codecov/default.profdata"
 
     xcrun llvm-cov export -format="lcov" "$APP_PATH" -instr-profile "$PROFILE_PATH" > coverage.lcov
 
