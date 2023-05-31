@@ -58,6 +58,10 @@ let package = Package(
             name: "KamaalAlgorithms",
             targets: ["KamaalAlgorithms"]
         ),
+        .library(
+            name: "KamaalUtils",
+            targets: ["KamaalUtils"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", "4.0.0" ..< "5.0.0"),
