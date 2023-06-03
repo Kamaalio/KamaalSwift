@@ -78,7 +78,7 @@ struct LogsScreen: View {
         # Reported log
 
         label: \(log.label)
-        type: \(log.type.rawValue)
+        type: \(log.level.rawValue)
         message: \(log.message)
 
 

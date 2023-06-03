@@ -20,78 +20,60 @@ final class KamaalLoggerTests: XCTestCase {
     func testErrorLogged() async throws {
         let label = "Oh No!"
         let error = TestError.test
+
         logger.error(label: label, error: error)
 
-        let log = try await getLog()
+        let log = try await getLog(from: logger)
         XCTAssert(log.message.contains(label))
         XCTAssert(log.message.contains(error.localizedDescription))
         XCTAssertEqual(log.label, String(describing: KamaalLoggerTests.self))
-        XCTAssertEqual(log.type, .error)
-        XCTAssertEqual(log.type.color, .red)
+        XCTAssertEqual(log.level, .error)
+        XCTAssertEqual(log.level.color, .red)
     }
 
     func testErrorLoggedAndFail() async throws {
         let logger = KamaalLogger(from: KamaalLoggerTests.self, failOnError: true)
-        let label = "Oh No!"
-        let error = TestError.test
 
-        XCTAssertNotNil(catchBadInstruction { logger.error(label: label, error: error) })
+        XCTAssertNotNil(catchBadInstruction { logger.error(label: "Fail harshly", error: TestError.test) })
     }
 
     func testWarningLogged() async throws {
         let message1 = "Oh well! 🤷"
         let message2 = "Go on as usual"
+
         logger.warning(message1, message2)
 
-        let log = try await getLog()
+        let log = try await getLog(from: logger)
         XCTAssert(log.message.contains(message1))
         XCTAssert(log.message.contains(message2))
         XCTAssertEqual(log.label, String(describing: KamaalLoggerTests.self))
-        XCTAssertEqual(log.type, .warning)
-        XCTAssertEqual(log.type.color, .yellow)
+        XCTAssertEqual(log.level, .warning)
+        XCTAssertEqual(log.level.color, .yellow)
     }
 
     func testInfoLogged() async throws {
         let message1 = "Phew!"
         let message2 = "Run Forest Run"
+
         logger.info(message1, message2)
 
-        let log = try await getLog()
+        let log = try await getLog(from: logger)
         XCTAssert(log.message.contains(message1))
         XCTAssert(log.message.contains(message2))
         XCTAssertEqual(log.label, String(describing: KamaalLoggerTests.self))
-        XCTAssertEqual(log.type, .info)
-        XCTAssertEqual(log.type.color, .green)
+        XCTAssertEqual(log.level, .info)
+        XCTAssertEqual(log.level.color, .green)
     }
 
     func testDebugLogged() async throws {
         let message = "What are thoooose"
+
         logger.debug(message)
 
-        let log = try await getLog()
+        let log = try await getLog(from: logger)
         XCTAssert(log.message.contains(message))
         XCTAssertEqual(log.label, String(describing: KamaalLoggerTests.self))
-        XCTAssertEqual(log.type, .debug)
-        XCTAssertEqual(log.type.color, .gray)
-    }
-
-    private func getLog() async throws -> HoldedLog {
-        var log: HoldedLog?
-        let timeoutDate = Date(timeIntervalSinceNow: 0.5)
-        repeat {
-            log = await logger.holder.logs.first
-        } while log == nil && Date().compare(timeoutDate) == .orderedAscending
-
-        guard let log else { throw TestError.test }
-
-        return log
-    }
-}
-
-enum TestError: LocalizedError {
-    case test
-
-    public var errorDescription: String? {
-        "something horrible happened"
+        XCTAssertEqual(log.level, .debug)
+        XCTAssertEqual(log.level.color, .gray)
     }
 }

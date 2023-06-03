@@ -147,7 +147,7 @@ let package = Package(
         ),
         .testTarget(
             name: "KamaalLoggerTests",
-            dependencies: ["KamaalLogger", "CwlPreconditionTesting"]
+            dependencies: ["KamaalLogger", "CwlPreconditionTesting", "KamaalExtensions"]
         ),
         .testTarget(
             name: "KamaalStructuresTests",
