@@ -2,14 +2,13 @@
 //  InvisibleFill.swift
 //
 //
-//  Created by Kamaal Farah on 24/12/2022.
+//  Created by Kamaal M Farah on 03/06/2023.
 //
 
 import SwiftUI
-import KamaalUI
 
 extension View {
-    func invisibleFill() -> some View {
+    public func kInvisibleFill() -> some View {
         ktakeWidthEagerly()
         #if os(macOS)
             .background(Color(nsColor: .separatorColor).opacity(0.01))

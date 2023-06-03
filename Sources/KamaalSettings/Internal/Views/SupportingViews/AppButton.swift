@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KamaalUI
 
 struct AppButton<Content: View>: View {
     let action: () -> Void
@@ -20,7 +21,7 @@ struct AppButton<Content: View>: View {
         Button(action: action) {
             content
                 .foregroundColor(.accentColor)
-                .invisibleFill()
+                .kInvisibleFill()
         }
         .buttonStyle(.plain)
     }

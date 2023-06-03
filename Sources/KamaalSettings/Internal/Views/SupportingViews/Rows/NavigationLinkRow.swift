@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KamaalUI
 import KamaalNavigation
 
 struct NavigationLinkRow<Value: View>: View {
@@ -38,7 +39,7 @@ struct NavigationLinkRow<Value: View>: View {
     private var valueView: some View {
         value()
             .foregroundColor(.accentColor)
-            .invisibleFill()
+            .kInvisibleFill()
     }
 }
 
