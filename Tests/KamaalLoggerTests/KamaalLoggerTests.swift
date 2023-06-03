@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import CwlPreconditionTesting
 @testable import KamaalLogger
 
 final class KamaalLoggerTests: XCTestCase {
@@ -27,6 +28,14 @@ final class KamaalLoggerTests: XCTestCase {
         XCTAssertEqual(log.label, String(describing: KamaalLoggerTests.self))
         XCTAssertEqual(log.type, .error)
         XCTAssertEqual(log.type.color, .red)
+    }
+
+    func testErrorLoggedAndFail() async throws {
+        let logger = KamaalLogger(from: KamaalLoggerTests.self, failOnError: true)
+        let label = "Oh No!"
+        let error = TestError.test
+
+        XCTAssertNotNil(catchBadInstruction { logger.error(label: label, error: error) })
     }
 
     func testWarningLogged() async throws {
@@ -70,7 +79,7 @@ final class KamaalLoggerTests: XCTestCase {
         var log: HoldedLog?
         let timeoutDate = Date(timeIntervalSinceNow: 0.5)
         repeat {
-            log = await logger.holder?.logs.first
+            log = await logger.holder.logs.first
         } while log == nil && Date().compare(timeoutDate) == .orderedAscending
 
         guard let log else { throw TestError.test }

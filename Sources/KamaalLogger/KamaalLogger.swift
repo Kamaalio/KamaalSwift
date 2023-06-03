@@ -12,19 +12,21 @@ import Foundation
 public struct KamaalLogger {
     private let logger: Logger
     let label: String
-    let holder: LogHolder?
+    let holder: LogHolder
+    let failOnError: Bool
 
     /// Initialize with type as label.
     /// - Parameters:
     ///   - subsystem: Subsystem search term for console.
     ///   - type: The type to name the label when logging.
     ///   - holder: Custom ``LogHolder``.
-    public init<T>(
+    public init(
         subsystem: String = Bundle.main.bundleIdentifier ?? "",
-        from type: T.Type,
-        holder: LogHolder = .shared
+        from type: (some Any).Type,
+        holder: LogHolder = .shared,
+        failOnError: Bool = false
     ) {
-        self.init(subsystem: subsystem, label: String(describing: type), holder: holder)
+        self.init(subsystem: subsystem, label: String(describing: type), holder: holder, failOnError: failOnError)
     }
 
     /// Initialize with custom label.
@@ -32,10 +34,16 @@ public struct KamaalLogger {
     ///   - subsystem: Subsystem search term for console.
     ///   - label: The label to display when logging.
     ///   - holder: Custom ``LogHolder``.
-    public init(subsystem: String = Bundle.main.bundleIdentifier ?? "", label: String, holder: LogHolder = .shared) {
+    public init(
+        subsystem: String = Bundle.main.bundleIdentifier ?? "",
+        label: String,
+        holder: LogHolder = .shared,
+        failOnError: Bool = false
+    ) {
         self.label = label
         self.logger = .init(subsystem: subsystem, category: label)
         self.holder = holder
+        self.failOnError = failOnError
     }
 
     /// To log errors
@@ -43,6 +51,9 @@ public struct KamaalLogger {
     public func error(_ message: String) {
         logger.error("\(message)")
         addLogToQueue(type: .error, message: message)
+        if failOnError {
+            assertionFailure(message)
+        }
     }
 
     /// To log errors formatted with an extra label.
@@ -91,8 +102,6 @@ public struct KamaalLogger {
     }
 
     private func addLogToQueue(type: HoldedLog.LogTypes, message: String) {
-        guard let holder else { return }
-
         Task {
             await holder.addLog(.init(label: label, type: type, message: message, timestamp: Date()))
         }
