@@ -6,8 +6,8 @@
 //
 
 import XCTest
-import CwlPreconditionTesting
 @testable import KamaalLogger
+import CwlPreconditionTesting
 
 final class KamaalLoggerTests: XCTestCase {
     var logger: KamaalLogger!

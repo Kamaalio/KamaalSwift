@@ -33,8 +33,8 @@ public class ManagedObjectPropertyConfiguration: ManagedObjectField {
     ///   - name: Property name.
     ///   - type: Property type.
     ///   - isOptional: Wether or not the object is optional.
-    public convenience init<Root: ManuallyManagedObject, Value>(
-        name: KeyPath<Root, Value>,
+    public convenience init(
+        name: KeyPath<some ManuallyManagedObject, some Any>,
         type: PropertyTypes,
         isOptional: Bool
     ) {

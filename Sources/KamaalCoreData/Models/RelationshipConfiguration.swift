@@ -34,11 +34,11 @@ public class _RelationshipConfiguration: ManagedObjectField {
         self.relationshipType = relationshipType
     }
 
-    public convenience init<Destination: ManuallyManagedObject, Inverse: ManuallyManagedObject>(
+    public convenience init(
         name: String,
-        destinationEntity: Destination.Type,
+        destinationEntity: (some ManuallyManagedObject).Type,
         inverseRelationshipName: String,
-        inverseRelationshipEntity: Inverse.Type,
+        inverseRelationshipEntity: (some ManuallyManagedObject).Type,
         isOptional: Bool,
         relationshipType: RelationshipType
     ) {

@@ -121,7 +121,7 @@ extension ManuallyManagedObject {
     ) throws -> [Self] {
         let request = fetchRequest()
         request.predicate = predicate
-        if let limit = limit {
+        if let limit {
             request.fetchLimit = limit
         }
         return try context.fetch(request)

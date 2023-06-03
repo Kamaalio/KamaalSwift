@@ -23,7 +23,7 @@ public struct KTimePicker: View {
         VStack {
             Picker("", selection: selection) {
                 ForEach(range) {
-                    Text(String(format: "%02d", $0 * self.steps))
+                    Text(String(format: "%02d", $0 * steps))
                 }
             }
             .labelsHidden()

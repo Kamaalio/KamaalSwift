@@ -254,7 +254,7 @@ class MockURLProtocol: URLProtocol {
 
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
 
-        if let data = data {
+        if let data {
             client?.urlProtocol(self, didLoad: data)
         }
 

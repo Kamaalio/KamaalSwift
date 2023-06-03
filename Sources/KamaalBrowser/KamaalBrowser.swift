@@ -102,7 +102,7 @@ private struct InAppBrowserSUI: ViewModifier {
             InAppBrowserRepresentable(url: url ?? fallbackURL, tintColor: color)
         }
         #else
-            .onChange(of: isPresented, perform: { newValue in
+        .onChange(of: isPresented, perform: { newValue in
                 if !bindingWithURL, newValue, let url {
                     NSWorkspace.shared.open(url)
                     isPresented = false

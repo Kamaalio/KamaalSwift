@@ -25,8 +25,8 @@ extension Sequence {
     ///   - keyPath: The keyPath of the object to sort by.
     ///   - comparison: The comparison method.
     /// - Returns: A sorted array.
-    public func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>,
-                                      using comparison: ComparisonResult) -> [Element] {
+    public func sorted(by keyPath: KeyPath<Element, some Comparable>,
+                       using comparison: ComparisonResult) -> [Element] {
         sorted(by: {
             switch comparison {
             case .orderedAscending:

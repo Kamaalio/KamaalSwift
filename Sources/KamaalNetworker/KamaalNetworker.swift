@@ -283,12 +283,12 @@ public class KamaalNetworker {
         kowalskiAnalysis: Bool = false,
         completion: @escaping (Result<Response<T>, Errors>) -> Void
     ) {
-        if let error = error {
+        if let error {
             completion(.failure(.generalError(error: error)))
             return
         }
 
-        guard let data = data, let response = response else {
+        guard let data, let response else {
             completion(.failure(.notAValidJSON))
             return
         }
