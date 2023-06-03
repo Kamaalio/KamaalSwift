@@ -33,14 +33,14 @@ struct BottomPopupView: View {
     var body: some View {
         KJustStack {
             HStack(alignment: .top) {
-                if let bottomType = bottomType {
+                if let bottomType {
                     Image(systemName: bottomType.iconName)
                         .foregroundColor(bottomType.color)
                     VStack(alignment: .leading) {
                         Text(title)
                             .foregroundColor(bottomType.color)
                             .bold()
-                        if let description = description {
+                        if let description {
                             Text(description)
                                 .foregroundColor(.secondary)
                         }

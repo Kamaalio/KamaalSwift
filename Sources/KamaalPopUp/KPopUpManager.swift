@@ -54,7 +54,7 @@ public final class KPopUpManager: ObservableObject {
         timeout: TimeInterval? = nil
     ) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             self.style = style
             withAnimation(.easeOut(duration: 0.5)) { self.isShown = true }
@@ -64,7 +64,7 @@ public final class KPopUpManager: ObservableObject {
 
     public func hidePopUp() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             withAnimation(.easeIn(duration: 0.8)) { self.isShown = false }
             self.lastTimeout = nil
@@ -77,7 +77,7 @@ public final class KPopUpManager: ObservableObject {
     }
 
     private func lastTimeoutDidSet() {
-        guard let lastTimeout = lastTimeout else { return }
+        guard let lastTimeout else { return }
         let timeoutTimer = Timer.scheduledTimer(
             timeInterval: lastTimeout,
             target: self,

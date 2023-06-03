@@ -21,13 +21,13 @@ struct HudPopupView: View {
     var body: some View {
         KJustStack {
             HStack {
-                if let systemImageName = systemImageName {
+                if let systemImageName {
                     Image(systemName: systemImageName)
                         .kSize(Self.imageSize)
                 }
                 VStack {
                     Text(title)
-                    if let description = description {
+                    if let description {
                         Text(description)
                             .font(.callout)
                             .foregroundColor(.secondary)

@@ -34,13 +34,13 @@ public class GitHubReposClient: BaseGitHubClient {
         var payload: [String: Any] = [
             "title": title,
         ]
-        if let description = description {
+        if let description {
             payload["body"] = description
         }
-        if let assignee = assignee {
+        if let assignee {
             payload["assignee"] = assignee
         }
-        if let labels = labels {
+        if let labels {
             payload["labels"] = labels
         }
         let config = KRequestConfig(priority: KRequestConfig.defaultPriority, kowalskiAnalysis: false)

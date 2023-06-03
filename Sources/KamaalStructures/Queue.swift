@@ -24,7 +24,7 @@ public struct Queue<T> {
     }
 
     public mutating func enqueue(_ element: T) {
-        if let max = max, count >= max {
+        if let max, count >= max {
             while count >= max {
                 dequeue()
             }

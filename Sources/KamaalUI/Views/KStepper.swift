@@ -41,10 +41,10 @@ public struct KStepper: View {
                 .disabled(disableDecrement)
                 .onTapGesture(perform: {
                     if !disableDecrement {
-                        self.decrementOpacity = 0.2
-                        self.onDecrement()
+                        decrementOpacity = 0.2
+                        onDecrement()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            withAnimation { self.decrementOpacity = 1 }
+                            withAnimation { decrementOpacity = 1 }
                         }
                     }
                 })
@@ -54,10 +54,10 @@ public struct KStepper: View {
                 .disabled(disableIncrement)
                 .onTapGesture(perform: {
                     if !disableIncrement {
-                        self.incrementOpacity = 0.2
-                        self.onIncrement()
+                        incrementOpacity = 0.2
+                        onIncrement()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            withAnimation { self.incrementOpacity = 1 }
+                            withAnimation { incrementOpacity = 1 }
                         }
                     }
                 })
