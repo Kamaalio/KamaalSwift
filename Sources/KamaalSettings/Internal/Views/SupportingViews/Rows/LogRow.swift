@@ -17,7 +17,7 @@ struct LogRow: View {
         AppButton(action: { action(log) }) {
             HStack(alignment: .top, spacing: 8) {
                 Text(log.label)
-                    .foregroundColor(log.type.color)
+                    .foregroundColor(log.level.color)
                 Text(log.message)
                     .foregroundColor(.primary)
                     .lineLimit(1)
@@ -30,7 +30,7 @@ struct LogRow: View {
 struct LogRow_Previews: PreviewProvider {
     static var previews: some View {
         LogRow(
-            log: .init(label: "LogRow", type: .info, message: "Preview", timestamp: Date.distantPast),
+            log: .init(label: "LogRow", level: .info, message: "Preview", timestamp: Date.distantPast),
             action: { _ in }
         )
     }

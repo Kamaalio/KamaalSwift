@@ -50,7 +50,7 @@ public struct KamaalLogger {
     /// - Parameter message: The message to log.
     public func error(_ message: String) {
         logger.error("\(message)")
-        addLogToQueue(type: .error, message: message)
+        addLogToQueue(level: .error, message: message)
         if failOnError {
             assertionFailure(message)
         }
@@ -69,7 +69,7 @@ public struct KamaalLogger {
     /// - Parameter message: The message to log.
     public func warning(_ message: String) {
         logger.warning("\(message)")
-        addLogToQueue(type: .warning, message: message)
+        addLogToQueue(level: .warning, message: message)
     }
 
     /// To log warnings.
@@ -82,7 +82,7 @@ public struct KamaalLogger {
     /// - Parameter message: The message to log.
     public func info(_ message: String) {
         logger.info("\(message)")
-        addLogToQueue(type: .info, message: message)
+        addLogToQueue(level: .info, message: message)
     }
 
     /// To log information.
@@ -97,13 +97,13 @@ public struct KamaalLogger {
         logger.debug("\(message)")
 
         #if DEBUG
-        addLogToQueue(type: .debug, message: message)
+        addLogToQueue(level: .debug, message: message)
         #endif
     }
 
-    private func addLogToQueue(type: HoldedLog.LogTypes, message: String) {
+    private func addLogToQueue(level: LogLevels, message: String) {
         Task {
-            await holder.addLog(.init(label: label, type: type, message: message, timestamp: Date()))
+            await holder.addLog(.init(label: label, level: level, message: message, timestamp: Date()))
         }
     }
 }

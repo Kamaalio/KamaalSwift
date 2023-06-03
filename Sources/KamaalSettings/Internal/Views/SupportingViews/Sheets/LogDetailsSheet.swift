@@ -32,11 +32,11 @@ struct LogDetailsSheet: View {
                     if let log {
                         AppText(string: log.label)
                             .font(.headline)
-                            .foregroundColor(log.type.color)
+                            .foregroundColor(log.level.color)
                         AppText(string: log.message)
                             .foregroundColor(.primary)
 
-                        if [HoldedLog.LogTypes.error, .warning].contains(log.type) {
+                        if [LogLevels.error, .warning].contains(log.level) {
                             AppButton(action: { reportBug(log) }) {
                                 HStack {
                                     Image(systemName: "ant")
@@ -47,7 +47,7 @@ struct LogDetailsSheet: View {
                                 }
                                 .padding(.vertical, .small)
                                 .ktakeWidthEagerly()
-                                .background(log.type.color)
+                                .background(log.level.color)
                                 .cornerRadius(.small)
                             }
                         }
@@ -63,7 +63,7 @@ struct LogDetailsSheet: View {
 struct LogDetailsSheet_Previews: PreviewProvider {
     static var previews: some View {
         LogDetailsSheet(
-            log: .init(label: "LogDetails", type: .error, message: "Message", timestamp: .distantFuture),
+            log: .init(label: "LogDetails", level: .error, message: "Message", timestamp: .distantFuture),
             close: { },
             reportBug: { _ in }
         )

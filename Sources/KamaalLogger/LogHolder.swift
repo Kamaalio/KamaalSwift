@@ -36,7 +36,7 @@ public struct HoldedLog: Hashable {
     /// The label of the log.
     public let label: String
     /// The type of the log as ``LogTypes``.
-    public let type: LogTypes
+    public let level: LogLevels
     /// The message that was logged.
     public let message: String
     /// The time the log has been logged.
@@ -45,35 +45,13 @@ public struct HoldedLog: Hashable {
     /// Memberwise initializer.
     /// - Parameters:
     ///   - label: The label of the log.
-    ///   - type: The type of the log as ``LogTypes``.
+    ///   - level: The level of the log as ``LogLevels``.
     ///   - message: The message that was logged.
     ///   - timestamp: The time the log has been logged.
-    public init(label: String, type: LogTypes, message: String, timestamp: Date) {
+    public init(label: String, level: LogLevels, message: String, timestamp: Date) {
         self.label = label
-        self.type = type
+        self.level = level
         self.message = message
         self.timestamp = timestamp
-    }
-
-    /// The different kind of logs.
-    public enum LogTypes: String {
-        case error
-        case warning
-        case info
-        case debug
-
-        /// Representation color.
-        public var color: Color {
-            switch self {
-            case .info:
-                return .green
-            case .warning:
-                return .yellow
-            case .error:
-                return .red
-            case .debug:
-                return .gray
-            }
-        }
     }
 }
