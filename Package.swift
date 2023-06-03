@@ -67,6 +67,7 @@ let package = Package(
         .package(url: "https://github.com/Quick/Quick.git", "4.0.0" ..< "5.0.0"),
         .package(url: "https://github.com/Quick/Nimble.git", "9.0.0" ..< "10.0.0"),
         .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "1.0.0" ..< "2.0.0"),
+        .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", "2.0.0" ..< "3.0.0")
     ],
     targets: [
         .target(
@@ -146,7 +147,7 @@ let package = Package(
         ),
         .testTarget(
             name: "KamaalLoggerTests",
-            dependencies: ["KamaalLogger"]
+            dependencies: ["KamaalLogger", "CwlPreconditionTesting"]
         ),
         .testTarget(
             name: "KamaalStructuresTests",
