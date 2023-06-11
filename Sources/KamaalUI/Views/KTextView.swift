@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if canImport(UIKit) || canImport(Cocoa)
+#if (canImport(UIKit) || canImport(Cocoa)) && !os(watchOS)
 public struct KTextView: View {
     @Binding var text: String
 

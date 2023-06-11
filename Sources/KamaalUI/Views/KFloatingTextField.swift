@@ -34,7 +34,7 @@ public struct KFloatingTextField: View {
         case decimals
         case numbers
 
-        #if canImport(UIKit)
+        #if canImport(UIKit) && !os(watchOS)
         var keyboardType: UIKeyboardType {
             switch self {
             case .decimals: return .decimalPad
@@ -47,7 +47,7 @@ public struct KFloatingTextField: View {
 
     public var body: some View {
         FloatingFieldWrapper(text: text, title: title, field: {
-            #if canImport(UIKit)
+            #if canImport(UIKit) && !os(watchOS)
             TextField("", text: $text, onEditingChanged: onEditingChanged, onCommit: onCommit)
                 .keyboardType(textFieldType.keyboardType)
             #else

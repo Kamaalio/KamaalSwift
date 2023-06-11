@@ -5,6 +5,7 @@
 //  Created by Kamaal Farah on 07/05/2020.
 //
 
+#if !os(watchOS)
 import SwiftUI
 
 public struct KLoading: View {
@@ -61,4 +62,5 @@ struct KActivityIndicator: NSViewRepresentable {
         isAnimating ? nsView.startAnimation(nil) : nsView.stopAnimation(nil)
     }
 }
+#endif
 #endif

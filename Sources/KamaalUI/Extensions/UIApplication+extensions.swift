@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if !os(macOS)
+#if !os(macOS) && !os(watchOS)
 extension UIApplication {
     public func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

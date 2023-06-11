@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 03/06/2023.
 //
 
+#if !os(watchOS)
 import SwiftUI
 
 extension View {
@@ -17,3 +18,4 @@ extension View {
         #endif
     }
 }
+#endif

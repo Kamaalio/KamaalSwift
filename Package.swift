@@ -7,7 +7,7 @@ let package = Package(
     name: "KamaalSwift",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v12), .iOS(.v15),
+        .macOS(.v12), .iOS(.v15), .watchOS(.v6),
     ],
     products: [
         .library(

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(watchOS 7.0, *)
 public struct KEnforcedFloatingDecimalField: View {
     @State private var text = ""
 
@@ -54,6 +55,7 @@ public struct KEnforcedFloatingDecimalField: View {
     }
 }
 
+@available(watchOS 7.0, *)
 struct KEnforcedFloatingDecimalField_Previews: PreviewProvider {
     static var previews: some View {
         Group {
