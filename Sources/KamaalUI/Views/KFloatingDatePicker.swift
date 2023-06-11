@@ -5,6 +5,7 @@
 //  Created by Kamaal Farah on 01/07/2021.
 //
 
+#if !os(watchOS)
 import SwiftUI
 
 public struct KFloatingDatePicker: View {
@@ -46,3 +47,4 @@ struct KFloatingDatePicker_Previews: PreviewProvider {
         KFloatingDatePicker(value: .constant(Date()), title: "Date", onChange: { _ in })
     }
 }
+#endif

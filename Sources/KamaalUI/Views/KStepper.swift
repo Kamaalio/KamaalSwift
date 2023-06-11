@@ -5,6 +5,7 @@
 //  Created by Kamaal Farah on 29/10/2020.
 //
 
+#if !os(watchOS)
 import SwiftUI
 
 @available(iOS 13.0, OSX 11.0, *)
@@ -104,3 +105,4 @@ public struct KStepper: View {
     }
     #endif
 }
+#endif
