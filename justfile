@@ -32,3 +32,14 @@ build-example:
     #!/bin/sh
 
     xcodebuild -configuration Debug -workspace "$WORKSPACE" -scheme $EXAMPLE_SCHEME -destination "$DESTINATION" | xcpretty && exit ${PIPESTATUS[0]}
+
+bootstrap: install_system_dependencies install_node_modules
+
+[private]
+install_system_dependencies:
+    npm install -g pnpm
+    brew install swiftformat
+
+[private]
+install_node_modules:
+    pnpm install
