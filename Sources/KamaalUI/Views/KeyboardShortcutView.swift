@@ -36,18 +36,30 @@ public struct KeyboardShortcutView<Content: View>: View {
 }
 
 public struct KeyboardShortcutConfiguration: Hashable, Identifiable {
-    public let key: KeyEquivalent
     public let modifiers: EventModifiers
+    private let keyCharacter: Character
 
     public init(key: KeyEquivalent, modifiers: EventModifiers = []) {
-        self.key = key
-        self.modifiers = modifiers
+        self.init(key: key.character, modifers: modifiers)
     }
+
+    private init(key: Character, modifers: EventModifiers = []) {
+        self.keyCharacter = key
+        self.modifiers = modifers
+    }
+
+    public var key: KeyEquivalent { KeyEquivalent(keyCharacter) }
 
     public var id: KeyboardShortcutConfiguration { self }
 }
 
 extension EventModifiers: Hashable { }
+
+extension KeyEquivalent: Equatable {
+    public static func == (lhs: KeyEquivalent, rhs: KeyEquivalent) -> Bool {
+        lhs.character == rhs.character
+    }
+}
 
 struct KeyboardShortcutView_Previews: PreviewProvider {
     static var previews: some View {
