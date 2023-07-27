@@ -15,4 +15,8 @@ extension Int {
     public var nsNumber: NSNumber {
         self as NSNumber
     }
+
+    public var string: String {
+        String(self)
+    }
 }
