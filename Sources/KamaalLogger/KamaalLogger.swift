@@ -94,9 +94,8 @@ public struct KamaalLogger {
     /// To log debugging messages. Beaware of that logs only get stored when `DEBUG` compiler flag is turned on.
     /// - Parameter message: The message to log.
     public func debug(_ message: String) {
-        logger.debug("\(message)")
-
         #if DEBUG
+        logger.debug("\(message)")
         addLogToQueue(level: .debug, message: message)
         #endif
     }
