@@ -1,5 +1,5 @@
 //
-//  KamaalCloud.swift
+//  CloudAccountsModule.swift
 //
 //
 //  Created by Kamaal M Farah on 31/08/2023.
@@ -9,7 +9,9 @@ import CloudKit
 import Foundation
 
 public class KamaalCloud {
-    private let container: CKContainer
+    public let accounts: CloudAccountsModule
+
+    let container: CKContainer
     private let database: CKDatabase
 
     public init(containerID: String, databaseType: DatabaseType) {
@@ -22,6 +24,7 @@ public class KamaalCloud {
         case .private: database = container.privateCloudDatabase
         }
         self.database = database
+        self.accounts = CloudAccountsModule(container: container)
     }
 
     /// Access control of the container
