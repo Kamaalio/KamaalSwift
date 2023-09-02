@@ -23,32 +23,32 @@ public class CloudSubscriptionModule {
 
     public enum Errors: Error {
         case accountFailure(context: CloudAccountsModule.Errors)
-        case fetchFailure(context: Error)
+        case fetchFailure(context: Error?)
     }
 
     public func subscribeToChanges(ofType objectType: String) async -> Result<CKSubscription, Errors> {
-        await subscribeToChanges(ofTypes: [objectType])
+        await self.subscribeToChanges(ofTypes: [objectType])
             .map(\.first!)
     }
 
     public func subscribeToChanges(ofTypes objectTypes: [String]) async -> Result<[CKSubscription], Errors> {
         await withCheckedContinuation { continuation in
-            subscribeToChanges(ofTypes: objectTypes) { result in
+            self.subscribeToChanges(ofTypes: objectTypes) { result in
                 continuation.resume(returning: result)
             }
         }
     }
 
     public func fetchAllSubscriptions() async -> Result<[CKSubscription], Errors> {
-        if fetchingSubscriptions {
+        if self.fetchingSubscriptions {
             let subscriptions = await getFetchingSubscriptions()
             return .success(subscriptions)
         }
 
-        return await withFetchingSubscriptions { [weak self] in
-            guard let self else { fatalError() }
+        return await self.withFetchingSubscriptions { [weak self] in
+            guard let self else { return .failure(.fetchFailure(context: nil)) }
 
-            let statusResult = await accounts.getStatus()
+            let statusResult = await self.accounts.getStatus()
                 .mapError { error in Errors.accountFailure(context: error) }
             switch statusResult {
             case let .failure(failure): return .failure(failure)
@@ -57,19 +57,19 @@ public class CloudSubscriptionModule {
 
             let subscriptions: [CKSubscription]
             do {
-                subscriptions = try await database.fetchAllSubscriptions()
+                subscriptions = try await self.database.fetchAllSubscriptions()
             } catch {
                 return .failure(.fetchFailure(context: error))
             }
 
-            fetchedSubscriptions = subscriptions
+            self.fetchedSubscriptions = subscriptions
             return .success(subscriptions)
         }
     }
 
     private func getFetchingSubscriptions() async -> [CKSubscription] {
         await withCheckedContinuation { continuation in
-            getFetchingSubscriptions { subscriptions in
+            self.getFetchingSubscriptions { subscriptions in
                 continuation.resume(returning: subscriptions)
             }
         }
@@ -79,7 +79,9 @@ public class CloudSubscriptionModule {
         ofTypes objectTypes: [String],
         completion: @escaping (Result<[CKSubscription], Errors>) -> Void
     ) {
-        accounts.getStatus { [weak self] result in
+        self.accounts.getStatus { [weak self] result in
+            guard let self else { return }
+
             switch result {
             case let .failure(failure):
                 completion(.failure(.accountFailure(context: failure)))
@@ -117,7 +119,7 @@ public class CloudSubscriptionModule {
                 case .success: break
                 }
 
-                var newSubscriptions = self!.fetchedSubscriptions
+                var newSubscriptions = self.fetchedSubscriptions
                 for subscription in subscriptions {
                     if let index = newSubscriptions.findIndex(by: \.subscriptionID, is: subscription.subscriptionID) {
                         newSubscriptions[index] = subscription
@@ -125,7 +127,7 @@ public class CloudSubscriptionModule {
                         newSubscriptions = newSubscriptions.appended(subscription)
                     }
                 }
-                self!.fetchedSubscriptions = newSubscriptions
+                self.fetchedSubscriptions = newSubscriptions
                 completion(.success(subscriptions))
             }
             operation.perSubscriptionSaveBlock = { _, saveResult in
@@ -135,18 +137,18 @@ public class CloudSubscriptionModule {
                 }
             }
             operation.qualityOfService = .utility
-            self!.database.add(operation)
+            self.database.add(operation)
         }
     }
 
     private func getFetchingSubscriptions(completion: @escaping ([CKSubscription]) -> Void) {
-        guard fetchingSubscriptions else {
-            completion(fetchedSubscriptions)
+        guard self.fetchingSubscriptions else {
+            completion(self.fetchedSubscriptions)
             return
         }
 
         Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { [weak self] timer in
-            guard let self else { fatalError() }
+            guard let self else { return }
 
             if !self.fetchingSubscriptions {
                 timer.invalidate()
@@ -156,9 +158,9 @@ public class CloudSubscriptionModule {
     }
 
     private func withFetchingSubscriptions<T>(completion: @escaping () async -> T) async -> T {
-        fetchingSubscriptions = true
+        self.fetchingSubscriptions = true
         let result = await completion()
-        fetchingSubscriptions = false
+        self.fetchingSubscriptions = false
         return result
     }
 }
@@ -166,7 +168,7 @@ public class CloudSubscriptionModule {
 extension CKDatabase {
     fileprivate func fetchAllSubscriptions() async throws -> [CKSubscription] {
         try await withCheckedThrowingContinuation { continuation in
-            fetchAllSubscriptions { subscriptions, error in
+            self.fetchAllSubscriptions { subscriptions, error in
                 if let error {
                     continuation.resume(throwing: error)
                     return

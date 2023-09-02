@@ -34,11 +34,11 @@ public class CloudObjectsModule {
 
     public func list(ofType objectType: String) async -> Result<[CKRecord], Errors> {
         let predicate = NSPredicate(value: true)
-        return await filter(ofType: objectType, by: predicate, limit: nil)
+        return await self.filter(ofType: objectType, by: predicate, limit: nil)
     }
 
     public func find(ofType objectType: String, by predicate: NSPredicate) async -> Result<CKRecord?, Errors> {
-        await filter(ofType: objectType, by: predicate, limit: 1)
+        await self.filter(ofType: objectType, by: predicate, limit: 1)
             .map(\.first)
     }
 
@@ -52,7 +52,7 @@ public class CloudObjectsModule {
         case .success: break
         }
 
-        return await fetchService.fetch(ofType: objectType, by: predicate, limit: limit)
+        return await self.fetchService.fetch(ofType: objectType, by: predicate, limit: limit)
             .mapError { error in .fetchFailure(context: error) }
     }
 
@@ -67,8 +67,11 @@ public class CloudObjectsModule {
         case .success: break
         }
 
-        return await multipleOperationsService.execute(recordsToDelete: recordsToDelete, recordsToSave: recordsToSave)
-            .mapError { error in .multipleOperationsFailure(context: error) }
+        return await self.multipleOperationsService.execute(
+            recordsToDelete: recordsToDelete,
+            recordsToSave: recordsToSave
+        )
+        .mapError { error in .multipleOperationsFailure(context: error) }
     }
 
     public func delete(record: CKRecord) async -> Result<CKRecord.ID, Errors> {
@@ -79,12 +82,12 @@ public class CloudObjectsModule {
         case .success: break
         }
 
-        return await deleteService.delete(record)
+        return await self.deleteService.delete(record)
             .mapError { error in .deleteFailure(context: error) }
     }
 
     public func delete(records: [CKRecord]) async -> Result<[CKRecord.ID], Errors> {
-        await deleteAndSave(recordsToDelete: records, recordsToSave: [])
+        await self.deleteAndSave(recordsToDelete: records, recordsToSave: [])
             .mapError { error in .deleteFailure(context: error) }
             .map(\.recordsDeleted)
     }
@@ -97,12 +100,12 @@ public class CloudObjectsModule {
         case .success: break
         }
 
-        return await saveService.save(record: record)
+        return await self.saveService.save(record: record)
             .mapError { error in .saveFailure(context: error) }
     }
 
     public func save(records: [CKRecord]) async -> Result<[CKRecord], Errors> {
-        await deleteAndSave(recordsToDelete: [], recordsToSave: records)
+        await self.deleteAndSave(recordsToDelete: [], recordsToSave: records)
             .mapError { error in .saveFailure(context: error) }
             .map(\.recordsSaved)
     }

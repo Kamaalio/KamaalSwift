@@ -22,7 +22,7 @@ class SaveService {
     func save(record: CKRecord) async -> Result<CKRecord, SaveErrors> {
         let updatedRecord: CKRecord
         do {
-            updatedRecord = try await database.save(record)
+            updatedRecord = try await self.database.save(record)
         } catch {
             return .failure(.saveFailure(context: error))
         }

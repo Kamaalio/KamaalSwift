@@ -29,7 +29,7 @@ public class CloudAccountsModule {
     /// - Returns: A result that is either `Void` on success or ``Errors`` on failure.
     public func getStatus() async -> Result<Void, Errors> {
         await withCheckedContinuation { continuation in
-            getStatus { result in
+            self.getStatus { result in
                 continuation.resume(returning: result)
             }
         }
@@ -46,16 +46,16 @@ public class CloudAccountsModule {
 
         let userID: CKRecord.ID?
         do {
-            userID = try await container.userRecordID()
+            userID = try await self.container.userRecordID()
         } catch {
-            return .failure(handleErrors(error))
+            return .failure(self.handleErrors(error))
         }
 
         return .success(userID)
     }
 
     func getStatus(completion: @escaping ((Result<Void, Errors>) -> Void)) {
-        container.accountStatus { [weak self] status, error in
+        self.container.accountStatus { [weak self] status, error in
             guard let self else {
                 completion(.failure(.unknownFailure(context: nil)))
                 return
@@ -78,7 +78,7 @@ public class CloudAccountsModule {
 
     private func handleErrors(_ error: Error) -> Errors {
         if let error = error as? CKError {
-            return handleCKError(error)
+            return self.handleCKError(error)
         }
 
         return .unknownFailure(context: error)
