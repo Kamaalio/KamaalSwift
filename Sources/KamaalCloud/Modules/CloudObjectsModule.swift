@@ -56,7 +56,7 @@ public class CloudObjectsModule {
             .mapError { error in .fetchFailure(context: error) }
     }
 
-    public func deleteAndSaveMultiple(recordsToDelete: [CKRecord], recordsToSave: [CKRecord]) async -> Result<(
+    public func deleteAndSave(recordsToDelete: [CKRecord], recordsToSave: [CKRecord]) async -> Result<(
         recordsDeleted: [CKRecord.ID],
         recordsSaved: [CKRecord]
     ), Errors> {
@@ -83,8 +83,8 @@ public class CloudObjectsModule {
             .mapError { error in .deleteFailure(context: error) }
     }
 
-    public func deleteMultiple(records: [CKRecord]) async -> Result<[CKRecord.ID], Errors> {
-        await deleteAndSaveMultiple(recordsToDelete: records, recordsToSave: [])
+    public func delete(records: [CKRecord]) async -> Result<[CKRecord.ID], Errors> {
+        await deleteAndSave(recordsToDelete: records, recordsToSave: [])
             .mapError { error in .deleteFailure(context: error) }
             .map(\.recordsDeleted)
     }
@@ -101,8 +101,8 @@ public class CloudObjectsModule {
             .mapError { error in .saveFailure(context: error) }
     }
 
-    public func saveMultiple(records: [CKRecord]) async -> Result<[CKRecord], Errors> {
-        await deleteAndSaveMultiple(recordsToDelete: [], recordsToSave: records)
+    public func save(records: [CKRecord]) async -> Result<[CKRecord], Errors> {
+        await deleteAndSave(recordsToDelete: [], recordsToSave: records)
             .mapError { error in .saveFailure(context: error) }
             .map(\.recordsSaved)
     }
