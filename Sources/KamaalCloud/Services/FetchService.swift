@@ -11,7 +11,6 @@ import KamaalExtensions
 
 public enum FetchErrors: Error {
     case fetchFailure(context: Error)
-    case unknownFailure(context: Error?)
 }
 
 class FetchService {
