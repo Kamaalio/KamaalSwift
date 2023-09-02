@@ -24,7 +24,7 @@ class FetchService {
                by predicate: NSPredicate,
                limit: Int? = nil) async -> Result<[CKRecord], FetchErrors> {
         await withCheckedContinuation { continuation in
-            _fetch(ofType: objectType, by: predicate, limit: limit) { result in
+            self._fetch(ofType: objectType, by: predicate, limit: limit) { result in
                 continuation.resume(returning: result)
             }
         }
@@ -71,6 +71,6 @@ class FetchService {
         }
 
         fetchWithQueryOperation(queryOperation, completion: completion)
-        database.add(queryOperation)
+        self.database.add(queryOperation)
     }
 }

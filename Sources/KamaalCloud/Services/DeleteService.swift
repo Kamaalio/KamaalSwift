@@ -22,7 +22,7 @@ class DeleteService {
     func delete(_ record: CKRecord) async -> Result<CKRecord.ID, DeleteErrors> {
         let deletedRecordID: CKRecord.ID
         do {
-            deletedRecordID = try await database.deleteRecord(withID: record.recordID)
+            deletedRecordID = try await self.database.deleteRecord(withID: record.recordID)
         } catch {
             return .failure(.deleteFailure(context: error))
         }

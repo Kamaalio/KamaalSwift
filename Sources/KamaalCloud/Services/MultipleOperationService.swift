@@ -25,7 +25,7 @@ class MultipleOperationService {
         recordsSaved: [CKRecord]
     ), MultipleOperationErrors> {
         await withCheckedContinuation { continuation in
-            execute(recordsToDelete: recordsToDelete, recordsToSave: recordsToSave, completion: { result in
+            self.execute(recordsToDelete: recordsToDelete, recordsToSave: recordsToSave, completion: { result in
                 continuation.resume(returning: result)
             })
         }
@@ -47,7 +47,7 @@ class MultipleOperationService {
 
         let recordsToDeleteIDs = recordsToDelete.map(\.recordID)
         let modification = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: recordsToDeleteIDs)
-        modification.database = database
+        modification.database = self.database
         let queue = OperationQueue()
         queue.addOperations([modification], waitUntilFinished: false)
         modification.modifyRecordsResultBlock = { operationResult in
