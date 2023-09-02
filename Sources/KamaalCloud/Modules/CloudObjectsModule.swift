@@ -13,17 +13,20 @@ public class CloudObjectsModule {
     private let accounts: CloudAccountsModule
     private let fetchService: FetchService
     private let deleteService: DeleteService
+    private let saveService: SaveService
 
     init(accounts: CloudAccountsModule, database: CKDatabase) {
         self.accounts = accounts
         self.fetchService = FetchService(database: database)
         self.deleteService = DeleteService(database: database)
+        self.saveService = SaveService(database: database)
     }
 
     public enum Errors: Error {
         case fetchFailure(context: FetchErrors)
         case accountFailure(context: CloudAccountsModule.Errors)
         case deleteFailure(context: DeleteErrors)
+        case saveFailure(context: SaveErrors)
     }
 
     public func list(ofType objectType: String) async -> Result<[CKRecord], Errors> {
@@ -72,5 +75,17 @@ public class CloudObjectsModule {
 
         return await deleteService.deleteMultiple(records)
             .mapError { error in .deleteFailure(context: error) }
+    }
+
+    public func save(record: CKRecord) async -> Result<CKRecord, Errors> {
+        let statusResult = await accounts.getStatus()
+            .mapError { error in Errors.accountFailure(context: error) }
+        switch statusResult {
+        case let .failure(failure): return .failure(failure)
+        case .success: break
+        }
+
+        return await saveService.save(record: record)
+            .mapError { error in .saveFailure(context: error) }
     }
 }
