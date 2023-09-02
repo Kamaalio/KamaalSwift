@@ -14,19 +14,22 @@ public class CloudObjectsModule {
     private let fetchService: FetchService
     private let deleteService: DeleteService
     private let saveService: SaveService
+    private let multipleOperationsService: MultipleOperationService
 
     init(accounts: CloudAccountsModule, database: CKDatabase) {
         self.accounts = accounts
         self.fetchService = FetchService(database: database)
         self.deleteService = DeleteService(database: database)
         self.saveService = SaveService(database: database)
+        self.multipleOperationsService = MultipleOperationService(database: database)
     }
 
     public enum Errors: Error {
         case fetchFailure(context: FetchErrors)
         case accountFailure(context: CloudAccountsModule.Errors)
-        case deleteFailure(context: DeleteErrors)
-        case saveFailure(context: SaveErrors)
+        case deleteFailure(context: Error)
+        case saveFailure(context: Error)
+        case multipleOperationsFailure(context: MultipleOperationErrors)
     }
 
     public func list(ofType objectType: String) async -> Result<[CKRecord], Errors> {
@@ -53,7 +56,22 @@ public class CloudObjectsModule {
             .mapError { error in .fetchFailure(context: error) }
     }
 
-    public func delete(record: CKRecord) async -> Result<Void, Errors> {
+    public func deleteAndSaveMultiple(recordsToDelete: [CKRecord], recordsToSave: [CKRecord]) async -> Result<(
+        recordsDeleted: [CKRecord.ID],
+        recordsSaved: [CKRecord]
+    ), Errors> {
+        let statusResult = await accounts.getStatus()
+            .mapError { error in Errors.accountFailure(context: error) }
+        switch statusResult {
+        case let .failure(failure): return .failure(failure)
+        case .success: break
+        }
+
+        return await multipleOperationsService.execute(recordsToDelete: recordsToDelete, recordsToSave: recordsToSave)
+            .mapError { error in .multipleOperationsFailure(context: error) }
+    }
+
+    public func delete(record: CKRecord) async -> Result<CKRecord.ID, Errors> {
         let statusResult = await accounts.getStatus()
             .mapError { error in Errors.accountFailure(context: error) }
         switch statusResult {
@@ -65,16 +83,10 @@ public class CloudObjectsModule {
             .mapError { error in .deleteFailure(context: error) }
     }
 
-    public func deleteMultiple(records: [CKRecord]) async -> Result<Void, Errors> {
-        let statusResult = await accounts.getStatus()
-            .mapError { error in Errors.accountFailure(context: error) }
-        switch statusResult {
-        case let .failure(failure): return .failure(failure)
-        case .success: break
-        }
-
-        return await deleteService.deleteMultiple(records)
+    public func deleteMultiple(records: [CKRecord]) async -> Result<[CKRecord.ID], Errors> {
+        await deleteAndSaveMultiple(recordsToDelete: records, recordsToSave: [])
             .mapError { error in .deleteFailure(context: error) }
+            .map(\.recordsDeleted)
     }
 
     public func save(record: CKRecord) async -> Result<CKRecord, Errors> {
@@ -87,5 +99,11 @@ public class CloudObjectsModule {
 
         return await saveService.save(record: record)
             .mapError { error in .saveFailure(context: error) }
+    }
+
+    public func saveMultiple(records: [CKRecord]) async -> Result<[CKRecord], Errors> {
+        await deleteAndSaveMultiple(recordsToDelete: [], recordsToSave: records)
+            .mapError { error in .saveFailure(context: error) }
+            .map(\.recordsSaved)
     }
 }
