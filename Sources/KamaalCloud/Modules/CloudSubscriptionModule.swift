@@ -7,6 +7,7 @@
 
 import CloudKit
 import Foundation
+import KamaalExtensions
 
 public class CloudSubscriptionModule {
     public private(set) var fetchedSubscriptions: [CKSubscription] = []
@@ -25,32 +26,18 @@ public class CloudSubscriptionModule {
         case fetchFailure(context: Error)
     }
 
-//    public func subscribe(toType objectType: String,
-//                          by predicate: NSPredicate) async -> Result<CKSubscription, Errors> {
-//        let statusResult = await accounts.getStatus()
-//            .mapError { error in Errors.accountFailure(context: error) }
-//        switch statusResult {
-//        case let .failure(failure): return .failure(failure)
-//        case .success: break
-//        }
-//
-//        let subscriptionOptions: CKQuerySubscription.Options = [
-//            .firesOnRecordCreation,
-//            .firesOnRecordDeletion,
-//            .firesOnRecordUpdate,
-//        ]
-//        #error("Get the real subscription")
-//        let subscriptionQuery = CKQuerySubscription(
-//            recordType: objectType,
-//            predicate: predicate,
-//            subscriptionID: fetchedSubscriptions.first!.subscriptionID,
-//            options: subscriptionOptions
-//        )
-//        let notification = CKSubscription.NotificationInfo()
-//        notification.shouldSendContentAvailable = true
-//        subscriptionQuery.notificationInfo = notification
-//        fatalError()
-//    }
+    public func subscribeToChanges(ofType objectType: String) async -> Result<CKSubscription, Errors> {
+        await subscribeToChanges(ofTypes: [objectType])
+            .map(\.first!)
+    }
+
+    public func subscribeToChanges(ofTypes objectTypes: [String]) async -> Result<[CKSubscription], Errors> {
+        await withCheckedContinuation { continuation in
+            subscribeToChanges(ofTypes: objectTypes) { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
 
     public func fetchAllSubscriptions() async -> Result<[CKSubscription], Errors> {
         if fetchingSubscriptions {
@@ -85,6 +72,70 @@ public class CloudSubscriptionModule {
             getFetchingSubscriptions { subscriptions in
                 continuation.resume(returning: subscriptions)
             }
+        }
+    }
+
+    private func subscribeToChanges(
+        ofTypes objectTypes: [String],
+        completion: @escaping (Result<[CKSubscription], Errors>) -> Void
+    ) {
+        accounts.getStatus { [weak self] result in
+            switch result {
+            case let .failure(failure):
+                completion(.failure(.accountFailure(context: failure)))
+                return
+            case .success: break
+            }
+
+            let subscriptionOptions: CKQuerySubscription.Options = [
+                .firesOnRecordCreation,
+                .firesOnRecordDeletion,
+                .firesOnRecordUpdate,
+            ]
+            let predicate = NSPredicate(value: true)
+            let subscriptionQuerys = objectTypes.map { objectType in
+                let query = CKQuerySubscription(
+                    recordType: objectType,
+                    predicate: predicate,
+                    subscriptionID: "\(objectType)-changes",
+                    options: subscriptionOptions
+                )
+                let notification = CKSubscription.NotificationInfo()
+                notification.shouldSendContentAvailable = true
+                query.notificationInfo = notification
+                return query
+            }
+
+            let operation = CKModifySubscriptionsOperation(
+                subscriptionsToSave: subscriptionQuerys,
+                subscriptionIDsToDelete: nil
+            )
+            var subscriptions: [CKSubscription] = []
+            operation.modifySubscriptionsResultBlock = { operationResult in
+                switch operationResult {
+                case let .failure(failure): completion(.failure(.fetchFailure(context: failure)))
+                case .success: break
+                }
+
+                var newSubscriptions = self!.fetchedSubscriptions
+                for subscription in subscriptions {
+                    if let index = newSubscriptions.findIndex(by: \.subscriptionID, is: subscription.subscriptionID) {
+                        newSubscriptions[index] = subscription
+                    } else {
+                        newSubscriptions = newSubscriptions.appended(subscription)
+                    }
+                }
+                self!.fetchedSubscriptions = newSubscriptions
+                completion(.success(subscriptions))
+            }
+            operation.perSubscriptionSaveBlock = { _, saveResult in
+                switch saveResult {
+                case .failure: break
+                case let .success(success): subscriptions = subscriptions.appended(success)
+                }
+            }
+            operation.qualityOfService = .utility
+            self!.database.add(operation)
         }
     }
 
