@@ -10,6 +10,7 @@ import Foundation
 
 public class KamaalCloud {
     public let objects: CloudObjectsModule
+    public let subscriptions: CloudSubscriptionModule
 
     public init(containerID: String, databaseType: DatabaseType) {
         let container = CKContainer(identifier: containerID)
@@ -21,6 +22,7 @@ public class KamaalCloud {
         }
         let accounts = CloudAccountsModule(container: container)
         self.objects = CloudObjectsModule(accounts: accounts, database: database)
+        self.subscriptions = CloudSubscriptionModule(accounts: accounts, database: database)
     }
 
     /// Access control of the container
