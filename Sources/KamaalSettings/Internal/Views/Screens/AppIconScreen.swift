@@ -22,8 +22,8 @@ struct AppIconScreen: View {
         SelectionScreenWrapper(
             navigationTitle: "App icon".localized(comment: ""),
             sectionTitle: "Icons".localized(comment: ""),
-            items: settingsConfiguration.appIcon?.icons ?? [],
-            onItemPress: changeAppIcon
+            items: self.settingsConfiguration.appIcon?.icons ?? [],
+            onItemPress: self.changeAppIcon
         ) { item in
             ImageTextRow(label: item.title, imageName: item.imageName)
         }
@@ -33,9 +33,9 @@ struct AppIconScreen: View {
         NotificationCenter.default.post(name: .appIconChanged, object: appIcon)
         logger.info("app icon changed to \(appIcon.title)")
         #if os(macOS)
-        navigator.goBack()
+        self.navigator.goBack()
         #else
-        presentationMode.wrappedValue.dismiss()
+        self.presentationMode.wrappedValue.dismiss()
         #endif
     }
 }

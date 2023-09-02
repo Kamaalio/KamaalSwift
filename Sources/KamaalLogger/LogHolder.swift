@@ -20,11 +20,11 @@ public actor LogHolder {
 
     /// Computed array of logs.
     public var logs: [HoldedLog] {
-        items.array
+        self.items.array
     }
 
     func addLog(_ log: HoldedLog) {
-        items.enqueue(log)
+        self.items.enqueue(log)
     }
 
     /// Singleton of ``LogHolder`` to be used globally.

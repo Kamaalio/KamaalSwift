@@ -21,12 +21,12 @@ public struct StackNavigationBackButton<Destination: NavigatorStackValue, Conten
     public var body: some View {
         Button(action: {
             #if os(macOS)
-            navigator.goBack()
+            self.navigator.goBack()
             #else
-            presentationMode.wrappedValue.dismiss()
+            self.presentationMode.wrappedValue.dismiss()
             #endif
         }) {
-            content()
+            self.content()
         }
     }
 }

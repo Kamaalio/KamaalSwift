@@ -14,8 +14,8 @@ struct PackagesSection: View {
 
     var body: some View {
         KSection(header: "Packages".localized(comment: "")) {
-            ForEach(packages, id: \.self) { package in
-                AppButton(action: { onPackagePress(package) }) {
+            ForEach(self.packages, id: \.self) { package in
+                AppButton(action: { self.onPackagePress(package) }) {
                     VStack(alignment: .leading) {
                         AppText(string: package.name)
                             .bold()
@@ -27,7 +27,7 @@ struct PackagesSection: View {
                     .ktakeWidthEagerly(alignment: .leading)
                 }
                 #if os(macOS)
-                if package != packages.last {
+                if package != self.packages.last {
                     Divider()
                 }
                 #endif

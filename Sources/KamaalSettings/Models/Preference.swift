@@ -31,10 +31,10 @@ public struct Preference: Hashable, Identifiable, Codable {
     }
 
     var optionsContainSelectedOption: Bool {
-        options.contains(selectedOption)
+        self.options.contains(self.selectedOption)
     }
 
     func setOption(_ option: Option) -> Preference {
-        .init(id: id, label: label, selectedOption: option, options: options)
+        .init(id: self.id, label: self.label, selectedOption: option, options: self.options)
     }
 }

@@ -26,12 +26,12 @@ public struct StackNavigationLink<Content: View, NextView: View, Destination: Na
 
     public var body: some View {
         #if os(macOS)
-        Button(action: { navigator.navigate(to: destination) }) {
-            content()
+        Button(action: { self.navigator.navigate(to: self.destination) }) {
+            self.content()
         }
         #else
-        NavigationLink(destination: { nextView(destination) }) {
-            content()
+        NavigationLink(destination: { self.nextView(self.destination) }) {
+            self.content()
         }
         #endif
     }

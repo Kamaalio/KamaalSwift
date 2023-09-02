@@ -47,14 +47,14 @@ public struct _PersistentContainerBuilder {
 
     public func make() -> NSPersistentContainer {
         let container = NSPersistentContainer(name: containerName, managedObjectModel: model)
-        if preview {
+        if self.preview {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
         return container
     }
 
     private var entitiesWithRelationships: [NSEntityDescription] {
-        let entitiesByName: [String: NSEntityDescription] = entities
+        let entitiesByName: [String: NSEntityDescription] = self.entities
             .reduce([:]) { result, entity in
                 guard let name = entity.name else { return result }
 
@@ -63,7 +63,7 @@ public struct _PersistentContainerBuilder {
                 return result
             }
 
-        let relationshipsWithDestinationEntities: [RelationshipContainer] = relationships
+        let relationshipsWithDestinationEntities: [RelationshipContainer] = self.relationships
             .compactMap { relationship in
                 guard let entity = entitiesByName[relationship.destinationEntityName] else { return nil }
 
@@ -108,7 +108,7 @@ public struct _PersistentContainerBuilder {
             model = NSManagedObjectModel()
         }
 
-        model!.entities = entitiesWithRelationships
+        model!.entities = self.entitiesWithRelationships
         return model!
     }
 }

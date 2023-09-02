@@ -18,8 +18,8 @@ struct ColorTextRow: View {
     }
 
     var body: some View {
-        ValueRow(label: label) {
-            color
+        ValueRow(label: self.label) {
+            self.color
                 .frame(width: Constants.rowTileSize.width, height: Constants.rowTileSize.height)
                 .cornerRadius(Constants.rowTileCornerRadius)
         }

@@ -27,22 +27,22 @@ struct HomeScreen: View {
             Button(action: { logger.info("Logging something") }) {
                 Text("Loggin11111".digits)
             }
-            Button(action: { showBrowser = true }) {
+            Button(action: { self.showBrowser = true }) {
                 Text("Show Browser")
             }
             Button(action: {
-                popUpManager.showPopUp(
+                self.popUpManager.showPopUp(
                     style: .bottom(title: "Title", type: .success, description: "Description"),
                     timeout: 3
                 )
             }) {
                 Text("Bottom popup")
             }
-            Button(action: { showPopUp.toggle() }) {
+            Button(action: { self.showPopUp.toggle() }) {
                 Text("Lite")
             }
             Button(action: {
-                popUpManager.showPopUp(
+                self.popUpManager.showPopUp(
                     style: .hud(title: "Empty thing", systemImageName: "airpodspro", description: "Below thing"),
                     timeout: nil
                 )
@@ -62,12 +62,12 @@ struct HomeScreen: View {
                 Text("Go to other screen")
             }
         }
-        .kBrowser(isPresented: $showBrowser, url: URL(staticString: "https://kamaal.io"), color: .red)
-        .withKPopUp(popUpManager)
+        .kBrowser(isPresented: self.$showBrowser, url: URL(staticString: "https://kamaal.io"), color: .red)
+        .withKPopUp(self.popUpManager)
         .kPopUpLite(
-            isPresented: $showPopUp,
+            isPresented: self.$showPopUp,
             style: .bottom(title: "Title", type: .success, description: "Description"),
-            backgroundColor: colorScheme == .dark ? .black : .white
+            backgroundColor: self.colorScheme == .dark ? .black : .white
         )
     }
 }

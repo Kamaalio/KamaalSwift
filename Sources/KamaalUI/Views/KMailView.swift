@@ -57,15 +57,15 @@ public struct KMailView: UIViewControllerRepresentable {
     }
 
     public func makeCoordinator() -> Coordinator {
-        Coordinator(isShowing: $isShowing, result: $result)
+        Coordinator(isShowing: self.$isShowing, result: self.$result)
     }
 
     public func makeUIViewController(context: UIViewControllerRepresentableContext<KMailView>)
         -> MFMailComposeViewController {
         let viewController = MFMailComposeViewController()
         viewController.mailComposeDelegate = context.coordinator
-        viewController.setToRecipients([emailAddress])
-        viewController.setSubject(emailSubject)
+        viewController.setToRecipients([self.emailAddress])
+        viewController.setSubject(self.emailSubject)
         return viewController
     }
 

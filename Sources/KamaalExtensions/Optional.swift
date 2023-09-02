@@ -22,7 +22,7 @@ extension Int? {
     /// Adds increment to value if value is not nil.
     /// - Parameter increment: value to increment by.
     public mutating func add(_ increment: Int) {
-        self = added(increment)
+        self = self.added(increment)
     }
 
     /// Adds increment to value if value is not nil and returns that value.

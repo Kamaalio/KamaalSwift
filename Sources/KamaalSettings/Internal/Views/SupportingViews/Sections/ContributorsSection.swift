@@ -15,18 +15,18 @@ struct ContributorsSection: View {
 
     var body: some View {
         KSection(header: "Contributors".localized(comment: "")) {
-            ForEach(contributors, id: \.self) { contributor in
+            ForEach(self.contributors, id: \.self) { contributor in
                 AppText(string: contributor.name)
                     .bold()
                     .ktakeWidthEagerly(alignment: .leading)
-                    .onTapGesture(perform: { handleContributorTap(contributor) })
+                    .onTapGesture(perform: { self.handleContributorTap(contributor) })
                 #if os(macOS)
-                if contributor != contributors.last {
+                if contributor != self.contributors.last {
                     Divider()
                 }
                 #endif
             }
-            if kamaalTapTimes > 0, (kamaalTapTimes % 3) == 0 {
+            if self.kamaalTapTimes > 0, (self.kamaalTapTimes % 3) == 0 {
                 Image("GoodJobKamaal", bundle: .module)
                     .resizable()
                     .padding(.horizontal, .medium)
@@ -38,7 +38,7 @@ struct ContributorsSection: View {
 
     private func handleContributorTap(_ contributor: Acknowledgements.Contributor) {
         if contributor.name == "Kamaal Farah" {
-            withAnimation { kamaalTapTimes += 1 }
+            withAnimation { self.kamaalTapTimes += 1 }
         }
     }
 }

@@ -98,10 +98,10 @@ public struct GitHubIssue: Codable, Hashable, Identifiable {
     }
 
     public var state: States? {
-        States(rawValue: rawState)
+        States(rawValue: self.rawState)
     }
 
     public var authorAssociation: AuthorAssociations? {
-        AuthorAssociations(rawValue: rawAuthorAssociation)
+        AuthorAssociations(rawValue: self.rawAuthorAssociation)
     }
 }

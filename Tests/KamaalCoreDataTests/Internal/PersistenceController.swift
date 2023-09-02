@@ -18,12 +18,12 @@ struct PersistenceController {
             preview: true
         )
         self.container = persistentContainerBuilder.make()
-        container.loadPersistentStores(completionHandler: { _, error in
+        self.container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        container.viewContext.automaticallyMergesChangesFromParent = true
+        self.container.viewContext.automaticallyMergesChangesFromParent = true
     }
 
     private static let entities: [NSEntityDescription] = [
@@ -40,11 +40,11 @@ class Item: NSManagedObject, ManuallyManagedObject, Identifiable {
     @NSManaged var children: NSSet?
 
     var childrenArray: [Child] {
-        children?.allObjects as? [Child] ?? []
+        self.children?.allObjects as? [Child] ?? []
     }
 
     func addChild(_ child: Child, save: Bool) throws {
-        children = NSSet(array: childrenArray + [child])
+        self.children = NSSet(array: self.childrenArray + [child])
 
         if save {
             try managedObjectContext?.save()
@@ -52,7 +52,7 @@ class Item: NSManagedObject, ManuallyManagedObject, Identifiable {
     }
 
     func addChild(_ child: Child) throws {
-        try addChild(child, save: true)
+        try self.addChild(child, save: true)
     }
 
     static let properties: [ManagedObjectPropertyConfiguration] = [

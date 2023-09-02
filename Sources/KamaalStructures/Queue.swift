@@ -16,27 +16,27 @@ public struct Queue<T> {
     }
 
     public var count: Int {
-        array.count
+        self.array.count
     }
 
     public var isEmpty: Bool {
-        array.isEmpty
+        self.array.isEmpty
     }
 
     public mutating func enqueue(_ element: T) {
         if let max, count >= max {
-            while count >= max {
-                dequeue()
+            while self.count >= max {
+                self.dequeue()
             }
         }
 
-        array.append(element)
+        self.array.append(element)
     }
 
     @discardableResult
     public mutating func dequeue() -> T? {
-        guard !isEmpty else { return nil }
+        guard !self.isEmpty else { return nil }
 
-        return array.removeFirst()
+        return self.array.removeFirst()
     }
 }

@@ -49,9 +49,9 @@ public struct KamaalLogger {
     /// To log errors
     /// - Parameter message: The message to log.
     public func error(_ message: String) {
-        logger.error("\(message)")
-        addLogToQueue(level: .error, message: message)
-        if failOnError {
+        self.logger.error("\(message)")
+        self.addLogToQueue(level: .error, message: message)
+        if self.failOnError {
             assertionFailure(message)
         }
     }
@@ -68,41 +68,41 @@ public struct KamaalLogger {
     /// To log warnings.
     /// - Parameter message: The message to log.
     public func warning(_ message: String) {
-        logger.warning("\(message)")
-        addLogToQueue(level: .warning, message: message)
+        self.logger.warning("\(message)")
+        self.addLogToQueue(level: .warning, message: message)
     }
 
     /// To log warnings.
     /// - Parameter messages: The messages to log separated by a `; `.
     public func warning(_ messages: String...) {
-        warning(messages.joined(separator: "; "))
+        self.warning(messages.joined(separator: "; "))
     }
 
     /// To log information.
     /// - Parameter message: The message to log.
     public func info(_ message: String) {
-        logger.info("\(message)")
-        addLogToQueue(level: .info, message: message)
+        self.logger.info("\(message)")
+        self.addLogToQueue(level: .info, message: message)
     }
 
     /// To log information.
     /// - Parameter messages: The messages to log separated by a `; `.
     public func info(_ messages: String...) {
-        info(messages.joined(separator: "; "))
+        self.info(messages.joined(separator: "; "))
     }
 
     /// To log debugging messages. Beaware of that logs only get stored when `DEBUG` compiler flag is turned on.
     /// - Parameter message: The message to log.
     public func debug(_ message: String) {
         #if DEBUG
-        logger.debug("\(message)")
-        addLogToQueue(level: .debug, message: message)
+        self.logger.debug("\(message)")
+        self.addLogToQueue(level: .debug, message: message)
         #endif
     }
 
     private func addLogToQueue(level: LogLevels, message: String) {
         Task {
-            await holder.addLog(.init(label: label, level: level, message: message, timestamp: Date()))
+            await self.holder.addLog(.init(label: self.label, level: level, message: message, timestamp: Date()))
         }
     }
 }

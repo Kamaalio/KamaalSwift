@@ -31,23 +31,31 @@ public struct KSheetStack<LeadingNavButton: View, TrailingNavButton: View, Conte
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                leadingNavigationButton()
-                    .frame(minWidth: navigationButtonWidth, maxWidth: navigationButtonWidth, alignment: .leading)
+                self.leadingNavigationButton()
+                    .frame(
+                        minWidth: self.navigationButtonWidth,
+                        maxWidth: self.navigationButtonWidth,
+                        alignment: .leading
+                    )
                 Spacer()
-                if !title.isEmpty {
-                    Text(title)
+                if !self.title.isEmpty {
+                    Text(self.title)
                         .font(.headline)
                         .bold()
                 }
                 Spacer()
-                trailingNavigationButton()
-                    .frame(minWidth: navigationButtonWidth, maxWidth: navigationButtonWidth, alignment: .trailing)
+                self.trailingNavigationButton()
+                    .frame(
+                        minWidth: self.navigationButtonWidth,
+                        maxWidth: self.navigationButtonWidth,
+                        alignment: .trailing
+                    )
             }
-            .padding(.horizontal, horizontalPadding)
+            .padding(.horizontal, self.horizontalPadding)
             .padding(.top, 32)
             ScrollView(.vertical, showsIndicators: true) {
-                content()
-                    .padding(.horizontal, horizontalPadding)
+                self.content()
+                    .padding(.horizontal, self.horizontalPadding)
             }
         }
     }

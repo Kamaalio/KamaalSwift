@@ -26,6 +26,6 @@ private struct ImageBoldViewModifier: ViewModifier {
     let font: Font
 
     func body(content: Content) -> some View {
-        content.font(font.bold())
+        content.font(self.font.bold())
     }
 }

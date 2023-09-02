@@ -23,11 +23,11 @@ struct PreferenceOptionsScreen: View {
 
     var body: some View {
         SelectionScreenWrapper(
-            navigationTitle: preference.label,
+            navigationTitle: self.preference.label,
             sectionTitle: "Options".localized(comment: ""),
-            items: preference.options,
-            searchFilter: searchFilter,
-            onItemPress: onPreferenceOptionChange
+            items: self.preference.options,
+            searchFilter: self.searchFilter,
+            onItemPress: self.onPreferenceOptionChange
         ) { option in
             AppText(string: option.label)
                 .bold()
@@ -40,7 +40,7 @@ struct PreferenceOptionsScreen: View {
     }
 
     private func onPreferenceOptionChange(_ option: Preference.Option) {
-        let newPreference = preference.setOption(option)
+        let newPreference = self.preference.setOption(option)
         NotificationCenter.default.post(name: .preferenceChanged, object: newPreference)
         logger.info("preference changed to \(newPreference)")
     }

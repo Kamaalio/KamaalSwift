@@ -18,7 +18,7 @@ public struct SavePanel {
 
     public static func save(filename: String) async -> Result<NSSavePanel, Errors> {
         await withCheckedContinuation { continuation in
-            save(filename: filename) { result in
+            self.save(filename: filename) { result in
                 continuation.resume(returning: result)
             }
         }

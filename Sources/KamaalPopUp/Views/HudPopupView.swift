@@ -26,7 +26,7 @@ struct HudPopupView: View {
                         .kSize(Self.imageSize)
                 }
                 VStack {
-                    Text(title)
+                    Text(self.title)
                     if let description {
                         Text(description)
                             .font(.callout)
@@ -38,31 +38,31 @@ struct HudPopupView: View {
             }
             .padding(.vertical, 4)
             .padding(.horizontal, 12)
-            .background(backgroundColor)
+            .background(self.backgroundColor)
             .cornerRadius(24)
         }
         .ktakeWidthEagerly(alignment: .center)
         .padding(.top, 8)
         .transition(.move(edge: .top))
-        .offset(offset)
+        .offset(self.offset)
         .gesture(
             DragGesture()
-                .onChanged(onDrag(_:))
-                .onEnded(onDragEnd(_:))
+                .onChanged(self.onDrag(_:))
+                .onEnded(self.onDragEnd(_:))
         )
     }
 
     private func onDrag(_ value: DragGesture.Value) {
         let newHeight = value.translation.height
         guard newHeight <= 0 else { return }
-        offset = CGSize(width: offset.width, height: value.translation.height)
+        self.offset = CGSize(width: self.offset.width, height: value.translation.height)
     }
 
     private func onDragEnd(_: DragGesture.Value) {
-        if offset.height < -12 {
-            onClose()
+        if self.offset.height < -12 {
+            self.onClose()
         } else {
-            offset = .zero
+            self.offset = .zero
         }
     }
 

@@ -22,8 +22,8 @@ struct TextViewRepresentable: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIViewType, context _: Context) {
-        if uiView.text != text {
-            uiView.text = text
+        if uiView.text != self.text {
+            uiView.text = self.text
         }
     }
 
@@ -39,7 +39,7 @@ struct TextViewRepresentable: UIViewRepresentable {
         }
 
         func textViewDidChange(_ textView: UITextView) {
-            parent.$text.wrappedValue = textView.text
+            self.parent.$text.wrappedValue = textView.text
         }
     }
 
@@ -59,7 +59,7 @@ struct TextViewRepresentable: NSViewRepresentable {
     }
 
     func updateNSView(_ nsView: NSViewType, context: Context) {
-        nsView.setText(text)
+        nsView.setText(self.text)
         nsView.setSelectedRanges(context.coordinator.selectedRanges)
     }
 
@@ -78,20 +78,20 @@ struct TextViewRepresentable: NSViewRepresentable {
         func textDidBeginEditing(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
 
-            parent.text = textView.string
+            self.parent.text = textView.string
         }
 
         func textDidChange(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
 
-            parent.text = textView.string
-            selectedRanges = textView.selectedRanges
+            self.parent.text = textView.string
+            self.selectedRanges = textView.selectedRanges
         }
 
         func textDidEndEditing(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
 
-            parent.text = textView.string
+            self.parent.text = textView.string
         }
     }
 
@@ -101,15 +101,15 @@ struct TextViewRepresentable: NSViewRepresentable {
 final class CustomTextView: NSView {
     private var selectedRanges: [NSValue] = [] {
         didSet {
-            guard !selectedRanges.isEmpty else { return }
-            textView.selectedRanges = selectedRanges
+            guard !self.selectedRanges.isEmpty else { return }
+            self.textView.selectedRanges = self.selectedRanges
         }
     }
 
     init(text: String) {
         super.init(frame: .zero)
 
-        textView.string = text
+        self.textView.string = text
     }
 
     @available(*, unavailable)
@@ -129,7 +129,7 @@ final class CustomTextView: NSView {
     }()
 
     private lazy var textView: NSTextView = {
-        let contentSize = scrollView.contentSize
+        let contentSize = self.scrollView.contentSize
         let textStorage = NSTextStorage()
 
         let layoutManager = NSLayoutManager()
@@ -160,37 +160,37 @@ final class CustomTextView: NSView {
     override func viewWillDraw() {
         super.viewWillDraw()
 
-        setupScrollViewConstraints()
-        setupTextView()
+        self.setupScrollViewConstraints()
+        self.setupTextView()
     }
 
     func setSelectedRanges(_ ranges: [NSValue]) {
-        selectedRanges = ranges
+        self.selectedRanges = ranges
     }
 
     func setDelegate(_ delegate: NSTextViewDelegate) {
-        textView.delegate = delegate
+        self.textView.delegate = delegate
     }
 
     func setText(_ text: String) {
-        textView.string = text
+        self.textView.string = text
     }
 
     private func setupScrollViewConstraints() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-        addSubview(scrollView)
+        addSubview(self.scrollView)
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            self.scrollView.topAnchor.constraint(equalTo: topAnchor),
+            self.scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            self.scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            self.scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
         ])
     }
 
     private func setupTextView() {
-        scrollView.documentView = textView
+        self.scrollView.documentView = self.textView
     }
 }
 #endif

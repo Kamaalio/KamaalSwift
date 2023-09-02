@@ -25,19 +25,19 @@ public struct KSection<Content: View>: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .ktakeWidthEagerly(alignment: .leading)
-                    content
+                    self.content
                 }
                 #else
                 Section(header: Text(header)) {
-                    content
+                    self.content
                 }
                 #endif
             } else {
                 #if os(macOS)
-                content
+                self.content
                 #else
                 Section {
-                    content
+                    self.content
                 }
                 #endif
             }

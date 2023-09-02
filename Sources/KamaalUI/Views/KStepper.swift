@@ -37,28 +37,28 @@ public struct KStepper: View {
     public var body: some View {
         HStack {
             Image(systemName: "minus.rectangle.fill")
-                .kSize(size)
-                .opacity(decrementOpacity)
-                .disabled(disableDecrement)
+                .kSize(self.size)
+                .opacity(self.decrementOpacity)
+                .disabled(self.disableDecrement)
                 .onTapGesture(perform: {
-                    if !disableDecrement {
-                        decrementOpacity = 0.2
-                        onDecrement()
+                    if !self.disableDecrement {
+                        self.decrementOpacity = 0.2
+                        self.onDecrement()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            withAnimation { decrementOpacity = 1 }
+                            withAnimation { self.decrementOpacity = 1 }
                         }
                     }
                 })
             Image(systemName: "plus.rectangle.fill")
-                .kSize(size)
-                .opacity(incrementOpacity)
-                .disabled(disableIncrement)
+                .kSize(self.size)
+                .opacity(self.incrementOpacity)
+                .disabled(self.disableIncrement)
                 .onTapGesture(perform: {
-                    if !disableIncrement {
-                        incrementOpacity = 0.2
-                        onIncrement()
+                    if !self.disableIncrement {
+                        self.incrementOpacity = 0.2
+                        self.onIncrement()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            withAnimation { incrementOpacity = 1 }
+                            withAnimation { self.incrementOpacity = 1 }
                         }
                     }
                 })
@@ -69,37 +69,37 @@ public struct KStepper: View {
     #elseif targetEnvironment(macCatalyst)
     public var body: some View {
         HStack {
-            Button(action: onDecrement) {
+            Button(action: self.onDecrement) {
                 Image(systemName: "minus.rectangle.fill")
-                    .kSize(size)
+                    .kSize(self.size)
                     .foregroundColor(.accentColor)
             }
-            .disabled(disableDecrement)
-            Button(action: onIncrement) {
+            .disabled(self.disableDecrement)
+            Button(action: self.onIncrement) {
                 Image(systemName: "plus.rectangle.fill")
-                    .kSize(size)
+                    .kSize(self.size)
                     .foregroundColor(.accentColor)
             }
-            .disabled(disableIncrement)
+            .disabled(self.disableIncrement)
         }
     }
 
     #elseif os(macOS)
     public var body: some View {
         HStack {
-            Button(action: onDecrement) {
+            Button(action: self.onDecrement) {
                 Image(systemName: "minus.rectangle.fill")
-                    .kSize(size)
+                    .kSize(self.size)
                     .foregroundColor(.accentColor)
             }
-            .disabled(disableDecrement)
+            .disabled(self.disableDecrement)
             .buttonStyle(PlainButtonStyle())
-            Button(action: onIncrement) {
+            Button(action: self.onIncrement) {
                 Image(systemName: "plus.rectangle.fill")
-                    .kSize(size)
+                    .kSize(self.size)
                     .foregroundColor(.accentColor)
             }
-            .disabled(disableIncrement)
+            .disabled(self.disableIncrement)
             .buttonStyle(PlainButtonStyle())
         }
     }

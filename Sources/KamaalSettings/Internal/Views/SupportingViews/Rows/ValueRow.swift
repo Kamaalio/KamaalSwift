@@ -22,9 +22,9 @@ struct ValueRow<Value: View>: View {
 
     var body: some View {
         RowView(label: {
-            AppText(string: label)
+            AppText(string: self.label)
         }, value: {
-            value
+            self.value
         })
     }
 }

@@ -22,8 +22,8 @@ struct AppColorScreen: View {
         SelectionScreenWrapper(
             navigationTitle: "App colors".localized(comment: ""),
             sectionTitle: "Colors".localized(comment: ""),
-            items: settingsConfiguration.color?.colors ?? [],
-            onItemPress: changeAppColor
+            items: self.settingsConfiguration.color?.colors ?? [],
+            onItemPress: self.changeAppColor
         ) { appColor in
             ColorTextRow(label: appColor.name, color: appColor.color)
         }
@@ -33,9 +33,9 @@ struct AppColorScreen: View {
         NotificationCenter.default.post(name: .appColorChanged, object: appColor)
         logger.info("app color changed to \(appColor)")
         #if os(macOS)
-        navigator.goBack()
+        self.navigator.goBack()
         #else
-        presentationMode.wrappedValue.dismiss()
+        self.presentationMode.wrappedValue.dismiss()
         #endif
     }
 }

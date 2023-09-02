@@ -106,7 +106,7 @@ extension Array {
     /// - Returns: The first index of the sequence that satisfies the given key path
     ///   and comparison value or nil if there is no element that satisfies the condition.
     public func findIndex<T: Equatable>(by keyPath: KeyPath<Element, T>, is comparisonValue: T) -> Int? {
-        findIndex(where: { $0[keyPath: keyPath] == comparisonValue })
+        self.findIndex(where: { $0[keyPath: keyPath] == comparisonValue })
     }
 
     /// Returns the first index of the sequence that satisfies the given

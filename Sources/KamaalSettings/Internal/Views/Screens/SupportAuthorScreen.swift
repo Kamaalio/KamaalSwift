@@ -25,25 +25,25 @@ struct SupportAuthorScreen: View {
         ZStack {
             KScrollableForm {
                 KJustStack {
-                    if store.isLoading, !store.hasDonations {
+                    if self.store.isLoading, !self.store.hasDonations {
                         KLoading()
                             .ktakeSizeEagerly()
                     }
-                    ForEach(store.donations) { donation in
-                        AppButton(action: { handlePurchase(donation) }) {
+                    ForEach(self.store.donations) { donation in
+                        AppButton(action: { self.handlePurchase(donation) }) {
                             DonationView(donation: donation)
                         }
                         .padding(.vertical, .extraSmall)
-                        .disabled(!store.canMakePayments)
+                        .disabled(!self.store.canMakePayments)
                     }
                 }
                 .padding(.all, .medium)
             }
-            if store.isLoading, !store.hasDonations {
+            if self.store.isLoading, !self.store.hasDonations {
                 KLoading()
                     .ktakeSizeEagerly()
             }
-            if store.isPurchasing {
+            if self.store.isPurchasing {
                 HStack {
                     KLoading()
                     AppText(localizedString: "Purchasing", comment: "")
@@ -54,34 +54,34 @@ struct SupportAuthorScreen: View {
             }
         }
         .ktakeSizeEagerly(alignment: .topLeading)
-        .onAppear(perform: handleAppear)
+        .onAppear(perform: self.handleAppear)
         .confettiCannon(
-            counter: $viewModel.confettiTimesRun,
-            num: viewModel.numberOfConfettis,
-            repetitions: viewModel.confettiRepetitions
+            counter: self.$viewModel.confettiTimesRun,
+            num: self.viewModel.numberOfConfettis,
+            repetitions: self.viewModel.confettiRepetitions
         )
         .kPopUpLite(
-            isPresented: $viewModel.showToast,
+            isPresented: self.$viewModel.showToast,
             style: .bottom(
                 title: "Sorry, something went wrong".localized(comment: ""),
                 type: .error,
                 description: "Failed to make purchase".localized(comment: "")
             ),
-            backgroundColor: colorScheme == .dark ? .black : .white
+            backgroundColor: self.colorScheme == .dark ? .black : .white
         )
     }
 
     private func handlePurchase(_ donation: CustomProduct) {
-        store.purchaseDonation(donation) { result in
+        self.store.purchaseDonation(donation) { result in
             switch result {
             case .failure:
-                viewModel.openToast()
+                self.viewModel.openToast()
                 return
             case .success:
                 break
             }
 
-            viewModel.shootConfetti(for: donation)
+            self.viewModel.shootConfetti(for: donation)
         }
     }
 
@@ -91,9 +91,9 @@ struct SupportAuthorScreen: View {
             switch result {
             case .failure:
                 #if os(macOS)
-                navigator.goBack()
+                self.navigator.goBack()
                 #else
-                presentationMode.wrappedValue.dismiss()
+                self.presentationMode.wrappedValue.dismiss()
                 #endif
             case .success:
                 break

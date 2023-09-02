@@ -22,19 +22,19 @@ struct AcknowledgementsScreen: View {
                         .padding(.bottom, acknowledgements.packages.isEmpty ? .medium : .nada)
                 }
                 if !acknowledgements.packages.isEmpty {
-                    PackagesSection(packages: acknowledgements.packages, onPackagePress: onPackagePress)
+                    PackagesSection(packages: acknowledgements.packages, onPackagePress: self.onPackagePress)
                         .padding(.top, acknowledgements.contributors.isEmpty ? .medium : .nada)
                 }
             }
         }
-        .accentColor(settingsConfiguration.currentColor)
-        .kBrowser($selectedPackageURL,
+        .accentColor(self.settingsConfiguration.currentColor)
+        .kBrowser(self.$selectedPackageURL,
                   fallbackURL: URL(staticString: "https://kamaal.io"),
-                  color: settingsConfiguration.currentColor)
+                  color: self.settingsConfiguration.currentColor)
     }
 
     private func onPackagePress(_ package: Acknowledgements.Package) {
-        selectedPackageURL = package.url
+        self.selectedPackageURL = package.url
     }
 }
 

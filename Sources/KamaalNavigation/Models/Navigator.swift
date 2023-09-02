@@ -10,7 +10,7 @@ import KamaalStructures
 
 public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject {
     @Published private var stacks: [StackValue: Stack<StackValue>] {
-        didSet { stacksDidSet() }
+        didSet { self.stacksDidSet() }
     }
 
     @Published var currentStack: StackValue
@@ -23,7 +23,7 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
         let stack = Stack.fromArray(stack)
         self.stacks = [initialStack: stack]
         self.currentStack = initialStack
-        setupNotifications()
+        self.setupNotifications()
     }
 
     deinit {
@@ -42,7 +42,7 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
     }
 
     var currentScreen: StackValue? {
-        stacks[currentStack]?.peek()
+        self.stacks[self.currentStack]?.peek()
     }
 
     var screens: [StackValue] {
@@ -51,12 +51,12 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
 
     @MainActor
     func changeStack(to stack: StackValue) {
-        guard currentStack != stack else { return }
+        guard self.currentStack != stack else { return }
 
-        if stacks[stack] == nil {
-            stacks[stack] = Stack()
+        if self.stacks[stack] == nil {
+            self.stacks[stack] = Stack()
         }
-        currentStack = stack
+        self.currentStack = stack
     }
 
     /// Navigates to the given destination.
@@ -68,7 +68,7 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
         #if !os(macOS)
         assertionFailure("This method is only supported on macOS")
         #else
-        withAnimation { stacks[currentStack]?.push(destination) }
+        withAnimation { self.stacks[self.currentStack]?.push(destination) }
         #endif
     }
 
@@ -80,7 +80,7 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
         #if !os(macOS)
         assertionFailure("This method is only supported on macOS")
         #else
-        withAnimation { _ = stacks[currentStack]?.pop() }
+        withAnimation { _ = self.stacks[self.currentStack]?.pop() }
         #endif
     }
 
@@ -89,10 +89,10 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
     }
 
     private func setupNotifications() {
-        for notification in notifications {
+        for notification in self.notifications {
             NotificationCenter.default.addObserver(
                 self,
-                selector: #selector(handleNotification),
+                selector: #selector(self.handleNotification),
                 name: notification,
                 object: nil
             )
@@ -100,7 +100,7 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
     }
 
     private func removeNotifications() {
-        for notification in notifications {
+        for notification in self.notifications {
             NotificationCenter.default.removeObserver(self, name: notification, object: nil)
         }
     }
@@ -115,14 +115,14 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
                 return
             }
 
-            Task { await navigate(to: destination) }
+            Task { await self.navigate(to: destination) }
         default:
             assertionFailure("Unhandled notification")
         }
     }
 
     private func stacksDidSet() {
-        NotificationCenter.default.post(name: .hasChangedScreens, object: currentScreen)
+        NotificationCenter.default.post(name: .hasChangedScreens, object: self.currentScreen)
     }
 }
 

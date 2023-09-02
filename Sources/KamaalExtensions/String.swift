@@ -45,7 +45,7 @@ extension StringProtocol {
 
     /// Transforming localized number to a double
     public var localizedStringToDouble: Double? {
-        let string = trimmingByWhitespacesAndNewLines
+        let string = self.trimmingByWhitespacesAndNewLines
         guard let startNumberIndex = string.firstIndex(where: \.isNumber),
               let endNumberIndex = string.lastIndex(where: \.isNumber) else { return nil }
 

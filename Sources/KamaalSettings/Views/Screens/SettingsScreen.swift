@@ -25,10 +25,10 @@ public struct SettingsScreen: View {
             root: { screen in MainView(screen: screen) },
             subView: { screen in MainView(screen: screen) }
         )
-        .environmentObject(store)
-        .accentColor(configuration.currentColor)
-        .onAppear(perform: handleOnAppear)
-        .environment(\.settingsConfiguration, configuration)
+        .environmentObject(self.store)
+        .accentColor(self.configuration.currentColor)
+        .onAppear(perform: self.handleOnAppear)
+        .environment(\.settingsConfiguration, self.configuration)
         #if os(macOS)
             .padding(.vertical, .medium)
             .ktakeSizeEagerly(alignment: .topLeading)
@@ -38,7 +38,7 @@ public struct SettingsScreen: View {
 
     private func handleOnAppear() {
         Task {
-            _ = try? await store.requestProducts().get()
+            _ = try? await self.store.requestProducts().get()
         }
     }
 }

@@ -21,16 +21,16 @@ struct FeatureRow: View {
 
     var body: some View {
         HStack {
-            AppText(string: feature.label)
+            AppText(string: self.feature.label)
                 .bold()
                 .foregroundColor(.accentColor)
             Spacer()
-            Toggle(isOn: $isEnabled, label: { Text("") })
+            Toggle(isOn: self.$isEnabled, label: { Text("") })
                 .labelsHidden()
         }
-        .onChange(of: isEnabled, perform: { newState in
-            let newFeature = Feature(id: feature.id, label: feature.label, isEnabled: newState)
-            onChange(newFeature)
+        .onChange(of: self.isEnabled, perform: { newState in
+            let newFeature = Feature(id: feature.id, label: self.feature.label, isEnabled: newState)
+            self.onChange(newFeature)
         })
     }
 }

@@ -13,13 +13,17 @@ struct AppSettings: View {
     @State private var selectedLanguageOption = languageOptions[0]
 
     var body: some View {
-        SettingsScreen(configuration: configuration)
-            .onAppColorChange(handleOnAppColorChange)
-            .onSettingsPreferenceChange(handlePreferenceChange)
+        SettingsScreen(configuration: self.configuration)
+            .onAppColorChange(self.handleOnAppColorChange)
+            .onSettingsPreferenceChange(self.handlePreferenceChange)
     }
 
     private var configuration: SettingsConfiguration {
-        .init(donations: donations, color: .init(colors: appColors, currentColor: appColor), preferences: preferences)
+        .init(
+            donations: donations,
+            color: .init(colors: appColors, currentColor: self.appColor),
+            preferences: self.preferences
+        )
     }
 
     var preferences: [Preference] {
@@ -27,7 +31,7 @@ struct AppSettings: View {
             .init(
                 id: UUID(uuidString: "66971130-a466-44cc-83f6-4759b51e7789")!,
                 label: "Language",
-                selectedOption: selectedLanguageOption,
+                selectedOption: self.selectedLanguageOption,
                 options: languageOptions
             ),
         ]
@@ -38,7 +42,7 @@ struct AppSettings: View {
     }
 
     private func handlePreferenceChange(_ preference: Preference) {
-        selectedLanguageOption = preference.selectedOption
+        self.selectedLanguageOption = preference.selectedOption
     }
 }
 

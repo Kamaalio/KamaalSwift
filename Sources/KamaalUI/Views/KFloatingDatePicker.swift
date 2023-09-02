@@ -29,16 +29,16 @@ public struct KFloatingDatePicker: View {
 
     public var body: some View {
         ZStack(alignment: .leading) {
-            Text(title)
+            Text(self.title)
                 .foregroundColor(.accentColor)
                 .offset(y: -25)
                 .scaleEffect(0.75, anchor: .leading)
                 .padding(.horizontal, 4)
-            DatePicker("", selection: $value, displayedComponents: displayedComponents)
+            DatePicker("", selection: self.$value, displayedComponents: self.displayedComponents)
                 .labelsHidden()
         }
         .padding(.top, 12)
-        .onChange(of: value, perform: onChange)
+        .onChange(of: self.value, perform: self.onChange)
     }
 }
 

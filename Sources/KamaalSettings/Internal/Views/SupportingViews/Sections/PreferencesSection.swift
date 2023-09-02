@@ -16,7 +16,7 @@ struct PreferencesSection: View {
 
     var body: some View {
         KSection(header: "Preferences".localized(comment: "")) {
-            ForEach(settingsConfiguration.preferences) { preference in
+            ForEach(self.settingsConfiguration.preferences) { preference in
                 NavigationLinkValueRow(
                     label: preference.label,
                     destination: .preferenceOptions(preference: preference)

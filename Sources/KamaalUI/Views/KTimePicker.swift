@@ -21,9 +21,9 @@ public struct KTimePicker: View {
 
     public var body: some View {
         VStack {
-            Picker("", selection: selection) {
-                ForEach(range) {
-                    Text(String(format: "%02d", $0 * steps))
+            Picker("", selection: self.selection) {
+                ForEach(self.range) {
+                    Text(String(format: "%02d", $0 * self.steps))
                 }
             }
             .labelsHidden()

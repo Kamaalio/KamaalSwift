@@ -9,19 +9,19 @@ import SwiftUI
 
 extension View {
     public func onAppColorChange(_ perform: @escaping (AppColor) -> Void) -> some View {
-        onChangeBase(for: .appColorChanged, perform)
+        self.onChangeBase(for: .appColorChanged, perform)
     }
 
     public func onAppIconChange(_ perform: @escaping (AppIcon) -> Void) -> some View {
-        onChangeBase(for: .appIconChanged, perform)
+        self.onChangeBase(for: .appIconChanged, perform)
     }
 
     public func onFeatureChange(_ perform: @escaping (Feature) -> Void) -> some View {
-        onChangeBase(for: .featureChanged, perform)
+        self.onChangeBase(for: .featureChanged, perform)
     }
 
     public func onSettingsPreferenceChange(_ perform: @escaping (Preference) -> Void) -> some View {
-        onChangeBase(for: .preferenceChanged, perform)
+        self.onChangeBase(for: .preferenceChanged, perform)
     }
 
     private func onChangeBase<Target>(for notification: Notification.Name,

@@ -31,39 +31,43 @@ struct FeedbackScreen: View {
     var body: some View {
         VStack {
             KFloatingTextField(
-                text: $viewModel.title,
+                text: self.$viewModel.title,
                 title: "Title".localized(comment: "")
             )
             KTextView(
-                text: $viewModel.description,
+                text: self.$viewModel.description,
                 title: "Description".localized(comment: "")
             )
-            AppButton(action: onSendPress) {
+            AppButton(action: self.onSendPress) {
                 AppText(localizedString: "Send", comment: "")
                     .font(.headline)
                     .bold()
-                    .foregroundColor(colorScheme == .dark ? .black : .white)
+                    .foregroundColor(self.colorScheme == .dark ? .black : .white)
                     .padding(.vertical, .extraSmall)
                     .ktakeWidthEagerly()
                     .background(Color.accentColor)
                     .cornerRadius(.small)
             }
-            .disabled(viewModel.disableSubmit)
+            .disabled(self.viewModel.disableSubmit)
         }
         .padding(.all, .medium)
-        .kPopUpLite(isPresented: $viewModel.showToast,
-                    style: viewModel.lastToastType?.pupUpStyle ?? .bottom(title: "", type: .warning, description: nil),
-                    backgroundColor: colorScheme == .dark ? .black : .white)
-        .accentColor(settingsConfiguration.currentColor)
+        .kPopUpLite(isPresented: self.$viewModel.showToast,
+                    style: self.viewModel.lastToastType?.pupUpStyle ?? .bottom(
+                        title: "",
+                        type: .warning,
+                        description: nil
+                    ),
+                    backgroundColor: self.colorScheme == .dark ? .black : .white)
+        .accentColor(self.settingsConfiguration.currentColor)
     }
 
     private func onSendPress() {
         Task {
-            await viewModel.submit(using: settingsConfiguration.feedback, dismiss: {
+            await self.viewModel.submit(using: self.settingsConfiguration.feedback, dismiss: {
                 #if os(macOS)
-                navigator.goBack()
+                self.navigator.goBack()
                 #else
-                presentationMode.wrappedValue.dismiss()
+                self.presentationMode.wrappedValue.dismiss()
                 #endif
             })
         }
@@ -76,7 +80,7 @@ private final class ViewModel: ObservableObject {
     @Published private(set) var loading = false
     @Published var showToast = false
     @Published private(set) var toastType: ToastType? {
-        didSet { Task { await toastTypeDidSet() } }
+        didSet { Task { await self.toastTypeDidSet() } }
     }
 
     @Published private(set) var lastToastType: ToastType?
@@ -94,7 +98,7 @@ private final class ViewModel: ObservableObject {
         case failure
 
         var pupUpStyle: KPopUpStyles {
-            .bottom(title: title, type: popUpType, description: description)
+            .bottom(title: self.title, type: self.popUpType, description: self.description)
         }
 
         private var title: String {
@@ -126,7 +130,7 @@ private final class ViewModel: ObservableObject {
     }
 
     var disableSubmit: Bool {
-        loading || title.trimmingByWhitespacesAndNewLines.isEmpty
+        self.loading || self.title.trimmingByWhitespacesAndNewLines.isEmpty
     }
 
     func submit(
@@ -139,7 +143,7 @@ private final class ViewModel: ObservableObject {
         var gitHubAPI = services.gitHub
         gitHubAPI.configure(with: .init(token: feedbackConfiguration.token, username: feedbackConfiguration.username))
 
-        await withLoading(completion: {
+        await self.withLoading(completion: {
             let descriptionWithAdditionalFeedback = """
             # User Feedback
 
@@ -153,19 +157,19 @@ private final class ViewModel: ObservableObject {
                 _ = try await gitHubAPI.repos.createIssue(
                     username: feedbackConfiguration.username,
                     repoName: feedbackConfiguration.repoName,
-                    title: title,
+                    title: self.title,
                     description: descriptionWithAdditionalFeedback,
                     assignee: feedbackConfiguration.username,
-                    labels: feedbackConfiguration.additionalLabels.concat(style.labels)
+                    labels: feedbackConfiguration.additionalLabels.concat(self.style.labels)
                 ).get()
             } catch {
                 logger.error(label: "failed to send feedback", error: error)
-                await setToastType(to: .failure)
+                await self.setToastType(to: .failure)
                 return
             }
 
             logger.info("feedback sent")
-            await setToastType(to: .success)
+            await self.setToastType(to: .success)
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 dismiss()
@@ -175,22 +179,22 @@ private final class ViewModel: ObservableObject {
 
     @MainActor
     private func setToastType(to type: ToastType?) {
-        toastType = type
+        self.toastType = type
         if type != nil {
-            lastToastType = type
+            self.lastToastType = type
         }
     }
 
     @MainActor
     private func toastTypeDidSet() {
-        if toastType != nil {
-            if toastTimer != nil {
-                toastTimer?.invalidate()
-                toastTimer = nil
+        if self.toastType != nil {
+            if self.toastTimer != nil {
+                self.toastTimer?.invalidate()
+                self.toastTimer = nil
             }
 
-            showToast = true
-            toastTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { [weak self] _ in
+            self.showToast = true
+            self.toastTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { [weak self] _ in
                 guard let self else { return }
 
                 self.toastTimer?.invalidate()
@@ -198,14 +202,14 @@ private final class ViewModel: ObservableObject {
                 Task { await self.setToastType(to: .none) }
             })
         } else {
-            showToast = false
-            toastTimer?.invalidate()
-            toastTimer = nil
+            self.showToast = false
+            self.toastTimer?.invalidate()
+            self.toastTimer = nil
         }
     }
 
     private func withLoading<T>(completion: () async -> T) async -> T {
-        await setLoading(true)
+        await self.setLoading(true)
         let maybeResult = await completion()
         await setLoading(false)
         return maybeResult
@@ -213,7 +217,7 @@ private final class ViewModel: ObservableObject {
 
     @MainActor
     private func setLoading(_ state: Bool) {
-        loading = state
+        self.loading = state
     }
 }
 

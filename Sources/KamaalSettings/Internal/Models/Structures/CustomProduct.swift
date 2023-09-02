@@ -52,7 +52,7 @@ struct CustomProduct: Hashable, Identifiable {
     }
 
     var donation: StoreKitDonation {
-        .init(id: id, emoji: emoji, weight: weight)
+        .init(id: self.id, emoji: self.emoji, weight: self.weight)
     }
 
     static let carrot = CustomProduct(

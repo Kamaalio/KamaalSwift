@@ -12,12 +12,12 @@ final class StoreTests: XCTestCase {
     var store: Store!
 
     override func setUpWithError() throws {
-        store = Store(donations: donations, productFetcher: MockProductFetcher())
+        self.store = Store(donations: donations, productFetcher: MockProductFetcher())
     }
 
     func testGetAllProducts() async throws {
-        try await store.requestProducts().get()
-        XCTAssertEqual(store.donations.count, donations.count)
+        try await self.store.requestProducts().get()
+        XCTAssertEqual(self.store.donations.count, donations.count)
     }
 }
 

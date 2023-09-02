@@ -20,6 +20,6 @@ public struct StoreKitDonation: Hashable, Identifiable, Codable {
     }
 
     var emojiCharacter: Character {
-        emoji.first!
+        self.emoji.first!
     }
 }

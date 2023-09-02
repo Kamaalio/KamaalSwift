@@ -18,10 +18,10 @@ struct RowView<Label: View, Value: View>: View {
 
     var body: some View {
         HStack {
-            label
+            self.label
                 .font(.headline)
             Spacer()
-            value
+            self.value
         }
         .padding(.vertical, 1)
     }

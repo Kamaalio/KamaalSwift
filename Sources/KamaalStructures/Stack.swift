@@ -17,31 +17,31 @@ public struct Stack<Value: Codable & Hashable>: Equatable, Codable {
     }
 
     public var isEmpty: Bool {
-        count == 0
+        self.count == 0
     }
 
     public var array: [Value] {
-        top?.array ?? []
+        self.top?.array ?? []
     }
 
     public func peek() -> Value? {
-        top?.value
+        self.top?.value
     }
 
     public mutating func push(_ item: Value) {
-        let currentTop = top
-        top = Node(value: item, next: currentTop)
-        count += 1
+        let currentTop = self.top
+        self.top = Node(value: item, next: currentTop)
+        self.count += 1
     }
 
     @discardableResult
     public mutating func pop() -> Value? {
-        let currentTop = top
-        top = top?.next
+        let currentTop = self.top
+        self.top = self.top?.next
 
         guard let removedItem = currentTop?.value else { return nil }
 
-        count -= 1
+        self.count -= 1
         return removedItem
     }
 

@@ -17,24 +17,24 @@ struct DonationView: View {
 
     var body: some View {
         HStack {
-            AppText(string: donation.emoji.string)
+            AppText(string: self.donation.emoji.string)
             VStack(alignment: .center) {
                 AppText(
                     localizedString: "Buy me a %@",
                     comment: "%@ as in the item to buy",
-                    with: [donation.displayName]
+                    with: [self.donation.displayName]
                 )
                 .textCase(.uppercase)
                 .font(.headline)
                 .foregroundColor(.primary)
-                AppText(string: donation.description)
+                AppText(string: self.donation.description)
                     .textCase(.uppercase)
                     .font(.subheadline)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
             }
             Spacer()
-            AppText(string: donation.displayPrice)
+            AppText(string: self.donation.displayPrice)
                 .bold()
                 .font(.headline)
                 .foregroundColor(.accentColor)

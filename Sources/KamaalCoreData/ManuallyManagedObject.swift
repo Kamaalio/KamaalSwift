@@ -70,7 +70,7 @@ extension ManuallyManagedObject {
 
     /// Deletes the managed object.
     public func delete() throws {
-        try delete(save: true)
+        try self.delete(save: true)
     }
 
     /// A description of an entity in Core Data.
@@ -89,14 +89,14 @@ extension ManuallyManagedObject {
     ///  Makes a `NSFetchRequest` for the managed object.
     /// - Returns: A description of search criteria used to retrieve data from a persistent store.
     public static func fetchRequest() -> NSFetchRequest<Self> {
-        NSFetchRequest<Self>(entityName: entityName)
+        NSFetchRequest<Self>(entityName: self.entityName)
     }
 
     /// Lists all items in CoreData store.
     /// - Parameter context: An object space to manipulate and track changes to managed objects.
     /// - Returns: All items in CoreData store.
     public static func list(from context: NSManagedObjectContext) throws -> [Self] {
-        try filter(by: NSPredicate(value: true), from: context)
+        try self.filter(by: NSPredicate(value: true), from: context)
     }
 
     /// Filters items in CoreData store.
@@ -105,7 +105,7 @@ extension ManuallyManagedObject {
     ///   - context: An object space to manipulate and track changes to managed objects.
     /// - Returns: Filtered items in CoreData store.
     public static func filter(by predicate: NSPredicate, from context: NSManagedObjectContext) throws -> [Self] {
-        try filter(by: predicate, limit: nil, from: context)
+        try self.filter(by: predicate, limit: nil, from: context)
     }
 
     /// Filters items in CoreData store.
@@ -119,7 +119,7 @@ extension ManuallyManagedObject {
         limit: Int?,
         from context: NSManagedObjectContext
     ) throws -> [Self] {
-        let request = fetchRequest()
+        let request = self.fetchRequest()
         request.predicate = predicate
         if let limit {
             request.fetchLimit = limit
@@ -133,7 +133,7 @@ extension ManuallyManagedObject {
     ///   - context: An object space to manipulate and track changes to managed objects.
     /// - Returns: An found item in CoreData store.
     public static func find(by predicate: NSPredicate, from context: NSManagedObjectContext) throws -> Self? {
-        try filter(by: predicate, limit: 1, from: context).first
+        try self.filter(by: predicate, limit: 1, from: context).first
     }
 
     /// Delete multiple objects by the given predicate.

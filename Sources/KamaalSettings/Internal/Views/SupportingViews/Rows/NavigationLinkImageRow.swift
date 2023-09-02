@@ -45,12 +45,12 @@ struct NavigationLinkImageRow: View {
     }
 
     var body: some View {
-        NavigationLinkRow(destination: destination) {
-            switch imageType {
+        NavigationLinkRow(destination: self.destination) {
+            switch self.imageType {
             case .systemName:
-                ImageTextRow(label: label, imageSystemName: imageName)
+                ImageTextRow(label: self.label, imageSystemName: self.imageName)
             case .name:
-                ImageTextRow(label: label, imageName: imageName)
+                ImageTextRow(label: self.label, imageName: self.imageName)
             }
         }
     }

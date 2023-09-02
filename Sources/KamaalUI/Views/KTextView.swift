@@ -20,11 +20,11 @@ public struct KTextView: View {
 
     public var body: some View {
         VStack {
-            Text(title)
+            Text(self.title)
                 .foregroundColor(.accentColor)
                 .offset(y: 8)
                 .ktakeWidthEagerly(alignment: .leading)
-            TextViewRepresentable(text: $text)
+            TextViewRepresentable(text: self.$text)
                 .overlay(RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.secondary, lineWidth: 1))
         }

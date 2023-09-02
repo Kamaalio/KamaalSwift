@@ -16,8 +16,8 @@ struct FeaturesSection: View {
 
     var body: some View {
         KSection(header: "Features".localized(comment: "")) {
-            ForEach(settingsConfiguration.features) { feature in
-                FeatureRow(feature: feature, onChange: onFeatureChange)
+            ForEach(self.settingsConfiguration.features) { feature in
+                FeatureRow(feature: feature, onChange: self.onFeatureChange)
             }
         }
     }

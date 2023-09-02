@@ -20,17 +20,17 @@ public class LogValue<Value> {
         self.logger = logger
         self.level = level
 
-        log(.initialize)
+        self.log(.initialize)
     }
 
     public var wrappedValue: Value {
         get {
-            log(.get)
-            return value
+            self.log(.get)
+            return self.value
         }
         set {
-            log(.set)
-            value = newValue
+            self.log(.set)
+            self.value = newValue
         }
     }
 
@@ -52,16 +52,16 @@ public class LogValue<Value> {
     }
 
     private func log(_ event: Events) {
-        let message = "\(event.localized) '\(description)'; value='\(value)'"
-        switch level {
+        let message = "\(event.localized) '\(self.description)'; value='\(self.value)'"
+        switch self.level {
         case .error:
-            logger.error(message)
+            self.logger.error(message)
         case .warning:
-            logger.warning(message)
+            self.logger.warning(message)
         case .info:
-            logger.info(message)
+            self.logger.info(message)
         case .debug:
-            logger.debug(message)
+            self.logger.debug(message)
         }
     }
 }

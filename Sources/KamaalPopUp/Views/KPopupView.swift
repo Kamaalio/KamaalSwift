@@ -14,22 +14,22 @@ struct KPopupView: View {
     let onClose: () -> Void
 
     var body: some View {
-        switch style {
+        switch self.style {
         case let .bottom(title, type, description):
             BottomPopupView(
                 title: title,
                 description: description,
-                backgroundColor: backgroundColor,
+                backgroundColor: self.backgroundColor,
                 bottomType: type,
-                close: onClose
+                close: self.onClose
             )
         case let .hud(title, systemImageName, description):
             HudPopupView(
                 title: title,
                 description: description,
                 systemImageName: systemImageName,
-                backgroundColor: backgroundColor,
-                onClose: onClose
+                backgroundColor: self.backgroundColor,
+                onClose: self.onClose
             )
         }
     }

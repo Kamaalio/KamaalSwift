@@ -19,17 +19,17 @@ public class KamaalNetworker {
     }
 
     public func loadImage(from imageURL: URL) -> Result<Data, Errors> {
-        requestData(from: imageURL)
+        self.requestData(from: imageURL)
     }
 
     public func loadImage(from imageURLString: String) -> Result<Data, Errors> {
         guard let imageURL = URL(string: imageURLString) else { return .failure(.invalidURL(url: imageURLString)) }
-        return requestData(from: imageURL)
+        return self.requestData(from: imageURL)
     }
 
     public func requestData(from urlString: String) -> Result<Data, Errors> {
         guard let url = URL(string: urlString) else { return .failure(.invalidURL(url: urlString)) }
-        return requestData(from: url)
+        return self.requestData(from: url)
     }
 
     public func requestData(from url: URL) -> Result<Data, Errors> {
@@ -50,9 +50,9 @@ public class KamaalNetworker {
         config: KRequestConfig? = nil,
         completion: @escaping (Result<Response<T>, Errors>) -> Void
     ) {
-        let request = setupURLRequest(url: url, method: method, payload: payload, headers: headers)
+        let request = self.setupURLRequest(url: url, method: method, payload: payload, headers: headers)
 
-        let task = urlSession.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+        let task = self.urlSession.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             self.handleDataTask(
                 data: data,
                 response: response,
@@ -78,7 +78,7 @@ public class KamaalNetworker {
         config: KRequestConfig? = nil
     ) async -> Result<Response<T>, Errors> {
         await withCheckedContinuation { continuation in
-            request(
+            self.request(
                 from: url,
                 method: method,
                 payload: payload,
@@ -97,7 +97,7 @@ public class KamaalNetworker {
         config: KRequestConfig? = nil,
         completion: @escaping (Result<Response<T>, Errors>) -> Void
     ) {
-        request(
+        self.request(
             from: url,
             method: method,
             payload: payload?.asData,
@@ -116,7 +116,7 @@ public class KamaalNetworker {
         config: KRequestConfig? = nil
     ) async -> Result<Response<T>, Errors> {
         await withCheckedContinuation { continuation in
-            request(
+            self.request(
                 from: url,
                 method: method,
                 payload: payload,
@@ -139,7 +139,14 @@ public class KamaalNetworker {
             completion(.failure(.invalidURL(url: urlString)))
             return
         }
-        request(from: url, method: method, payload: payload, headers: headers, config: config, completion: completion)
+        self.request(
+            from: url,
+            method: method,
+            payload: payload,
+            headers: headers,
+            config: config,
+            completion: completion
+        )
     }
 
     @available(iOS 13.0.0, macOS 10.15.0, tvOS 13.0.0, watchOS 6.0.0, *)
@@ -151,7 +158,7 @@ public class KamaalNetworker {
         config: KRequestConfig? = nil
     ) async -> Result<Response<T>, Errors> {
         await withCheckedContinuation { continuation in
-            request(
+            self.request(
                 from: urlString,
                 method: method,
                 payload: payload,
@@ -174,7 +181,14 @@ public class KamaalNetworker {
             completion(.failure(.invalidURL(url: urlString)))
             return
         }
-        request(from: url, method: method, payload: payload, headers: headers, config: config, completion: completion)
+        self.request(
+            from: url,
+            method: method,
+            payload: payload,
+            headers: headers,
+            config: config,
+            completion: completion
+        )
     }
 
     @available(iOS 13.0.0, macOS 10.15.0, tvOS 13.0.0, watchOS 6.0.0, *)
@@ -186,7 +200,7 @@ public class KamaalNetworker {
         config: KRequestConfig? = nil
     ) async -> Result<Response<T>, Errors> {
         await withCheckedContinuation { continuation in
-            request(
+            self.request(
                 from: urlString,
                 method: method,
                 payload: payload,
@@ -206,7 +220,14 @@ public class KamaalNetworker {
         responseType _: T.Type,
         completion: @escaping (Result<Response<T>, Errors>) -> Void
     ) {
-        request(from: url, method: method, payload: payload, headers: headers, config: config, completion: completion)
+        self.request(
+            from: url,
+            method: method,
+            payload: payload,
+            headers: headers,
+            config: config,
+            completion: completion
+        )
     }
 
     public func request<T: Decodable>(
@@ -218,7 +239,7 @@ public class KamaalNetworker {
         responseType _: T.Type,
         completion: @escaping (Result<Response<T>, Errors>) -> Void
     ) {
-        request(
+        self.request(
             from: urlString,
             method: method,
             payload: payload,
@@ -237,9 +258,9 @@ public class KamaalNetworker {
         headers: [String: String]? = nil,
         config: KRequestConfig? = nil
     ) -> AnyPublisher<Response<T>, Error> {
-        let request = setupURLRequest(url: url, method: method, payload: payload?.asData, headers: headers)
+        let request = self.setupURLRequest(url: url, method: method, payload: payload?.asData, headers: headers)
 
-        return urlSession.dataTaskPublisher(for: request)
+        return self.urlSession.dataTaskPublisher(for: request)
             .tryMap { (output: URLSession.DataTaskPublisher.Output) -> Response<T> in
                 let transformedResponseResult: Result<Response<T>, Errors> = self.transformResponseOutput(
                     response: output.response,
@@ -263,7 +284,7 @@ public class KamaalNetworker {
         responseType _: T.Type,
         config: KRequestConfig? = nil
     ) -> AnyPublisher<Response<T>, Error> {
-        requestPublisher(from: url, method: method, payload: payload, headers: headers, config: config)
+        self.requestPublisher(from: url, method: method, payload: payload, headers: headers, config: config)
     }
     #endif
 
@@ -293,7 +314,7 @@ public class KamaalNetworker {
             return
         }
 
-        let transformedResponseResult: Result<Response<T>, Errors> = transformResponseOutput(
+        let transformedResponseResult: Result<Response<T>, Errors> = self.transformResponseOutput(
             response: response,
             data: data,
             kowalskiAnalysis: kowalskiAnalysis

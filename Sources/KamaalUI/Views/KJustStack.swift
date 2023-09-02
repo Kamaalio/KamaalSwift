@@ -15,7 +15,7 @@ public struct KJustStack<Content: View>: View {
     }
 
     public var body: some View {
-        content
+        self.content
     }
 }
 

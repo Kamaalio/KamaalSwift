@@ -18,9 +18,9 @@ public struct KSpacedHStack<Left: View, Right: View>: View {
 
     public var body: some View {
         HStack {
-            left()
+            self.left()
             Spacer()
-            right()
+            self.right()
         }
     }
 }

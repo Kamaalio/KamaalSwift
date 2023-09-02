@@ -21,35 +21,35 @@ public struct KEnforcedFloatingDecimalField: View {
     }
 
     public var body: some View {
-        KFloatingTextField(text: $text, title: title, textFieldType: .decimals)
-            .onAppear(perform: onViewAppear)
-            .onChange(of: text, perform: onTextChange(_:))
-            .onChange(of: value, perform: onValueChange(_:))
+        KFloatingTextField(text: self.$text, title: self.title, textFieldType: .decimals)
+            .onAppear(perform: self.onViewAppear)
+            .onChange(of: self.text, perform: self.onTextChange(_:))
+            .onChange(of: self.value, perform: self.onValueChange(_:))
     }
 
     private func onViewAppear() {
         let stringValue = String(value)
-        if stringValue != text {
-            text = stringValue
+        if stringValue != self.text {
+            self.text = stringValue
         }
     }
 
     private func onValueChange(_ newValue: Double) {
         let stringValue = String(newValue)
-        if stringValue != text {
-            text = stringValue
+        if stringValue != self.text {
+            self.text = stringValue
         }
     }
 
     private func onTextChange(_ changedText: String) {
         if let textAsDouble = Double(changedText) {
-            if textAsDouble != value {
-                value = textAsDouble
+            if textAsDouble != self.value {
+                self.value = textAsDouble
             }
         } else {
             let sanitizedDouble = String(changedText.sanitizedDouble)
-            if sanitizedDouble != text {
-                text = sanitizedDouble
+            if sanitizedDouble != self.text {
+                self.text = sanitizedDouble
             }
         }
     }
