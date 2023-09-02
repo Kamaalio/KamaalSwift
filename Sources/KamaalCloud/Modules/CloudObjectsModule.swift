@@ -1,5 +1,5 @@
 //
-//  CloudFetchModule.swift
+//  CloudObjectsModule.swift
 //
 //
 //  Created by Kamaal M Farah on 02/09/2023.
@@ -9,7 +9,7 @@ import CloudKit
 import Foundation
 import KamaalExtensions
 
-public class CloudFetchModule {
+public class CloudObjectsModule {
     private let accounts: CloudAccountsModule
     private let database: CKDatabase
 
