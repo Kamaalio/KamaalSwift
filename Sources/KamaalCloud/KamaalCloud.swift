@@ -9,8 +9,7 @@ import CloudKit
 import Foundation
 
 public class KamaalCloud {
-    public let accounts: CloudAccountsModule
-    public let fetch: CloudFetchModule
+    public let objects: CloudObjectsModule
 
     public init(containerID: String, databaseType: DatabaseType) {
         let container = CKContainer(identifier: containerID)
@@ -21,8 +20,7 @@ public class KamaalCloud {
         case .private: database = container.privateCloudDatabase
         }
         let accounts = CloudAccountsModule(container: container)
-        self.accounts = CloudAccountsModule(container: container)
-        self.fetch = CloudFetchModule(accounts: accounts, database: database)
+        self.objects = CloudObjectsModule(accounts: accounts, database: database)
     }
 
     /// Access control of the container
