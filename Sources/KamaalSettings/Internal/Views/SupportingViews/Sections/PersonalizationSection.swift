@@ -13,7 +13,7 @@ struct PersonalizationSection: View {
 
     var body: some View {
         KSection(header: "Personalization".localized(comment: "")) {
-            if settingsConfiguration.colorsIsConfigured {
+            if self.settingsConfiguration.colorsIsConfigured {
                 NavigationLinkColorRow(
                     localizedLabel: "App colors",
                     comment: "",
@@ -21,16 +21,16 @@ struct PersonalizationSection: View {
                     destination: .appColor
                 )
                 #if os(macOS)
-                if settingsConfiguration.appIconIsConfigured {
+                if self.settingsConfiguration.appIconIsConfigured {
                     Divider()
                 }
                 #endif
             }
-            if settingsConfiguration.appIconIsConfigured {
+            if self.settingsConfiguration.appIconIsConfigured {
                 NavigationLinkImageRow(
                     localizedLabel: "App icon",
                     comment: "",
-                    imageName: settingsConfiguration.appIcon!.currentIcon.imageName,
+                    imageName: self.settingsConfiguration.appIcon!.currentIcon.imageName,
                     destination: .appIcon
                 )
             }

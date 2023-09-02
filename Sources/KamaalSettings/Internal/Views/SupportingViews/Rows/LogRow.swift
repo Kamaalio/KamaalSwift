@@ -14,11 +14,11 @@ struct LogRow: View {
     let action: (_ log: HoldedLog) -> Void
 
     var body: some View {
-        AppButton(action: { action(log) }) {
+        AppButton(action: { self.action(self.log) }) {
             HStack(alignment: .top, spacing: 8) {
-                Text(log.label)
-                    .foregroundColor(log.level.color)
-                Text(log.message)
+                Text(self.log.label)
+                    .foregroundColor(self.log.level.color)
+                Text(self.log.message)
                     .foregroundColor(.primary)
                     .lineLimit(1)
             }

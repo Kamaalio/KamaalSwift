@@ -36,10 +36,10 @@ struct ImageTextRow: View {
     }
 
     var body: some View {
-        ValueRow(label: label) {
-            switch imageType {
+        ValueRow(label: self.label) {
+            switch self.imageType {
             case .systemName:
-                Image(systemName: imageName)
+                Image(systemName: self.imageName)
             case .name:
                 if let imageFromAsset {
                     imageFromAsset

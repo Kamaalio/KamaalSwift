@@ -97,9 +97,9 @@ public class ManagedObjectPropertyConfiguration: ManagedObjectField {
     override public var property: NSPropertyDescription? {
         get {
             let attribute = NSAttributeDescription()
-            attribute.name = name
-            attribute.attributeType = type.nsAttributeType
-            attribute.isOptional = isOptional
+            attribute.name = self.name
+            attribute.attributeType = self.type.nsAttributeType
+            attribute.isOptional = self.isOptional
             return attribute
         }
         set { }

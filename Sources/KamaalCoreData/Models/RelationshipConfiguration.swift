@@ -55,11 +55,11 @@ public class _RelationshipConfiguration: ManagedObjectField {
     override public var property: NSPropertyDescription? {
         get {
             let relationship = NSRelationshipDescription()
-            relationship.name = name
-            relationship.isOptional = isOptional
-            relationship.destinationEntity = destinationEntity
+            relationship.name = self.name
+            relationship.isOptional = self.isOptional
+            relationship.destinationEntity = self.destinationEntity
 
-            switch relationshipType {
+            switch self.relationshipType {
             case .toMany:
                 relationship.maxCount = 0
             case .toOne:

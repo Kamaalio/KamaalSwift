@@ -32,8 +32,8 @@ public struct KDeletableView<Content: View>: View {
 
     public var body: some View {
         HStack {
-            if enabled, !isDeleting {
-                Button(action: { withAnimation { isDeleting = true } }) {
+            if self.enabled, !self.isDeleting {
+                Button(action: { withAnimation { self.isDeleting = true } }) {
                     Image(systemName: "minus.circle.fill")
                         .foregroundColor(.red)
                         .padding(.leading, 20)
@@ -41,20 +41,20 @@ public struct KDeletableView<Content: View>: View {
                 .buttonStyle(PlainButtonStyle())
                 .transition(.move(edge: .leading))
             }
-            content()
-            if enabled, isDeleting {
+            self.content()
+            if self.enabled, self.isDeleting {
                 Spacer()
-                Button(action: _onDelete) {
+                Button(action: self._onDelete) {
                     ZStack {
                         Color.red
-                        Text(deleteText)
+                        Text(self.deleteText)
                             .foregroundColor(light: .white, dark: .black)
-                            .kBindToFrameSize($textSize)
+                            .kBindToFrameSize(self.$textSize)
                     }
-                    .frame(minWidth: deleteButtonWidth,
-                           maxWidth: deleteButtonWidth,
-                           minHeight: deleteButtonHeight,
-                           maxHeight: deleteButtonHeight)
+                    .frame(minWidth: self.deleteButtonWidth,
+                           maxWidth: self.deleteButtonWidth,
+                           minHeight: self.deleteButtonHeight,
+                           maxHeight: self.deleteButtonHeight)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .transition(.move(edge: .trailing))
@@ -64,16 +64,16 @@ public struct KDeletableView<Content: View>: View {
     }
 
     private var deleteButtonWidth: CGFloat {
-        textSize.width + 16
+        self.textSize.width + 16
     }
 
     private var deleteButtonHeight: CGFloat {
-        textSize.height + 16
+        self.textSize.height + 16
     }
 
     private func _onDelete() {
-        onDelete()
-        withAnimation { isDeleting = false }
+        self.onDelete()
+        withAnimation { self.isDeleting = false }
     }
 }
 

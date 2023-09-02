@@ -21,7 +21,7 @@ struct MainView: View {
 
     var body: some View {
         KJustStack {
-            switch screen {
+            switch self.screen {
             case .home:
                 HomeScreen()
             case .other:
@@ -34,7 +34,7 @@ struct MainView: View {
                 CoreDataChildScreen(parentID: parentID)
             }
         }
-        .navigationTitle(title: screen.title, displayMode: displayMode)
+        .navigationTitle(title: self.screen.title, displayMode: self.displayMode)
     }
 }
 

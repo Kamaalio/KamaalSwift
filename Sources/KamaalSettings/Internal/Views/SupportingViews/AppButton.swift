@@ -18,8 +18,8 @@ struct AppButton<Content: View>: View {
     }
 
     var body: some View {
-        Button(action: action) {
-            content
+        Button(action: self.action) {
+            self.content
                 .foregroundColor(.accentColor)
                 .kInvisibleFill()
         }

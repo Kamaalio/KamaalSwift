@@ -57,13 +57,13 @@ struct SelectionScreenWrapper<Row: View, Item: Hashable & Identifiable>: View {
 
     var body: some View {
         KScrollableForm {
-            KSection(header: sectionTitle) {
-                ForEach(filteredItems) { item in
-                    AppButton(action: { onItemPress(item) }) {
-                        row(item)
+            KSection(header: self.sectionTitle) {
+                ForEach(self.filteredItems) { item in
+                    AppButton(action: { self.onItemPress(item) }) {
+                        self.row(item)
                     }
                     #if os(macOS)
-                    if item != filteredItems.last {
+                    if item != self.filteredItems.last {
                         Divider()
                     }
                     #endif
@@ -74,14 +74,14 @@ struct SelectionScreenWrapper<Row: View, Item: Hashable & Identifiable>: View {
             #endif
         }
         .ktakeSizeEagerly(alignment: .topLeading)
-        .accentColor(settingsConfiguration.currentColor)
-        .searchable(text: $searchText)
+        .accentColor(self.settingsConfiguration.currentColor)
+        .searchable(text: self.$searchText)
     }
 
     private var filteredItems: [Item] {
-        guard searchable else { return items }
+        guard self.searchable else { return self.items }
 
-        return items.filter { searchFilter($0, searchText) }
+        return self.items.filter { self.searchFilter($0, self.searchText) }
     }
 }
 

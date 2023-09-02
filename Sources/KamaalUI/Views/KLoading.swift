@@ -32,11 +32,11 @@ struct KActivityIndicator: UIViewRepresentable {
     }
 
     func makeUIView(context _: UIViewRepresentableContext<KActivityIndicator>) -> UIActivityIndicatorView {
-        UIActivityIndicatorView(style: style)
+        UIActivityIndicatorView(style: self.style)
     }
 
     func updateUIView(_ uiView: UIActivityIndicatorView, context _: UIViewRepresentableContext<KActivityIndicator>) {
-        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
+        self.isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
     }
 }
 #endif
@@ -54,12 +54,12 @@ struct KActivityIndicator: NSViewRepresentable {
 
     func makeNSView(context _: Context) -> NSProgressIndicator {
         let progressIndicator = NSProgressIndicator()
-        progressIndicator.style = style
+        progressIndicator.style = self.style
         return progressIndicator
     }
 
     func updateNSView(_ nsView: NSProgressIndicator, context _: Context) {
-        isAnimating ? nsView.startAnimation(nil) : nsView.stopAnimation(nil)
+        self.isAnimating ? nsView.startAnimation(nil) : nsView.stopAnimation(nil)
     }
 }
 #endif

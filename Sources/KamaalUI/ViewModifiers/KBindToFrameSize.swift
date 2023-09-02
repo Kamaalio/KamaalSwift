@@ -17,7 +17,7 @@ private struct KBindToFrameSize: ViewModifier {
     @Binding var size: CGSize
 
     func body(content: Content) -> some View {
-        content.overlay(GeometryReader(content: overlay(for:)))
+        content.overlay(GeometryReader(content: self.overlay(for:)))
     }
 
     func overlay(for geometry: GeometryProxy) -> some View {

@@ -23,9 +23,9 @@ struct NavigationLinkValueRow<Value: View>: View {
     }
 
     var body: some View {
-        NavigationLinkRow(destination: destination) {
-            ValueRow(label: label) {
-                value
+        NavigationLinkRow(destination: self.destination) {
+            ValueRow(label: self.label) {
+                self.value
             }
         }
     }

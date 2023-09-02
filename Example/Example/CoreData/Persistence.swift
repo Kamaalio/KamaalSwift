@@ -20,12 +20,12 @@ struct PersistenceController {
             preview: inMemory
         )
         self.container = persistentContainerBuilder.make()
-        container.loadPersistentStores(completionHandler: { _, error in
+        self.container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        container.viewContext.automaticallyMergesChangesFromParent = true
+        self.container.viewContext.automaticallyMergesChangesFromParent = true
     }
 
     static let shared = PersistenceController()

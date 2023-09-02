@@ -15,11 +15,11 @@ class Item: NSManagedObject, ManuallyManagedObject, Identifiable {
     @NSManaged var children: NSSet?
 
     var childrenArray: [Child] {
-        children?.allObjects as? [Child] ?? []
+        self.children?.allObjects as? [Child] ?? []
     }
 
     func addChild(_ child: Child, save: Bool) throws {
-        children = NSSet(array: childrenArray + [child])
+        self.children = NSSet(array: self.childrenArray + [child])
 
         if save {
             try managedObjectContext?.save()
@@ -27,7 +27,7 @@ class Item: NSManagedObject, ManuallyManagedObject, Identifiable {
     }
 
     func addChild(_ child: Child) throws {
-        try addChild(child, save: true)
+        try self.addChild(child, save: true)
     }
 
     static let properties: [ManagedObjectPropertyConfiguration] = [

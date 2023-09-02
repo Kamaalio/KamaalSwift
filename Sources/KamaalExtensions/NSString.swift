@@ -9,7 +9,7 @@ import Foundation
 
 extension NSString {
     public var uuid: UUID? {
-        UUID(uuidString: string)
+        UUID(uuidString: self.string)
     }
 
     public var string: String {

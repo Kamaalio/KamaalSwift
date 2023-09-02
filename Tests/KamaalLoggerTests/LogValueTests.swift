@@ -13,11 +13,11 @@ final class LogValueTests: XCTestCase {
 
     override func setUpWithError() throws {
         let holder = LogHolder(max: max(LogLevels.allCases.count, 3))
-        logger = .init(subsystem: "io.kamaal.Testing", from: LogValueTests.self, holder: holder)
+        self.logger = .init(subsystem: "io.kamaal.Testing", from: LogValueTests.self, holder: holder)
     }
 
     func testLogValue() async throws {
-        @LogValue(description: "Hello", logger: logger, level: .info)
+        @LogValue(description: "Hello", logger: self.logger, level: .info)
         var value = "Value"
 
         let initialLog = try await getLog(from: logger)
@@ -35,7 +35,7 @@ final class LogValueTests: XCTestCase {
 
     func testLogLevels() async throws {
         for (index, level) in LogLevels.allCases.enumerated() {
-            @LogValue(description: "Level Things", logger: logger, level: level)
+            @LogValue(description: "Level Things", logger: self.logger, level: level)
             var value: String = level.rawValue
 
             let log = try await getLog(from: logger, at: index)

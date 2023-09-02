@@ -20,7 +20,7 @@ struct LogDetailsSheet: View {
         KSheetStack(
             title: "Logs".localized(comment: ""),
             leadingNavigationButton: {
-                Button(action: close) {
+                Button(action: self.close) {
                     AppText(localizedString: "Close", comment: "")
                         .bold()
                         .foregroundColor(.accentColor)
@@ -37,13 +37,13 @@ struct LogDetailsSheet: View {
                             .foregroundColor(.primary)
 
                         if [LogLevels.error, .warning].contains(log.level) {
-                            AppButton(action: { reportBug(log) }) {
+                            AppButton(action: { self.reportBug(log) }) {
                                 HStack {
                                     Image(systemName: "ant")
-                                        .foregroundColor(colorScheme == .dark ? .black : .white)
+                                        .foregroundColor(self.colorScheme == .dark ? .black : .white)
                                     AppText(localizedString: "Report bug", comment: "")
                                         .bold()
-                                        .foregroundColor(colorScheme == .dark ? .black : .white)
+                                        .foregroundColor(self.colorScheme == .dark ? .black : .white)
                                 }
                                 .padding(.vertical, .small)
                                 .ktakeWidthEagerly()

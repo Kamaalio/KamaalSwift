@@ -32,16 +32,16 @@ public struct KRadioCheckBox: View {
 
     public var body: some View {
         Circle()
-            .foregroundColor(foregroundColor)
-            .frame(width: size, height: size)
-            .padding(.all, spacing)
+            .foregroundColor(self.foregroundColor)
+            .frame(width: self.size, height: self.size)
+            .padding(.all, self.spacing)
             .overlay(
-                RoundedRectangle(cornerRadius: size)
-                    .stroke(color, lineWidth: borderWidth)
+                RoundedRectangle(cornerRadius: self.size)
+                    .stroke(self.color, lineWidth: self.borderWidth)
             )
     }
 
     private var foregroundColor: Color {
-        color.opacity(checked ? 1 : 0)
+        self.color.opacity(self.checked ? 1 : 0)
     }
 }

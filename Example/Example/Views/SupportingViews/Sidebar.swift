@@ -23,7 +23,7 @@ struct Sidebar: View {
         }
         #if os(macOS)
         .toolbar(content: {
-            Button(action: toggleSidebar) {
+            Button(action: self.toggleSidebar) {
                 Label("Toggle sidebar", systemImage: "sidebar.left")
                     .foregroundColor(.accentColor)
             }

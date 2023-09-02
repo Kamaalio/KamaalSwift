@@ -19,7 +19,7 @@ struct EdgeBorder: Shape {
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        for edge in edges {
+        for edge in self.edges {
             var xAs: CGFloat {
                 switch edge {
                 case .top, .bottom, .leading: return rect.minX

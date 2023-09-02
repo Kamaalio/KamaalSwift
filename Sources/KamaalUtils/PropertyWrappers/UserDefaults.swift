@@ -18,14 +18,14 @@ public class UserDefaultsValue<Value> {
     }
 
     public var wrappedValue: Value? {
-        get { container.object(forKey: constructKey(key)) as? Value }
-        set { container.set(newValue, forKey: constructKey(key)) }
+        get { self.container.object(forKey: constructKey(self.key)) as? Value }
+        set { self.container.set(newValue, forKey: constructKey(self.key)) }
     }
 
     public var projectedValue: UserDefaultsValue<Value> { self }
 
     public func removeValue() {
-        container.removeObject(forKey: constructKey(key))
+        self.container.removeObject(forKey: constructKey(self.key))
     }
 }
 
@@ -40,14 +40,14 @@ public class UserDefaultsObject<Value: Codable> {
     }
 
     public var wrappedValue: Value? {
-        get { getValue() }
-        set { setValue(newValue) }
+        get { self.getValue() }
+        set { self.setValue(newValue) }
     }
 
     public var projectedValue: UserDefaultsObject<Value> { self }
 
     public func removeValue() {
-        container.removeObject(forKey: constructKey(key))
+        self.container.removeObject(forKey: constructKey(self.key))
     }
 
     private func getValue() -> Value? {
@@ -58,13 +58,13 @@ public class UserDefaultsObject<Value: Codable> {
 
     private func setValue(_ newValue: Value?) {
         guard let newValue else {
-            removeValue()
+            self.removeValue()
             return
         }
 
         guard let data = try? JSONEncoder().encode(newValue) else { return }
 
-        container.set(data, forKey: constructKey(key))
+        self.container.set(data, forKey: constructKey(self.key))
     }
 }
 

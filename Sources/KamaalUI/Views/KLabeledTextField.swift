@@ -29,12 +29,12 @@ public struct KLabeledTextField: View {
 
     public var body: some View {
         HStack {
-            Text(label)
+            Text(self.label)
                 .frame(minWidth: 75, maxWidth: 75, minHeight: 40, maxHeight: 40)
-                .foregroundColor(disableTextField ? .secondary : .primary)
-            TextField(placeholder, text: value)
-                .disabled(disableTextField)
-                .foregroundColor(disableTextField ? .secondary : .primary)
+                .foregroundColor(self.disableTextField ? .secondary : .primary)
+            TextField(self.placeholder, text: self.value)
+                .disabled(self.disableTextField)
+                .foregroundColor(self.disableTextField ? .secondary : .primary)
         }
     }
 }

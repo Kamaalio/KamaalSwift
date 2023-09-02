@@ -37,7 +37,7 @@ struct BottomPopupView: View {
                     Image(systemName: bottomType.iconName)
                         .foregroundColor(bottomType.color)
                     VStack(alignment: .leading) {
-                        Text(title)
+                        Text(self.title)
                             .foregroundColor(bottomType.color)
                             .bold()
                         if let description {
@@ -47,7 +47,7 @@ struct BottomPopupView: View {
                     }
                 }
                 Spacer()
-                Button(action: close) {
+                Button(action: self.close) {
                     Image(systemName: "xmark")
                         .kBold()
                         .foregroundColor(.secondary)
@@ -57,7 +57,7 @@ struct BottomPopupView: View {
             .padding(.all, 16)
         }
         .ktakeWidthEagerly(alignment: .center)
-        .background(backgroundColor)
+        .background(self.backgroundColor)
         .cornerRadius(8)
         .padding(.bottom, 8)
         .transition(.move(edge: .bottom))

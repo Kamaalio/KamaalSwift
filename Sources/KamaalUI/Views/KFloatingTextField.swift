@@ -46,12 +46,12 @@ public struct KFloatingTextField: View {
     }
 
     public var body: some View {
-        FloatingFieldWrapper(text: text, title: title, field: {
+        FloatingFieldWrapper(text: self.text, title: self.title, field: {
             #if canImport(UIKit) && !os(watchOS)
-            TextField("", text: $text, onEditingChanged: onEditingChanged, onCommit: onCommit)
-                .keyboardType(textFieldType.keyboardType)
+            TextField("", text: self.$text, onEditingChanged: self.onEditingChanged, onCommit: self.onCommit)
+                .keyboardType(self.textFieldType.keyboardType)
             #else
-            TextField(title, text: $text, onEditingChanged: onEditingChanged, onCommit: onCommit)
+            TextField(self.title, text: self.$text, onEditingChanged: self.onEditingChanged, onCommit: self.onCommit)
             #endif
         })
     }

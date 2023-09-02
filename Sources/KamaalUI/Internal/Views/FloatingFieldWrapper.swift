@@ -14,26 +14,26 @@ struct FloatingFieldWrapper<Field: View>: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            Text(title)
-                .foregroundColor(textColor)
-                .offset(y: text.isEmpty ? 0 : -25)
-                .scaleEffect(text.isEmpty ? 1 : 0.75, anchor: .leading)
-                .padding(.horizontal, titleHorizontalPadding)
-            field()
+            Text(self.title)
+                .foregroundColor(self.textColor)
+                .offset(y: self.text.isEmpty ? 0 : -25)
+                .scaleEffect(self.text.isEmpty ? 1 : 0.75, anchor: .leading)
+                .padding(.horizontal, self.titleHorizontalPadding)
+            self.field()
         }
         .padding(.top, 12)
         .animation(.spring(response: 0.5))
     }
 
     private var textColor: Color {
-        if text.isEmpty {
+        if self.text.isEmpty {
             return .secondary
         }
         return .accentColor
     }
 
     private var titleHorizontalPadding: CGFloat {
-        if text.isEmpty {
+        if self.text.isEmpty {
             return 4
         }
         return 0

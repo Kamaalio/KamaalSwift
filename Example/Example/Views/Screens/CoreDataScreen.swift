@@ -18,10 +18,10 @@ struct CoreDataScreen: View {
     var body: some View {
         NavigationStack {
             List {
-                if items.isEmpty {
+                if self.items.isEmpty {
                     EmptyItemsView(itemName: "items")
                 }
-                ForEach(items, id: \.id) { item in
+                ForEach(self.items, id: \.id) { item in
                     StackNavigationLink(
                         destination: Screens.coreDataChild(parentID: item.id),
                         nextView: { screen in MainView(screen: screen) }
@@ -31,12 +31,12 @@ struct CoreDataScreen: View {
                     }
                     .buttonStyle(.plain)
                 }
-                .onDelete(perform: deleteItem)
+                .onDelete(perform: self.deleteItem)
             }
             #if os(iOS)
-            .toolbar { ToolbarItem(placement: .navigationBarTrailing) { AddButton(action: addItem) } }
+            .toolbar { ToolbarItem(placement: .navigationBarTrailing) { AddButton(action: self.addItem) } }
             #else
-            .toolbar { AddButton(action: addItem) }
+            .toolbar { AddButton(action: self.addItem) }
             #endif
         }
     }
@@ -44,7 +44,7 @@ struct CoreDataScreen: View {
     private func deleteItem(_ indices: IndexSet) {
         for index in indices {
             do {
-                try items[index].delete()
+                try self.items[index].delete()
             } catch {
                 print("error", error)
             }
@@ -57,7 +57,7 @@ struct CoreDataScreen: View {
         item.id = UUID()
 
         do {
-            try viewContext.save()
+            try self.viewContext.save()
         } catch {
             print("error", error)
             return
@@ -75,21 +75,24 @@ struct CoreDataChildScreen: View {
 
     var body: some View {
         List {
-            if children.isEmpty {
+            if self.children.isEmpty {
                 EmptyItemsView(itemName: "children")
             }
-            ForEach(children, id: \.id) { item in
+            ForEach(self.children, id: \.id) { item in
                 TimestampView(time: item.timestamp)
             }
         }
         #if os(iOS)
-        .toolbar { ToolbarItem(placement: .navigationBarTrailing) { AddButton(action: addChild) } }
+        .toolbar { ToolbarItem(placement: .navigationBarTrailing) { AddButton(action: self.addChild) } }
         #else
-        .toolbar { AddButton(action: addChild) }
+        .toolbar { AddButton(action: self.addChild) }
         #endif
         .onAppear(perform: {
-            let parent = try! Item.find(by: NSPredicate(format: "id = %@", parentID.nsString), from: viewContext)!
-            children = parent.childrenArray
+            let parent = try! Item.find(
+                by: NSPredicate(format: "id = %@", self.parentID.nsString),
+                from: self.viewContext
+            )!
+            self.children = parent.childrenArray
                 .sorted(by: {
                     $0.timestamp.compare($1.timestamp) == .orderedDescending
                 })
@@ -101,17 +104,17 @@ struct CoreDataChildScreen: View {
         let child = Child(context: viewContext)
         child.timestamp = Date()
         child.id = UUID()
-        child.parent = parent!
+        child.parent = self.parent!
 
         do {
-            try parent!.addChild(child)
+            try self.parent!.addChild(child)
         } catch {
             print("error", error)
             return
         }
 
         withAnimation {
-            children = [child] + children
+            self.children = [child] + self.children
         }
     }
 }
@@ -120,7 +123,7 @@ struct EmptyItemsView: View {
     let itemName: String
 
     var body: some View {
-        Text("No \(itemName) yet")
+        Text("No \(self.itemName) yet")
     }
 }
 
@@ -128,7 +131,7 @@ struct TimestampView: View {
     let time: Date
 
     var body: some View {
-        Text(dateFormatter.string(from: time))
+        Text(dateFormatter.string(from: self.time))
     }
 }
 
@@ -136,7 +139,7 @@ struct AddButton: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
+        Button(action: self.action) {
             Image(systemName: "plus")
                 .bold()
         }

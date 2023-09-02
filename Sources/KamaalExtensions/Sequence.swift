@@ -27,7 +27,7 @@ extension Sequence {
     /// - Returns: A sorted array.
     public func sorted(by keyPath: KeyPath<Element, some Comparable>,
                        using comparison: ComparisonResult) -> [Element] {
-        sorted(by: {
+        self.sorted(by: {
             switch comparison {
             case .orderedAscending:
                 return $0[keyPath: keyPath] < $1[keyPath: keyPath]
@@ -82,7 +82,7 @@ extension Sequence {
     /// - Returns: The first element of the sequence that satisfies the given key path
     ///   and comparison value or nil if there is no element that satisfies the condition.
     public func find<T: Equatable>(by keyPath: KeyPath<Element, T>, is comparisonValue: T) -> Element? {
-        find(where: { $0[keyPath: keyPath] == comparisonValue })
+        self.find(where: { $0[keyPath: keyPath] == comparisonValue })
     }
 
     /// Returns the first element of the sequence that satisfies the given

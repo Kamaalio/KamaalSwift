@@ -45,11 +45,11 @@ public struct SettingsConfiguration: Hashable {
     }
 
     var donationsIsConfigured: Bool {
-        !donations.isEmpty
+        !self.donations.isEmpty
     }
 
     var feedbackIsConfigured: Bool {
-        feedback != nil
+        self.feedback != nil
     }
 
     var colorsIsConfigured: Bool {
@@ -65,11 +65,11 @@ public struct SettingsConfiguration: Hashable {
     }
 
     var personalizationIsConfigured: Bool {
-        colorsIsConfigured || appIconIsConfigured
+        self.colorsIsConfigured || self.appIconIsConfigured
     }
 
     var featuresIsConfigured: Bool {
-        !features.isEmpty
+        !self.features.isEmpty
     }
 
     var acknowledgementsAreConfigured: Bool {
@@ -79,11 +79,11 @@ public struct SettingsConfiguration: Hashable {
     }
 
     var preferencesIsConfigured: Bool {
-        !preferences.isEmpty
+        !self.preferences.isEmpty
     }
 
     var currentColor: Color {
-        color?.currentColor.color ?? .accentColor
+        self.color?.currentColor.color ?? .accentColor
     }
 
     public struct FeedbackConfiguration: Hashable, Codable {

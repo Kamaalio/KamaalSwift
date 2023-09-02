@@ -14,7 +14,7 @@ struct MainView: View {
 
     var body: some View {
         KJustStack {
-            switch screen {
+            switch self.screen {
             case .acknowledgements:
                 AcknowledgementsScreen()
             case .appColor:
@@ -33,7 +33,7 @@ struct MainView: View {
                 PreferenceOptionsScreen(preference: preference)
             }
         }
-        .navigationTitle(title: screen.title, displayMode: screen == .root ? .large : .inline)
+        .navigationTitle(title: self.screen.title, displayMode: self.screen == .root ? .large : .inline)
     }
 }
 

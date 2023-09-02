@@ -22,8 +22,8 @@ public struct StackNavigationChangeStackButton<Content: View, Destination: Navig
     }
 
     public var body: some View {
-        Button(action: { navigator.changeStack(to: destination) }) {
-            content()
+        Button(action: { self.navigator.changeStack(to: self.destination) }) {
+            self.content()
         }
     }
 }

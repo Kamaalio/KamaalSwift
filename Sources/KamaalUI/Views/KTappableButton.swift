@@ -17,7 +17,7 @@ public struct KTappableButton<Label>: View where Label: View {
     }
 
     public var body: some View {
-        label
-            .onTapGesture(perform: action)
+        self.label
+            .onTapGesture(perform: self.action)
     }
 }

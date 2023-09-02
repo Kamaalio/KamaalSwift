@@ -7,3 +7,4 @@
 --tabwidth 4
 --maxwidth 120
 --disable wrapMultilineStatementBraces
+--self insert

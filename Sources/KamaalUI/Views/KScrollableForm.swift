@@ -18,11 +18,11 @@ public struct KScrollableForm<Content: View>: View {
     public var body: some View {
         #if os(macOS)
         ScrollView(.vertical, showsIndicators: true) {
-            content
+            self.content
         }
         #else
         Form {
-            content
+            self.content
         }
         #endif
     }

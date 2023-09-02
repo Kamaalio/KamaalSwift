@@ -12,7 +12,7 @@ public final class KPopUpManager: ObservableObject {
     @Published var style: KPopUpStyles = .bottom(title: "", type: .success, description: nil)
     @Published var config: KPopUpConfig
     @Published private var lastTimeout: TimeInterval? {
-        didSet { lastTimeoutDidSet() }
+        didSet { self.lastTimeoutDidSet() }
     }
 
     private var timeoutTimer: Timer?
@@ -22,28 +22,28 @@ public final class KPopUpManager: ObservableObject {
     }
 
     var title: String {
-        switch style {
+        switch self.style {
         case .bottom(title: let title, type: _, description: _): return title
         case .hud(title: let title, systemImageName: _, description: _): return title
         }
     }
 
     var description: String? {
-        switch style {
+        switch self.style {
         case .bottom(title: _, type: _, description: let description): return description
         case .hud(title: _, systemImageName: _, description: let description): return description
         }
     }
 
     var systemImageName: String? {
-        switch style {
+        switch self.style {
         case .bottom: return nil
         case .hud(title: _, systemImageName: let systemImageName, description: _): return systemImageName
         }
     }
 
     var bottomType: KPopUpBottomType? {
-        switch style {
+        switch self.style {
         case .bottom(title: _, type: let type, description: _): return type
         case .hud: return nil
         }
@@ -81,7 +81,7 @@ public final class KPopUpManager: ObservableObject {
         let timeoutTimer = Timer.scheduledTimer(
             timeInterval: lastTimeout,
             target: self,
-            selector: #selector(handleTimeout),
+            selector: #selector(self.handleTimeout),
             userInfo: nil,
             repeats: false
         )
@@ -90,7 +90,7 @@ public final class KPopUpManager: ObservableObject {
 
     @objc
     private func handleTimeout(_: Timer?) {
-        timeoutTimer?.invalidate()
-        hidePopUp()
+        self.timeoutTimer?.invalidate()
+        self.hidePopUp()
     }
 }

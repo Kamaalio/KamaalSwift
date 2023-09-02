@@ -30,24 +30,24 @@ struct LogsScreen: View {
             #if !os(macOS)
             NavigationLink(
                 tag: Screens.feedback,
-                selection: $screenToShow,
+                selection: self.$screenToShow,
                 destination: {
-                    FeedbackScreen(style: .bug, description: bugDescription)
-                        .environment(\.settingsConfiguration, settingsConfiguration)
+                    FeedbackScreen(style: .bug, description: self.bugDescription)
+                        .environment(\.settingsConfiguration, self.settingsConfiguration)
                 },
                 label: { EmptyView() }
             )
             #endif
             KScrollableForm {
                 KSection {
-                    if logs.isEmpty {
+                    if self.logs.isEmpty {
                         AppText(localizedString: "No logs available", comment: "")
                             .ktakeWidthEagerly(alignment: .leading)
                     }
-                    ForEach(logs, id: \.self) { item in
-                        LogRow(log: item, action: onLogPress)
+                    ForEach(self.logs, id: \.self) { item in
+                        LogRow(log: item, action: self.onLogPress)
                         #if os(macOS)
-                        if item != logs.last {
+                        if item != self.logs.last {
                             Divider()
                         }
                         #endif
@@ -59,20 +59,20 @@ struct LogsScreen: View {
             }
             .ktakeSizeEagerly(alignment: .topLeading)
         }
-        .onAppear(perform: handleOnAppear)
-        .onChange(of: showSelectedLogSheet, perform: onShowSelectedLogSheetChange)
-        .sheet(isPresented: $showSelectedLogSheet, content: {
-            LogDetailsSheet(log: selectedLog, close: closeSheet, reportBug: reportBug)
-                .accentColor(settingsConfiguration.currentColor)
+        .onAppear(perform: self.handleOnAppear)
+        .onChange(of: self.showSelectedLogSheet, perform: self.onShowSelectedLogSheetChange)
+        .sheet(isPresented: self.$showSelectedLogSheet, content: {
+            LogDetailsSheet(log: self.selectedLog, close: self.closeSheet, reportBug: self.reportBug)
+                .accentColor(self.settingsConfiguration.currentColor)
         })
     }
 
     private func closeSheet() {
-        showSelectedLogSheet = false
+        self.showSelectedLogSheet = false
     }
 
     private func reportBug(_ log: HoldedLog) {
-        closeSheet()
+        self.closeSheet()
 
         let predefinedDescription = """
         # Reported log
@@ -84,29 +84,29 @@ struct LogsScreen: View {
 
         """
 
-        bugDescription = predefinedDescription
+        self.bugDescription = predefinedDescription
         #if os(macOS)
-        navigator.navigate(to: .feedback(style: .bug, description: predefinedDescription))
+        self.navigator.navigate(to: .feedback(style: .bug, description: predefinedDescription))
         #else
-        screenToShow = .feedback
+        self.screenToShow = .feedback
         #endif
     }
 
     private func onShowSelectedLogSheetChange(_ newValue: Bool) {
         if !newValue {
-            selectedLog = .none
+            self.selectedLog = .none
         }
     }
 
     private func handleOnAppear() {
         Task {
-            logs = await LogHolder.shared.logs.reversed()
+            self.logs = await LogHolder.shared.logs.reversed()
         }
     }
 
     private func onLogPress(_ log: HoldedLog) {
-        selectedLog = log
-        showSelectedLogSheet = true
+        self.selectedLog = log
+        self.showSelectedLogSheet = true
     }
 }
 

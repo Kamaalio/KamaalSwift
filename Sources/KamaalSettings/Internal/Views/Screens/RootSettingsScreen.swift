@@ -15,32 +15,32 @@ struct RootSettingsScreen: View {
 
     var body: some View {
         KScrollableForm {
-            if configuration.donationsIsConfigured && store.hasDonations {
+            if self.configuration.donationsIsConfigured && self.store.hasDonations {
                 SupportAuthorSection()
                     .padding(.horizontal, .medium)
             }
-            if configuration.feedbackIsConfigured {
+            if self.configuration.feedbackIsConfigured {
                 FeedbackSection()
                     .padding(.horizontal, .medium)
             }
-            if configuration.personalizationIsConfigured {
+            if self.configuration.personalizationIsConfigured {
                 PersonalizationSection()
                     .padding(.horizontal, .medium)
             }
-            if configuration.preferencesIsConfigured {
+            if self.configuration.preferencesIsConfigured {
                 PreferencesSection()
                     .padding(.horizontal, .medium)
             }
-            if configuration.featuresIsConfigured {
+            if self.configuration.featuresIsConfigured {
                 FeaturesSection()
                     .padding(.horizontal, .medium)
             }
-            if configuration.showLogs {
+            if self.configuration.showLogs {
                 MiscellaneousSection()
                     .padding(.horizontal, .medium)
             }
-            if versionText != nil || configuration.acknowledgementsAreConfigured {
-                AboutSection(versionText: versionText, buildNumber: buildNumber)
+            if self.versionText != nil || self.configuration.acknowledgementsAreConfigured {
+                AboutSection(versionText: self.versionText, buildNumber: self.buildNumber)
                     .padding(.horizontal, .medium)
             }
         }

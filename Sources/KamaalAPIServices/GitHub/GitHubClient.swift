@@ -10,7 +10,7 @@ import KamaalExtensions
 
 public struct GitHubClient: ConfigurableClient {
     public var configuration: GitHubClientConfiguration? {
-        didSet { configurationDidSet() }
+        didSet { self.configurationDidSet() }
     }
 
     public var repos = GitHubReposClient()
@@ -19,7 +19,7 @@ public struct GitHubClient: ConfigurableClient {
 
     private mutating func configurationDidSet() {
         if let configuration {
-            repos.configure(with: configuration)
+            self.repos.configure(with: configuration)
         }
     }
 }

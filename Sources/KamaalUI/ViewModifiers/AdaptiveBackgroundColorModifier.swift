@@ -14,14 +14,14 @@ private struct AdaptiveBackgroundColorModifier: ViewModifier {
     var darkModeColor: Color
 
     func body(content: Content) -> some View {
-        content.background(resolvedColor)
+        content.background(self.resolvedColor)
     }
 
     private var resolvedColor: Color {
-        switch colorScheme {
-        case .light: return lightModeColor
-        case .dark: return darkModeColor
-        @unknown default: return lightModeColor
+        switch self.colorScheme {
+        case .light: return self.lightModeColor
+        case .dark: return self.darkModeColor
+        @unknown default: return self.lightModeColor
         }
     }
 }

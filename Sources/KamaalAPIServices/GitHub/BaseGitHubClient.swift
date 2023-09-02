@@ -11,7 +11,7 @@ import KamaalExtensions
 
 public class BaseGitHubClient: ConfigurableClient {
     public var configuration: GitHubClientConfiguration? {
-        didSet { configurationDidSet() }
+        didSet { self.configurationDidSet() }
     }
 
     var networker = KamaalNetworker()
@@ -40,6 +40,6 @@ public class BaseGitHubClient: ConfigurableClient {
     private func configurationDidSet() {
         guard let configuration else { return }
 
-        networker = .init(urlSession: configuration.urlSession)
+        self.networker = .init(urlSession: configuration.urlSession)
     }
 }

@@ -33,7 +33,7 @@ final class Store: NSObject, ObservableObject {
         super.init()
 
         self.storeKitDonations = donations.mappedByID
-        self.updateListenerTask = listenForTransactions()
+        self.updateListenerTask = self.listenForTransactions()
         self.productFetcher = productFetcher
     }
 
@@ -50,26 +50,26 @@ final class Store: NSObject, ObservableObject {
     }
 
     var hasDonations: Bool {
-        !donations.isEmpty
+        !self.donations.isEmpty
     }
 
     var canMakePayments: Bool {
-        SKPaymentQueue.canMakePayments() && (!isLoading || !isPurchasing)
+        SKPaymentQueue.canMakePayments() && (!self.isLoading || !self.isPurchasing)
     }
 
     func purchaseDonation(_ donation: CustomProduct, completion: @escaping (Result<Transaction, Errors>) -> Void) {
-        guard canMakePayments, let foundProduct = products.find(by: \.id, is: donation.id) else {
+        guard self.canMakePayments, let foundProduct = products.find(by: \.id, is: donation.id) else {
             completion(.failure(.canNotMakePayment))
             return
         }
 
-        purchasingTask?.cancel()
-        purchasingTask = Task {
+        self.purchasingTask?.cancel()
+        self.purchasingTask = Task {
             let result = await verifyAndPurchase(foundProduct)
             let transaction: Transaction
             switch result {
             case let .failure(failure):
-                logger.error(label: "failed to verify or purchase product", error: failure)
+                self.logger.error(label: "failed to verify or purchase product", error: failure)
                 completion(.failure(failure))
                 return
             case let .success(success):
@@ -81,11 +81,11 @@ final class Store: NSObject, ObservableObject {
     }
 
     func requestProducts() async -> Result<Void, Errors> {
-        guard !hasDonations, !storeKitDonations.isEmpty else { return .success(()) }
+        guard !self.hasDonations, !self.storeKitDonations.isEmpty else { return .success(()) }
 
-        logger.info("requesting products")
+        self.logger.info("requesting products")
 
-        return await withLoading(completion: {
+        return await self.withLoading(completion: {
             let productsResult = await getProducts()
             let donations: [CustomProduct]
             switch productsResult {
@@ -95,7 +95,7 @@ final class Store: NSObject, ObservableObject {
                 donations = success
             }
 
-            await setDonations(donations)
+            await self.setDonations(donations)
             self.products = donations.compactMap(\.product)
             return .success(())
         })
@@ -104,9 +104,9 @@ final class Store: NSObject, ObservableObject {
     private func getProducts() async -> Result<[CustomProduct], Errors> {
         let products: [CustomProduct]
         do {
-            products = try await productFetcher.getProducts(by: storeKitDonations)
+            products = try await self.productFetcher.getProducts(by: self.storeKitDonations)
         } catch {
-            logger.error(label: "failed to get products", error: error)
+            self.logger.error(label: "failed to get products", error: error)
             return .failure(.getProducts)
         }
 
@@ -122,17 +122,17 @@ final class Store: NSObject, ObservableObject {
 
     @MainActor
     private func withLoading<T>(completion: () async -> T) async -> T {
-        isLoading = true
+        self.isLoading = true
         let result = await completion()
-        isLoading = false
+        self.isLoading = false
         return result
     }
 
     @MainActor
     private func withIsPurchasing<T>(completion: () async -> T) async -> T {
-        isPurchasing = true
+        self.isPurchasing = true
         let result = await completion()
-        isPurchasing = false
+        self.isPurchasing = false
         return result
     }
 
@@ -170,15 +170,15 @@ final class Store: NSObject, ObservableObject {
     }
 
     private func verifyAndPurchase(_ product: Product) async -> Result<Transaction, Errors> {
-        await withIsPurchasing(completion: {
-            await withLoading(completion: {
-                logger.info("purchasing product with id \(product.id)")
+        await self.withIsPurchasing(completion: {
+            await self.withLoading(completion: {
+                self.logger.info("purchasing product with id \(product.id)")
 
                 let purchaseResult: Product.PurchaseResult
                 do {
                     purchaseResult = try await product.purchase()
                 } catch {
-                    logger.error(label: "failed to purchase product", error: error)
+                    self.logger.error(label: "failed to purchase product", error: error)
                     return .failure(.purchaseError(causeError: error))
                 }
 
@@ -190,16 +190,16 @@ final class Store: NSObject, ObservableObject {
                 }
 
                 let transaction: Transaction
-                switch checkVerified(verification) {
+                switch self.checkVerified(verification) {
                 case let .failure(failure):
                     return .failure(failure)
                 case let .success(success):
                     transaction = success
                 }
 
-                await updatePurchasedIdentifiers(transaction)
+                await self.updatePurchasedIdentifiers(transaction)
                 await transaction.finish()
-                logger.info("successfully purchased product with id \(transaction.productID)")
+                self.logger.info("successfully purchased product with id \(transaction.productID)")
                 return .success(transaction)
             })
         })
@@ -218,20 +218,20 @@ final class Store: NSObject, ObservableObject {
         let productID = transaction.productID
         if transaction.revocationDate == nil {
             // If the App Store has not revoked the transaction, add it to the list of `purchasedIdentifiers`.
-            incrementPurchasedIdentifiers(by: 1, toIdentifier: productID)
+            self.incrementPurchasedIdentifiers(by: 1, toIdentifier: productID)
         } else {
             // If the App Store has revoked this transaction, remove it from the list of `purchasedIdentifiers`.
-            incrementPurchasedIdentifiers(by: -1, toIdentifier: productID)
+            self.incrementPurchasedIdentifiers(by: -1, toIdentifier: productID)
         }
     }
 
     private func incrementPurchasedIdentifiers(by increment: Int, toIdentifier identifier: String) {
-        let value = purchasedIdentifiersToTimesPurchased[identifier] ?? 0
+        let value = self.purchasedIdentifiersToTimesPurchased[identifier] ?? 0
         if increment < 0, value < 1 {
             return
         }
 
-        purchasedIdentifiersToTimesPurchased[identifier] = value + increment
+        self.purchasedIdentifiersToTimesPurchased[identifier] = value + increment
     }
 }
 

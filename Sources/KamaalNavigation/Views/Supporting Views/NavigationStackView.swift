@@ -45,26 +45,26 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
 
     public var body: some View {
         KJustStack {
-            if enableNavigationStack {
-                navigationStackView
+            if self.enableNavigationStack {
+                self.navigationStackView
             } else {
-                viewWithoutNavigationStack
+                self.viewWithoutNavigationStack
             }
         }
     }
 
     private var macView: some View {
         KJustStack {
-            switch navigator.currentScreen {
+            switch self.navigator.currentScreen {
             case .none:
-                root(navigator.currentStack)
+                self.root(self.navigator.currentStack)
             case let .some(unwrapped):
-                subView(unwrapped)
+                self.subView(unwrapped)
                     .id(unwrapped)
                     .transition(.move(edge: .trailing))
                     .toolbar {
                         ToolbarItem(placement: .navigation) {
-                            Button(action: { navigator.goBack() }) {
+                            Button(action: { self.navigator.goBack() }) {
                                 Image(systemName: "chevron.left")
                                     .foregroundColor(.accentColor)
                             }
@@ -77,34 +77,34 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
     private var viewWithoutNavigationStack: some View {
         KJustStack {
             #if os(macOS)
-            macView
+            self.macView
             #else
-            root(navigator.currentStack)
+            self.root(self.navigator.currentStack)
             #endif
         }
-        .environmentObject(navigator)
+        .environmentObject(self.navigator)
     }
 
     private var navigationStackView: some View {
         KJustStack {
             #if os(macOS)
             NavigationView {
-                AnyView(sidebar())
-                macView
+                AnyView(self.sidebar())
+                self.macView
             }
-            .environmentObject(navigator)
+            .environmentObject(self.navigator)
             #else
             if UIDevice.current.userInterfaceIdiom == .pad {
                 NavigationView {
-                    AnyView(sidebar())
-                    root(navigator.currentStack)
+                    AnyView(self.sidebar())
+                    self.root(self.navigator.currentStack)
                 }
-                .environmentObject(navigator)
+                .environmentObject(self.navigator)
             } else {
-                TabView(selection: $navigator.currentStack) {
-                    ForEach(navigator.screens.filter(\.isTabItem), id: \.self) { screen in
+                TabView(selection: self.$navigator.currentStack) {
+                    ForEach(self.navigator.screens.filter(\.isTabItem), id: \.self) { screen in
                         NavigationView {
-                            root(screen)
+                            self.root(screen)
                         }
                         .navigationViewStyle(.stack)
                         .tabItem {
@@ -114,7 +114,7 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
                         .tag(screen)
                     }
                 }
-                .environmentObject(navigator)
+                .environmentObject(self.navigator)
             }
             #endif
         }

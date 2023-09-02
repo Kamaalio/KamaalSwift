@@ -23,8 +23,8 @@ struct NavigationLinkColorRow: View {
     }
 
     var body: some View {
-        NavigationLinkRow(destination: destination) {
-            ColorTextRow(label: label, color: color)
+        NavigationLinkRow(destination: self.destination) {
+            ColorTextRow(label: self.label, color: self.color)
         }
     }
 }

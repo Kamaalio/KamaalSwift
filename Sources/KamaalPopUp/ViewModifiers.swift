@@ -40,7 +40,7 @@ extension View {
         style: KPopUpStyles,
         backgroundColor: Color
     ) -> some View {
-        kPopUpLite(isPresented: isPresented, style: style, backgroundColor: backgroundColor, onClose: { })
+        self.kPopUpLite(isPresented: isPresented, style: style, backgroundColor: backgroundColor, onClose: { })
     }
 
     fileprivate func kPopUp(
@@ -79,42 +79,42 @@ struct KPopUpLiteModifier: ViewModifier {
         content
             .onChange(of: _isPresented.wrappedValue, perform: { newValue in
                 if !newValue {
-                    close()
+                    self.close()
                 } else {
-                    open()
+                    self.open()
                 }
             })
-            .onChange(of: definitiveIsPresented, perform: { newValue in
+            .onChange(of: self.definitiveIsPresented, perform: { newValue in
                 if !newValue {
-                    close()
+                    self.close()
                 } else {
-                    open()
+                    self.open()
                 }
             })
             .kPopUp(
-                isPresented: $definitiveIsPresented,
-                style: style,
-                backgroundColor: backgroundColor,
-                onClose: close
+                isPresented: self.$definitiveIsPresented,
+                style: self.style,
+                backgroundColor: self.backgroundColor,
+                onClose: self.close
             )
     }
 
     private func close() {
-        onClose()
-        if definitiveIsPresented {
-            withAnimation(.easeIn(duration: 0.8)) { definitiveIsPresented = false }
+        self.onClose()
+        if self.definitiveIsPresented {
+            withAnimation(.easeIn(duration: 0.8)) { self.definitiveIsPresented = false }
         }
-        if isPresented {
-            isPresented = false
+        if self.isPresented {
+            self.isPresented = false
         }
     }
 
     private func open() {
-        if !definitiveIsPresented {
-            withAnimation(.easeOut(duration: 0.5)) { definitiveIsPresented = true }
+        if !self.definitiveIsPresented {
+            withAnimation(.easeOut(duration: 0.5)) { self.definitiveIsPresented = true }
         }
-        if !isPresented {
-            isPresented = true
+        if !self.isPresented {
+            self.isPresented = true
         }
     }
 }
@@ -129,9 +129,13 @@ struct KPopUpViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .overlay(GeometryReader(content: { geometry in
-                if isPresented {
-                    KPopupView(style: style, backgroundColor: backgroundColor, onClose: onClose)
-                        .frame(width: geometry.size.width, height: geometry.size.height, alignment: style.alignment)
+                if self.isPresented {
+                    KPopupView(style: self.style, backgroundColor: self.backgroundColor, onClose: self.onClose)
+                        .frame(
+                            width: geometry.size.width,
+                            height: geometry.size.height,
+                            alignment: self.style.alignment
+                        )
                 }
             }))
     }

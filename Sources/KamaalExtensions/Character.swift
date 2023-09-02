@@ -9,23 +9,23 @@ import Foundation
 
 extension Character {
     public var uppercased: Character {
-        string.uppercased().first!
+        self.string.uppercased().first!
     }
 
     public var isUppercase: Bool {
-        uppercased.string == string
+        self.uppercased.string == self.string
     }
 
     public var lowercased: Character {
-        string.lowercased().first!
+        self.string.lowercased().first!
     }
 
     public var isLowercase: Bool {
-        lowercased.string == string
+        self.lowercased.string == self.string
     }
 
     public var int: Int? {
-        Int(string)
+        Int(self.string)
     }
 
     public var string: String {

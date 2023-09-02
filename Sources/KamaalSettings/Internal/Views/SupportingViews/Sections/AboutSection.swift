@@ -16,11 +16,11 @@ struct AboutSection: View {
 
     var body: some View {
         KSection(header: "About".localized(comment: "")) {
-            if settingsConfiguration.acknowledgementsAreConfigured {
+            if self.settingsConfiguration.acknowledgementsAreConfigured {
                 NavigationLinkImageRow(
                     localizedLabel: "Acknowledgements",
                     comment: "",
-                    imageSystemName: acknowledgementsImageSystemName,
+                    imageSystemName: self.acknowledgementsImageSystemName,
                     destination: .acknowledgements
                 )
                 #if os(macOS)

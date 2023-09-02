@@ -62,7 +62,7 @@ extension Date {
     public var endOfDay: Date {
         var components = DateComponents()
         components.day = 1
-        let date = Calendar.current.date(byAdding: components, to: startOfDay)
+        let date = Calendar.current.date(byAdding: components, to: self.startOfDay)
         return (date?.addingTimeInterval(-1))!
     }
 
@@ -130,7 +130,7 @@ extension Date {
 extension Date {
     func dateOfWeek(weekday targetDayOfWeek: Weekday, weekOffset: Int = 0) -> Date {
         var selfDate = self
-        let weekInterval = intervalByDays(days: weekOffset * 7)
+        let weekInterval = self.intervalByDays(days: weekOffset * 7)
         selfDate.addTimeInterval(weekInterval)
 
         let formattor = DateFormatter()
@@ -139,7 +139,7 @@ extension Date {
 
         if let selfDayOfWeek = Int(formattor.string(from: selfDate)) {
             let interval_days = targetDayOfWeek.rawValue - selfDayOfWeek
-            let interval = intervalByDays(days: interval_days)
+            let interval = self.intervalByDays(days: interval_days)
             selfDate.addTimeInterval(interval)
             return selfDate
         }

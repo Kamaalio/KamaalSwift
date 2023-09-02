@@ -18,13 +18,13 @@ public struct KTitledView<Content: View>: View {
 
     public var body: some View {
         VStack {
-            Text(title)
+            Text(self.title)
                 .font(.caption)
                 .foregroundColor(.accentColor)
                 .padding(.bottom, -4)
                 .padding(.top, 4)
                 .ktakeWidthEagerly(alignment: .leading)
-            content()
+            self.content()
                 .ktakeWidthEagerly(alignment: .leading)
             #if os(iOS)
                 .padding(.leading, -12)

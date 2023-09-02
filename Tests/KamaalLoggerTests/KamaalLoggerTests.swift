@@ -14,14 +14,14 @@ final class KamaalLoggerTests: XCTestCase {
 
     override func setUpWithError() throws {
         let holder = LogHolder(max: 1)
-        logger = .init(subsystem: "io.kamaal.Testing", from: KamaalLoggerTests.self, holder: holder)
+        self.logger = .init(subsystem: "io.kamaal.Testing", from: KamaalLoggerTests.self, holder: holder)
     }
 
     func testErrorLogged() async throws {
         let label = "Oh No!"
         let error = TestError.test
 
-        logger.error(label: label, error: error)
+        self.logger.error(label: label, error: error)
 
         let log = try await getLog(from: logger)
         XCTAssert(log.message.contains(label))
@@ -41,7 +41,7 @@ final class KamaalLoggerTests: XCTestCase {
         let message1 = "Oh well! 🤷"
         let message2 = "Go on as usual"
 
-        logger.warning(message1, message2)
+        self.logger.warning(message1, message2)
 
         let log = try await getLog(from: logger)
         XCTAssert(log.message.contains(message1))
@@ -55,7 +55,7 @@ final class KamaalLoggerTests: XCTestCase {
         let message1 = "Phew!"
         let message2 = "Run Forest Run"
 
-        logger.info(message1, message2)
+        self.logger.info(message1, message2)
 
         let log = try await getLog(from: logger)
         XCTAssert(log.message.contains(message1))
@@ -68,7 +68,7 @@ final class KamaalLoggerTests: XCTestCase {
     func testDebugLogged() async throws {
         let message = "What are thoooose"
 
-        logger.debug(message)
+        self.logger.debug(message)
 
         let log = try await getLog(from: logger)
         XCTAssert(log.message.contains(message))

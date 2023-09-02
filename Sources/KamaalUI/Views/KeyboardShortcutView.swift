@@ -25,12 +25,12 @@ public struct KeyboardShortcutView<Content: View>: View {
 
     public var body: some View {
         ZStack {
-            ForEach(shortcuts) { shortcut in
-                Button(action: { onEmit(shortcut) }) { EmptyView() }
+            ForEach(self.shortcuts) { shortcut in
+                Button(action: { self.onEmit(shortcut) }) { EmptyView() }
                     .keyboardShortcut(shortcut.key, modifiers: shortcut.modifiers)
                     .buttonStyle(.borderless)
             }
-            content
+            self.content
         }
     }
 }
@@ -48,7 +48,7 @@ public struct KeyboardShortcutConfiguration: Hashable, Identifiable {
         self.modifiers = modifers
     }
 
-    public var key: KeyEquivalent { KeyEquivalent(keyCharacter) }
+    public var key: KeyEquivalent { KeyEquivalent(self.keyCharacter) }
 
     public var id: KeyboardShortcutConfiguration { self }
 }

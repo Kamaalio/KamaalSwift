@@ -17,14 +17,14 @@ struct KDeletableForEach<Data: RandomAccessCollection, ID: Hashable, Content: Vi
     let content: (Data.Element) -> Content
 
     var body: some View {
-        ForEach(data, id: id) { element in
+        ForEach(self.data, id: self.id) { element in
             KDeletableView(
                 isDeleting: .constant(false),
-                enabled: isEditing,
-                deleteText: deleteText,
-                onDelete: { onDelete(element) }
+                enabled: self.isEditing,
+                deleteText: self.deleteText,
+                onDelete: { self.onDelete(element) }
             ) {
-                content(element)
+                self.content(element)
             }
         }
     }

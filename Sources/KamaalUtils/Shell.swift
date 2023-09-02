@@ -12,7 +12,7 @@ public struct Shell {
     private init() { }
 
     public static func zsh(_ command: String) -> Result<String, Errors> {
-        shell("/bin/zsh", command)
+        self.shell("/bin/zsh", command)
     }
 
     public static func shell(_ launchPath: String, _ command: String) -> Result<String, Errors> {

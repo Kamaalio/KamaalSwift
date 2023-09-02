@@ -94,22 +94,22 @@ private struct InAppBrowserSUI: ViewModifier {
     func body(content: Content) -> some View {
         content
         #if canImport(UIKit)
-        .sheet(isPresented: $isPresented, onDismiss: {
-            if bindingWithURL {
-                url = nil
+        .sheet(isPresented: self.$isPresented, onDismiss: {
+            if self.bindingWithURL {
+                self.url = nil
             }
         }) {
-            InAppBrowserRepresentable(url: url ?? fallbackURL, tintColor: color)
+            InAppBrowserRepresentable(url: self.url ?? self.fallbackURL, tintColor: self.color)
         }
         #else
-        .onChange(of: isPresented, perform: { newValue in
-                if !bindingWithURL, newValue, let url {
+        .onChange(of: self.isPresented, perform: { newValue in
+                if !self.bindingWithURL, newValue, let url {
                     NSWorkspace.shared.open(url)
-                    isPresented = false
+                    self.isPresented = false
                 }
             })
-            .onChange(of: url, perform: { newValue in
-                if bindingWithURL, let url = newValue {
+            .onChange(of: self.url, perform: { newValue in
+                if self.bindingWithURL, let url = newValue {
                     NSWorkspace.shared.open(url)
                     self.url = nil
                 }
@@ -128,7 +128,7 @@ fileprivate struct InAppBrowserRepresentable: UIViewControllerRepresentable {
         let safariViewController = SFSafariViewController(url: url, configuration: configuaration)
         safariViewController.dismissButtonStyle = .close
         safariViewController.preferredBarTintColor = .systemBackground
-        safariViewController.preferredControlTintColor = UIColor(tintColor)
+        safariViewController.preferredControlTintColor = UIColor(self.tintColor)
         return safariViewController
     }
 

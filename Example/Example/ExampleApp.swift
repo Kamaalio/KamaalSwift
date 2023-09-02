@@ -14,7 +14,7 @@ struct ExampleApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, self.persistenceController.container.viewContext)
                 .frame(minWidth: 300, minHeight: 300)
         }
     }

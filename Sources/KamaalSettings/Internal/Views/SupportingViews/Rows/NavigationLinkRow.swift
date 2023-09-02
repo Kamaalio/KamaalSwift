@@ -24,20 +24,20 @@ struct NavigationLinkRow<Value: View>: View {
 
     var body: some View {
         StackNavigationLink(
-            destination: destination,
+            destination: self.destination,
             nextView: { screen in
                 MainView(screen: screen)
-                    .environment(\.settingsConfiguration, settingsConfiguration)
-                    .environmentObject(store)
+                    .environment(\.settingsConfiguration, self.settingsConfiguration)
+                    .environmentObject(self.store)
             }
         ) {
-            valueView
+            self.valueView
         }
         .buttonStyle(.plain)
     }
 
     private var valueView: some View {
-        value()
+        self.value()
             .foregroundColor(.accentColor)
             .kInvisibleFill()
     }

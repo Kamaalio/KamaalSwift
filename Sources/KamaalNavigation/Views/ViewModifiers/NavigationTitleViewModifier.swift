@@ -40,9 +40,9 @@ private struct NavigationTitleViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .navigationTitle(Text(title))
+            .navigationTitle(Text(self.title))
         #if os(iOS)
-            .navigationBarTitleDisplayMode(displayMode.navigationBarItemDisplayMode)
+            .navigationBarTitleDisplayMode(self.displayMode.navigationBarItemDisplayMode)
         #endif
     }
 }
