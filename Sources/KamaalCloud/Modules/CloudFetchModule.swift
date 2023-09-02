@@ -24,9 +24,24 @@ public class CloudFetchModule {
         case unknownFailure(context: Error?)
     }
 
-    public func get(ofType objectType: String,
-                    by predicate: NSPredicate,
-                    limit: Int? = nil) async -> Result<[CKRecord], Errors> {
+    public func list(ofType objectType: String) async -> Result<[CKRecord], Errors> {
+        await fetch(ofType: objectType, by: NSPredicate(value: true), limit: nil)
+    }
+
+    public func find(ofType objectType: String, by predicate: NSPredicate) async -> Result<CKRecord?, Errors> {
+        await fetch(ofType: objectType, by: predicate, limit: 1)
+            .map(\.first)
+    }
+
+    public func filter(ofType objectType: String,
+                       by predicate: NSPredicate,
+                       limit: Int? = nil) async -> Result<[CKRecord], Errors> {
+        await fetch(ofType: objectType, by: predicate, limit: limit)
+    }
+
+    private func fetch(ofType objectType: String,
+                       by predicate: NSPredicate,
+                       limit: Int? = nil) async -> Result<[CKRecord], Errors> {
         await withCheckedContinuation { continuation in
             _fetch(ofType: objectType, by: predicate, limit: limit) { result in
                 continuation.resume(returning: result)
