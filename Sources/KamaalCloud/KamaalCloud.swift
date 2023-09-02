@@ -10,21 +10,19 @@ import Foundation
 
 public class KamaalCloud {
     public let accounts: CloudAccountsModule
-
-    let container: CKContainer
-    private let database: CKDatabase
+    public let fetch: CloudFetchModule
 
     public init(containerID: String, databaseType: DatabaseType) {
         let container = CKContainer(identifier: containerID)
-        self.container = container
         let database: CKDatabase
         switch databaseType {
         case .public: database = container.publicCloudDatabase
         case .shared: database = container.sharedCloudDatabase
         case .private: database = container.privateCloudDatabase
         }
-        self.database = database
+        let accounts = CloudAccountsModule(container: container)
         self.accounts = CloudAccountsModule(container: container)
+        self.fetch = CloudFetchModule(accounts: accounts, database: database)
     }
 
     /// Access control of the container

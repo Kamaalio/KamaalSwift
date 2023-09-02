@@ -143,7 +143,7 @@ let package = Package(
         ),
         .target(
             name: "KamaalCloud",
-            dependencies: []
+            dependencies: ["KamaalExtensions"]
         ),
         .testTarget(
             name: "KamaalUITests",
