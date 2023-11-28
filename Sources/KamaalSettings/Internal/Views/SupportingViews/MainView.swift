@@ -1,5 +1,5 @@
 //
-//  SwiftUIView.swift
+//  MainView.swift
 //
 //
 //  Created by Kamaal M Farah on 25/12/2022.
