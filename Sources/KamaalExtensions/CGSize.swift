@@ -1,5 +1,5 @@
 //
-//  CGSize+extensions.swift
+//  CGSize.swift
 //
 //
 //  Created by Kamaal Farah on 23/10/2020.

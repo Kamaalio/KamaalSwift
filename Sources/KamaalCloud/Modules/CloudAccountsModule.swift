@@ -1,5 +1,5 @@
 //
-//  KamaalCloud+account.swift
+//  CloudAccountsModule.swift
 //
 //
 //  Created by Kamaal M Farah on 31/08/2023.
