@@ -25,17 +25,17 @@ public struct KFloatingDecimalField: View {
 
     public var body: some View {
         VStack(alignment: .leading) {
-            KTitledView(title: title) {
+            KTitledView(title: self.title) {
                 HStack {
-                    TextField("", text: $value)
-                        #if os(iOS)
-                        .padding(.horizontal, .medium)
-                        #endif
-                    if !valueIsValid {
-                        Button(action: fixValue) {
+                    TextField("", text: self.$value)
+                    #if os(iOS)
+                        .padding(.horizontal, 16)
+                    #endif
+                    if !self.valueIsValid {
+                        Button(action: self.fixValue) {
                             HStack(spacing: 0) {
                                 Image(systemName: "hammer.fill")
-                                Text(fixButtonTitle)
+                                Text(self.fixButtonTitle)
                                     .textCase(.uppercase)
                             }
                             .foregroundColor(.accentColor)
@@ -44,32 +44,32 @@ public struct KFloatingDecimalField: View {
                     }
                 }
             }
-            if !valueIsValid {
-                Text(fixMessage)
+            if !self.valueIsValid {
+                Text(self.fixMessage)
                     .font(.subheadline)
                     .foregroundColor(.red)
             }
         }
-        .onChange(of: value, perform: handleValueChange)
-        .onAppear(perform: handleOnAppear)
+        .onChange(of: self.value, perform: self.handleValueChange)
+        .onAppear(perform: self.handleOnAppear)
     }
 
     private func handleValueChange(_ newValue: String) {
         let doubleValue = Double(newValue)
-        if valueIsValid != (doubleValue != nil) {
-            withAnimation { valueIsValid = (doubleValue != nil) }
+        if self.valueIsValid != (doubleValue != nil) {
+            withAnimation { self.valueIsValid = (doubleValue != nil) }
         }
     }
 
     private func handleOnAppear() {
-        handleValueChange(value)
+        self.handleValueChange(self.value)
     }
 
     private func fixValue() {
-        guard !valueIsValid else { return }
+        guard !self.valueIsValid else { return }
 
-        let sanitizedValue = value.sanitizedDouble
-        value = String(sanitizedValue)
+        let sanitizedValue = self.value.sanitizedDouble
+        self.value = String(sanitizedValue)
     }
 }
 
