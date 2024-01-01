@@ -36,7 +36,7 @@ struct PreferenceOptionsScreen: View {
                 AppText(string: option.label)
                     .bold()
                 Spacer()
-                if isSelected(option) {
+                if self.isSelected(option) {
                     Image(systemName: "checkmark")
                         .kBold()
                 }
@@ -46,7 +46,7 @@ struct PreferenceOptionsScreen: View {
     }
 
     private func isSelected(_ option: Preference.Option) -> Bool {
-        preference.selectedOption == option
+        self.preference.selectedOption == option
     }
 
     private func searchFilter(_ option: Preference.Option, _ searchText: String) -> Bool {
