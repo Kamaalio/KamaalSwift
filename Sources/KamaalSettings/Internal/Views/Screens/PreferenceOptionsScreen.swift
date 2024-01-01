@@ -8,12 +8,15 @@
 import SwiftUI
 import KamaalUI
 import KamaalLogger
+import KamaalNavigation
 import KamaalAlgorithms
 
 private let logger = KamaalLogger(from: PreferenceOptionsScreen.self)
 
 struct PreferenceOptionsScreen: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+
+    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
 
     let preference: Preference
 
@@ -29,10 +32,21 @@ struct PreferenceOptionsScreen: View {
             searchFilter: self.searchFilter,
             onItemPress: self.onPreferenceOptionChange
         ) { option in
-            AppText(string: option.label)
-                .bold()
-                .ktakeWidthEagerly(alignment: .leading)
+            HStack {
+                AppText(string: option.label)
+                    .bold()
+                Spacer()
+                if isSelected(option) {
+                    Image(systemName: "checkmark")
+                        .kBold()
+                }
+            }
+            .ktakeWidthEagerly(alignment: .leading)
         }
+    }
+
+    private func isSelected(_ option: Preference.Option) -> Bool {
+        preference.selectedOption == option
     }
 
     private func searchFilter(_ option: Preference.Option, _ searchText: String) -> Bool {
@@ -43,6 +57,11 @@ struct PreferenceOptionsScreen: View {
         let newPreference = self.preference.setOption(option)
         NotificationCenter.default.post(name: .preferenceChanged, object: newPreference)
         logger.info("preference changed to \(newPreference)")
+        #if os(macOS)
+        self.navigator.goBack()
+        #else
+        self.presentationMode.wrappedValue.dismiss()
+        #endif
     }
 }
 
