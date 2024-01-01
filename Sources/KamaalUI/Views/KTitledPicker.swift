@@ -8,14 +8,14 @@
 import SwiftUI
 
 public struct KTitledPicker<Item: Hashable, PickerItemView: View>: View {
-    @Binding var selection: Item
+    @Binding var selection: Item?
 
     let title: String
     let items: [Item]
     let pickerItemView: (_ item: Item) -> PickerItemView
 
     public init(
-        selection: Binding<Item>,
+        selection: Binding<Item?>,
         title: String,
         items: [Item],
         @ViewBuilder pickerItemView: @escaping (_ item: Item) -> PickerItemView
