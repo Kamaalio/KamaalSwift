@@ -14,7 +14,7 @@ public struct FileClerk {
 
     public static let libraryDirectory = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).first
 
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, watchOS 9.0, *)
     public static func moveFolderContent(from sourceFolder: URL, to destinationFolder: URL) throws {
         let sourceFolderContent = try fileManager.contentsOfDirectory(
             at: sourceFolder,
@@ -44,7 +44,7 @@ public struct FileClerk {
         self.fileManager.createFile(atPath: url.path, contents: data)
     }
 
-    @available(macOS 13.0, *)
+    @available(macOS 13.0, iOS 16.0, watchOS 9.0, *)
     public static func getOrCreateSubfolder(atBase baseURL: URL, subFolderPaths: [String]) throws -> URL {
         var currentPath = baseURL
         for subFolderPath in subFolderPaths {
