@@ -11,19 +11,36 @@ import Foundation
 public struct Shell {
     private init() { }
 
-    public static func zsh(_ command: String) -> Result<String, Errors> {
-        self.shell("/bin/zsh", command)
+    public static func zsh(_ command: String, at executionLocation: String? = nil) -> Result<String, Errors> {
+        self.shell("/bin/zsh", command, at: executionLocation)
     }
 
-    public static func shell(_ launchPath: String, _ command: String) -> Result<String, Errors> {
+    public static func shell(
+        _ launchPath: String,
+        _ command: String,
+        at executionLocation: String? = nil
+    ) -> Result<String, Errors> {
+        let commandToUse: String
+        var previousPath: String?
+        if let executionLocation {
+            let previousPathResult = self.shell(launchPath, "pwd")
+            switch previousPathResult {
+            case .failure: return previousPathResult
+            case let .success(success): previousPath = success
+            }
+            commandToUse = "cd \(executionLocation) && \(command)"
+        } else {
+            commandToUse = command
+        }
+
         let task = Process()
         let outputPipe = Pipe()
         let errorPipe = Pipe()
 
         task.standardOutput = outputPipe
         task.standardError = errorPipe
-        task.arguments = ["-c", command]
-        task.launchPath = launchPath
+        task.arguments = ["-c", commandToUse]
+        task.executableURL = URL(fileURLWithPath: launchPath)
         task.launch()
 
         let errorData: Data?
@@ -41,6 +58,14 @@ public struct Shell {
             outputData = try outputPipe.fileHandleForReading.readToEnd()
         } catch {
             return .failure(.readPipeError(context: error, pipe: .output))
+        }
+
+        if let previousPath {
+            let backToOriginalPathResult = self.shell(launchPath, "cd \(previousPath)")
+            switch backToOriginalPathResult {
+            case .failure: return backToOriginalPathResult
+            case .success: break
+            }
         }
 
         guard let outputData else { return .success("") }
