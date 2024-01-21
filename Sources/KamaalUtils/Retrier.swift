@@ -11,7 +11,18 @@ import KamaalExtensions
 public enum Retrier {
     public static func retryUntilSuccess<T>(
         intervalTimeInSeconds: TimeInterval,
-        retries: Int = 0,
+        completion: () async throws -> T
+    ) async throws -> T {
+        try await self.retryUntilSuccess(
+            intervalTimeInSeconds: intervalTimeInSeconds,
+            retries: 0,
+            completion: completion
+        )
+    }
+
+    private static func retryUntilSuccess<T>(
+        intervalTimeInSeconds: TimeInterval,
+        retries: Int,
         completion: () async throws -> T
     ) async throws -> T {
         do {
