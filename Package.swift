@@ -139,7 +139,7 @@ let package = Package(
         ),
         .target(
             name: "KamaalUtils",
-            dependencies: []
+            dependencies: ["KamaalExtensions"]
         ),
         .target(
             name: "KamaalCloud",

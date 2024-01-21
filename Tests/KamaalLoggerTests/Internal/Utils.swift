@@ -16,7 +16,9 @@ func getLog(from logger: KamaalLogger, at index: Int = 0) async throws -> Holded
         log = await logger.holder.logs.at(index)
     } while log == nil && Date().compare(timeoutDate) == .orderedAscending
 
-    guard let log else { throw TestError.test }
+    guard let log else {
+        throw TestError.test
+    }
 
     return log
 }
