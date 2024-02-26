@@ -7,20 +7,14 @@
 
 import SwiftUI
 
-public struct StackNavigationLink<Content: View, NextView: View, Destination: NavigatorStackValue>: View {
+public struct StackNavigationLink<Content: View, Destination: NavigatorStackValue>: View {
     @EnvironmentObject private var navigator: Navigator<Destination>
 
     let destination: Destination
-    let nextView: (Destination) -> NextView
     let content: () -> Content
 
-    public init(
-        destination: Destination,
-        @ViewBuilder nextView: @escaping (Destination) -> NextView,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
+    public init(destination: Destination, @ViewBuilder content: @escaping () -> Content) {
         self.destination = destination
-        self.nextView = nextView
         self.content = content
     }
 
@@ -30,7 +24,7 @@ public struct StackNavigationLink<Content: View, NextView: View, Destination: Na
             self.content()
         }
         #else
-        NavigationLink(destination: { self.nextView(self.destination) }) {
+        NavigationLink(destination: { self.destination.view(true) }) {
             self.content()
         }
         #endif
@@ -40,7 +34,7 @@ public struct StackNavigationLink<Content: View, NextView: View, Destination: Na
 #if DEBUG
 struct StackNavigationLink_Previews: PreviewProvider {
     static var previews: some View {
-        StackNavigationLink(destination: PreviewScreenType.screen, nextView: { _ in Text("s") }) {
+        StackNavigationLink(destination: PreviewScreenType.screen) {
             Text("Link")
         }
     }

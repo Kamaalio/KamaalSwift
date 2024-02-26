@@ -5,7 +5,7 @@
 //  Created by Kamaal M Farah on 25/12/2022.
 //
 
-import Foundation
+import SwiftUI
 import KamaalNavigation
 
 enum ScreenSelection: Codable, Hashable, CaseIterable, NavigatorStackValue {
@@ -45,6 +45,10 @@ enum ScreenSelection: Codable, Hashable, CaseIterable, NavigatorStackValue {
         case let .preferenceOptions(preference):
             return preference.label
         }
+    }
+
+    func view(_ isSub: Bool) -> some View {
+        MainView(screen: self).navigationTitle(title: self.title, displayMode: isSub ? .inline : .large)
     }
 
     static var allCases: [ScreenSelection] {

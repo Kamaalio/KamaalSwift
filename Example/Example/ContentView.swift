@@ -12,7 +12,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStackView(
             stack: [] as [Screens],
-            root: { screen in MainView(screen: screen) },
+            root: { screen in MainView(screen: screen, displayMode: .large) },
             subView: { screen in MainView(screen: screen, displayMode: .inline) },
             sidebar: { Sidebar() }
         )

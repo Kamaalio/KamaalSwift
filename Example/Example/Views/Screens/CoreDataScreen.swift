@@ -22,10 +22,7 @@ struct CoreDataScreen: View {
                     EmptyItemsView(itemName: "items")
                 }
                 ForEach(self.items, id: \.id) { item in
-                    StackNavigationLink(
-                        destination: Screens.coreDataChild(parentID: item.id),
-                        nextView: { screen in MainView(screen: screen) }
-                    ) {
+                    StackNavigationLink(destination: Screens.coreDataChild(parentID: item.id)) {
                         TimestampView(time: item.timestamp)
                             .foregroundColor(.accentColor)
                     }
