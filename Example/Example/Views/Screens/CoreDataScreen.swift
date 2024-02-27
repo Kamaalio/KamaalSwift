@@ -16,26 +16,24 @@ struct CoreDataScreen: View {
     private var items: FetchedResults<Item>
 
     var body: some View {
-        NavigationStack {
-            List {
-                if self.items.isEmpty {
-                    EmptyItemsView(itemName: "items")
-                }
-                ForEach(self.items, id: \.id) { item in
-                    StackNavigationLink(destination: Screens.coreDataChild(parentID: item.id)) {
-                        TimestampView(time: item.timestamp)
-                            .foregroundColor(.accentColor)
-                    }
-                    .buttonStyle(.plain)
-                }
-                .onDelete(perform: self.deleteItem)
+        List {
+            if self.items.isEmpty {
+                EmptyItemsView(itemName: "items")
             }
-            #if os(iOS)
-            .toolbar { ToolbarItem(placement: .navigationBarTrailing) { AddButton(action: self.addItem) } }
-            #else
-            .toolbar { AddButton(action: self.addItem) }
-            #endif
+            ForEach(self.items, id: \.id) { item in
+                StackNavigationLink(destination: Screens.coreDataChild(parentID: item.id)) {
+                    TimestampView(time: item.timestamp)
+                        .foregroundColor(.accentColor)
+                }
+                .buttonStyle(.plain)
+            }
+            .onDelete(perform: self.deleteItem)
         }
+        #if os(iOS)
+        .toolbar { ToolbarItem(placement: .navigationBarTrailing) { AddButton(action: self.addItem) } }
+        #else
+        .toolbar { AddButton(action: self.addItem) }
+        #endif
     }
 
     private func deleteItem(_ indices: IndexSet) {

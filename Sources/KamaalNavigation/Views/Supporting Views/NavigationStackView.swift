@@ -8,7 +8,6 @@
 import SwiftUI
 import KamaalUI
 
-@available(macOS 11.0, *)
 public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorStackValue>: View {
     @ObservedObject private var navigator: Navigator<Screen>
 
@@ -88,23 +87,40 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
     private var navigationStackView: some View {
         KJustStack {
             #if os(macOS)
-            NavigationView {
-                AnyView(self.sidebar())
-                self.macView
-            }
+            NavigationSplitView(
+                sidebar: { AnyView(self.sidebar()) },
+                detail: {
+                    NavigationStack {
+                        self.macView
+                            .navigationDestination(for: Screen.self) { screen in
+                                screen.view(true)
+                            }
+                    }
+                }
+            )
             .environmentObject(self.navigator)
             #else
             if UIDevice.current.userInterfaceIdiom == .pad {
-                NavigationView {
-                    AnyView(self.sidebar())
-                    self.root(self.navigator.currentStack)
-                }
+                NavigationSplitView(
+                    sidebar: { AnyView(self.sidebar()) },
+                    detail: {
+                        NavigationStack {
+                            self.root(self.navigator.currentStack)
+                                .navigationDestination(for: Screen.self) { screen in
+                                    screen.view(true)
+                                }
+                        }
+                    }
+                )
                 .environmentObject(self.navigator)
             } else {
                 TabView(selection: self.$navigator.currentStack) {
                     ForEach(self.navigator.screens.filter(\.isTabItem), id: \.self) { screen in
-                        NavigationView {
+                        NavigationStack {
                             self.root(screen)
+                                .navigationDestination(for: Screen.self) { screen in
+                                    screen.view(true)
+                                }
                         }
                         .navigationViewStyle(.stack)
                         .tabItem {
@@ -128,7 +144,6 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
 }
 
 #if DEBUG
-@available(macOS 11.0, *)
 struct NavigationStackView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStackView(
