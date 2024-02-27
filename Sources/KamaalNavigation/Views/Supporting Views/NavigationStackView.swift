@@ -90,7 +90,7 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
             NavigationSplitView(
                 sidebar: { AnyView(self.sidebar()) },
                 detail: {
-                    NavigationStack {
+                    NavigationStack(path: self.navigator.getBindingPath()) {
                         self.macView
                             .navigationDestination(for: Screen.self) { screen in
                                 screen.view(true)
@@ -104,7 +104,7 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
                 NavigationSplitView(
                     sidebar: { AnyView(self.sidebar()) },
                     detail: {
-                        NavigationStack {
+                        NavigationStack(path: self.navigator.getBindingPath()) {
                             self.root(self.navigator.currentStack)
                                 .navigationDestination(for: Screen.self) { screen in
                                     screen.view(true)
@@ -115,30 +115,24 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: NavigatorSt
                 .environmentObject(self.navigator)
             } else {
                 TabView(selection: self.$navigator.currentStack) {
-                    ForEach(self.navigator.screens.filter(\.isTabItem), id: \.self) { screen in
-                        NavigationStack {
-                            self.root(screen)
+                    ForEach(self.navigator.screens.filter(\.isTabItem), id: \.self) { stack in
+                        NavigationStack(path: self.navigator.getBindingPath(forStack: stack)) {
+                            self.root(stack)
                                 .navigationDestination(for: Screen.self) { screen in
                                     screen.view(true)
                                 }
                         }
                         .navigationViewStyle(.stack)
                         .tabItem {
-                            Image(systemName: screen.imageSystemName)
-                            Text(screen.title)
+                            Image(systemName: stack.imageSystemName)
+                            Text(stack.title)
                         }
-                        .tag(screen)
+                        .tag(stack)
                     }
                 }
                 .environmentObject(self.navigator)
             }
             #endif
-        }
-    }
-
-    public func onScreenChange(_ perform: @escaping (Screen) -> Void) -> some View {
-        onReceive(NotificationCenter.default.publisher(for: .hasChangedScreens)) { output in
-            perform(output.object as? Screen ?? .root)
         }
     }
 }

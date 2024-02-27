@@ -17,6 +17,8 @@ private let logger = KamaalLogger(from: HomeScreen.self)
 struct HomeScreen: View {
     @Environment(\.colorScheme) private var colorScheme
 
+    @EnvironmentObject private var navigator: Navigator<Screens>
+
     @StateObject private var popUpManager = KPopUpManager()
 
     @State private var showPopUp = false
@@ -48,6 +50,9 @@ struct HomeScreen: View {
                 )
             }) {
                 Text("Hud popup")
+            }
+            Button(action: { self.navigator.navigate(to: .coreData) }) {
+                Text("Brogrammatic core data screen nav")
             }
             StackNavigationLink(destination: Screens.coreData) {
                 Text("Go to core data screen")

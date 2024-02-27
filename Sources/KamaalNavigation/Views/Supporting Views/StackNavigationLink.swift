@@ -24,8 +24,8 @@ public struct StackNavigationLink<Content: View, Destination: NavigatorStackValu
             self.content()
         }
         #else
-        NavigationLink(value: destination) {
-            content()
+        NavigationLink(value: self.destination) {
+            self.content()
         }
         #endif
     }

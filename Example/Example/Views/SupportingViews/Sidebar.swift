@@ -21,22 +21,7 @@ struct Sidebar: View {
                 }
             }
         }
-        #if os(macOS)
-        .toolbar(content: {
-            Button(action: self.toggleSidebar) {
-                Label("Toggle sidebar", systemImage: "sidebar.left")
-                    .foregroundColor(.accentColor)
-            }
-        })
-        #endif
     }
-
-    #if os(macOS)
-    private func toggleSidebar() {
-        guard let firstResponder = NSApp.keyWindow?.firstResponder else { return }
-        firstResponder.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
-    }
-    #endif
 }
 
 struct Sidebar_Previews: PreviewProvider {

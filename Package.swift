@@ -92,7 +92,7 @@ let package = Package(
         ),
         .target(
             name: "KamaalNavigation",
-            dependencies: ["KamaalStructures", "KamaalUI"]
+            dependencies: ["KamaalUI"]
         ),
         .target(
             name: "KamaalBrowser",
