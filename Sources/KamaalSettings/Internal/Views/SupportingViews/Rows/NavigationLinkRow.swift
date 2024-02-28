@@ -23,14 +23,7 @@ struct NavigationLinkRow<Value: View>: View {
     }
 
     var body: some View {
-        StackNavigationLink(
-            destination: self.destination,
-            nextView: { screen in
-                MainView(screen: screen)
-                    .environment(\.settingsConfiguration, self.settingsConfiguration)
-                    .environmentObject(self.store)
-            }
-        ) {
+        StackNavigationLink(destination: self.destination) {
             self.valueView
         }
         .buttonStyle(.plain)

@@ -7,40 +7,28 @@
 
 import SwiftUI
 
-public struct StackNavigationLink<Content: View, NextView: View, Destination: NavigatorStackValue>: View {
+public struct StackNavigationLink<Content: View, Destination: NavigatorStackValue>: View {
     @EnvironmentObject private var navigator: Navigator<Destination>
 
     let destination: Destination
-    let nextView: (Destination) -> NextView
     let content: () -> Content
 
-    public init(
-        destination: Destination,
-        @ViewBuilder nextView: @escaping (Destination) -> NextView,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
+    public init(destination: Destination, @ViewBuilder content: @escaping () -> Content) {
         self.destination = destination
-        self.nextView = nextView
         self.content = content
     }
 
     public var body: some View {
-        #if os(macOS)
         Button(action: { self.navigator.navigate(to: self.destination) }) {
             self.content()
         }
-        #else
-        NavigationLink(destination: { self.nextView(self.destination) }) {
-            self.content()
-        }
-        #endif
     }
 }
 
 #if DEBUG
 struct StackNavigationLink_Previews: PreviewProvider {
     static var previews: some View {
-        StackNavigationLink(destination: PreviewScreenType.screen, nextView: { _ in Text("s") }) {
+        StackNavigationLink(destination: PreviewScreenType.screen) {
             Text("Link")
         }
     }

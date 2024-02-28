@@ -8,24 +8,16 @@
 import SwiftUI
 
 public struct StackNavigationBackButton<Destination: NavigatorStackValue, Content: View>: View {
-    @Environment(\.presentationMode) private var presentationMode
-
     @EnvironmentObject private var navigator: Navigator<Destination>
 
     let content: () -> Content
 
-    public init(screenType _: Destination.Type, content: @escaping () -> Content) {
+    public init(screenType _: Destination.Type, @ViewBuilder content: @escaping () -> Content) {
         self.content = content
     }
 
     public var body: some View {
-        Button(action: {
-            #if os(macOS)
-            self.navigator.goBack()
-            #else
-            self.presentationMode.wrappedValue.dismiss()
-            #endif
-        }) {
+        Button(action: { self.navigator.goBack() }) {
             self.content()
         }
     }

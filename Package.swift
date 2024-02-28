@@ -7,7 +7,7 @@ let package = Package(
     name: "KamaalSwift",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v12), .iOS(.v15), .watchOS(.v7),
+        .macOS(.v13), .iOS(.v16), .watchOS(.v7),
     ],
     products: [
         .library(
@@ -92,7 +92,7 @@ let package = Package(
         ),
         .target(
             name: "KamaalNavigation",
-            dependencies: ["KamaalStructures", "KamaalUI"]
+            dependencies: ["KamaalUI"]
         ),
         .target(
             name: "KamaalBrowser",

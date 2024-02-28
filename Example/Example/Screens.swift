@@ -5,7 +5,10 @@
 //  Created by Kamaal M Farah on 23/04/2023.
 //
 
+import SwiftUI
 import KamaalNavigation
+
+typealias AppNavigator = Navigator<Screens>
 
 enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
     case home
@@ -60,6 +63,10 @@ enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
         default:
             return false
         }
+    }
+
+    func view(_ isSub: Bool) -> some View {
+        MainView(screen: self, displayMode: isSub ? .inline : .large)
     }
 
     static let root: Screens = .home

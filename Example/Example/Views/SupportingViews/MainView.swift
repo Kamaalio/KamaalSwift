@@ -14,7 +14,7 @@ struct MainView: View {
     let screen: Screens
     let displayMode: DisplayMode
 
-    init(screen: Screens, displayMode: DisplayMode = .large) {
+    init(screen: Screens, displayMode: DisplayMode) {
         self.screen = screen
         self.displayMode = displayMode
     }
@@ -40,6 +40,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(screen: .home)
+        MainView(screen: .home, displayMode: .large)
     }
 }
