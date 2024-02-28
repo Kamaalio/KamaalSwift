@@ -13,10 +13,7 @@ public struct StackNavigationChangeStackButton<Content: View, Destination: Navig
     let destination: Destination
     let content: () -> Content
 
-    public init(
-        destination: Destination,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
+    public init(destination: Destination, @ViewBuilder content: @escaping () -> Content) {
         self.destination = destination
         self.content = content
     }

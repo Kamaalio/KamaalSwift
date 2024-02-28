@@ -8,6 +8,8 @@
 import SwiftUI
 import KamaalNavigation
 
+typealias AppNavigator = Navigator<Screens>
+
 enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
     case home
     case other

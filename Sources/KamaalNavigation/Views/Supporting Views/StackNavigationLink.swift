@@ -19,15 +19,9 @@ public struct StackNavigationLink<Content: View, Destination: NavigatorStackValu
     }
 
     public var body: some View {
-        #if os(macOS)
         Button(action: { self.navigator.navigate(to: self.destination) }) {
             self.content()
         }
-        #else
-        NavigationLink(value: self.destination) {
-            self.content()
-        }
-        #endif
     }
 }
 

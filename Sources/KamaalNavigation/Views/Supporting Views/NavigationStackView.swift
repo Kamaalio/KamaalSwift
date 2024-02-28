@@ -8,12 +8,12 @@
 import SwiftUI
 import KamaalUI
 
-public struct NavigationStackView<Screen: NavigatorStackValue>: View {
+public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue>: View {
     @ObservedObject private var navigator: Navigator<Screen>
 
-    let sidebar: () -> any View
+    let sidebar: () -> Sidebar
 
-    public init(stack: [Screen], @ViewBuilder sidebar: @escaping () -> any View) {
+    public init(stack: [Screen], @ViewBuilder sidebar: @escaping () -> Sidebar) {
         self.sidebar = sidebar
         self._navigator = ObservedObject(wrappedValue: Navigator(stack: stack))
     }
@@ -46,7 +46,7 @@ public struct NavigationStackView<Screen: NavigatorStackValue>: View {
         KJustStack {
             #if os(macOS)
             NavigationSplitView(
-                sidebar: { AnyView(self.sidebar()) },
+                sidebar: { self.sidebar() },
                 detail: {
                     NavigationStack(path: self.navigator.getBindingPath()) {
                         self.macView
@@ -60,7 +60,7 @@ public struct NavigationStackView<Screen: NavigatorStackValue>: View {
             #else
             if UIDevice.current.userInterfaceIdiom == .pad {
                 NavigationSplitView(
-                    sidebar: { AnyView(self.sidebar()) },
+                    sidebar: { self.sidebar() },
                     detail: {
                         NavigationStack(path: self.navigator.getBindingPath()) {
                             self.navigator.currentStack.view(false)

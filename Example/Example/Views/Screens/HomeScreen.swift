@@ -17,7 +17,7 @@ private let logger = KamaalLogger(from: HomeScreen.self)
 struct HomeScreen: View {
     @Environment(\.colorScheme) private var colorScheme
 
-    @EnvironmentObject private var navigator: Navigator<Screens>
+    @EnvironmentObject private var navigator: AppNavigator
 
     @StateObject private var popUpManager = KPopUpManager()
 
