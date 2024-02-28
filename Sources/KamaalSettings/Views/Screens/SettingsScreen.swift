@@ -12,6 +12,8 @@ import KamaalNavigation
 public struct SettingsScreen: View {
     @StateObject private var store: Store
 
+    private let initialStack: [ScreenSelection] = []
+
     let configuration: SettingsConfiguration
 
     public init(configuration: SettingsConfiguration) {
@@ -20,15 +22,11 @@ public struct SettingsScreen: View {
     }
 
     public var body: some View {
-        NavigationStackView(
-            stackWithoutNavigationStack: [ScreenSelection](),
-            root: { screen in MainView(screen: screen) },
-            subView: { screen in MainView(screen: screen) }
-        )
-        .environmentObject(self.store)
-        .accentColor(self.configuration.currentColor)
-        .onAppear(perform: self.handleOnAppear)
-        .environment(\.settingsConfiguration, self.configuration)
+        NavigationStackWithoutNavigationStack(stack: self.initialStack, root: { screen in MainView(screen: screen) })
+            .environmentObject(self.store)
+            .accentColor(self.configuration.currentColor)
+            .onAppear(perform: self.handleOnAppear)
+            .environment(\.settingsConfiguration, self.configuration)
         #if os(macOS)
             .padding(.vertical, .medium)
             .ktakeSizeEagerly(alignment: .topLeading)
