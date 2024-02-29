@@ -8,14 +8,20 @@
 import SwiftUI
 import KamaalUI
 
-public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue>: View {
+public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, WrappedView: View>: View {
     @ObservedObject private var navigator: Navigator<Screen>
 
     let sidebar: () -> Sidebar
+    let passthroughEnvironment: (_ view: Screen.ScreenView) -> WrappedView
 
-    public init(stack: [Screen], @ViewBuilder sidebar: @escaping () -> Sidebar) {
+    public init(
+        stack: [Screen],
+        @ViewBuilder sidebar: @escaping () -> Sidebar,
+        @ViewBuilder passthroughEnvironment: @escaping (_ view: Screen.ScreenView) -> WrappedView
+    ) {
         self.sidebar = sidebar
         self._navigator = ObservedObject(wrappedValue: Navigator(stack: stack))
+        self.passthroughEnvironment = passthroughEnvironment
     }
 
     public var body: some View {
@@ -26,9 +32,9 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue>: V
         KJustStack {
             switch self.navigator.currentScreen {
             case .none:
-                self.navigator.currentStack.view(false)
+                self.passthroughEnvironment(self.navigator.currentStack.view(false))
             case let .some(unwrapped):
-                unwrapped.view(true)
+                self.passthroughEnvironment(unwrapped.view(true))
                     .transition(.move(edge: .trailing))
                     .toolbar {
                         ToolbarItem(placement: .navigation) {
@@ -51,7 +57,7 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue>: V
                     NavigationStack(path: self.navigator.getBindingPath()) {
                         self.macView
                             .navigationDestination(for: Screen.self) { screen in
-                                screen.view(true)
+                                self.passthroughEnvironment(screen.view(true))
                             }
                     }
                 }
@@ -63,9 +69,9 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue>: V
                     sidebar: { self.sidebar() },
                     detail: {
                         NavigationStack(path: self.navigator.getBindingPath()) {
-                            self.navigator.currentStack.view(false)
+                            self.passthroughEnvironment(self.navigator.currentStack.view(false))
                                 .navigationDestination(for: Screen.self) { screen in
-                                    screen.view(true)
+                                    self.passthroughEnvironment(screen.view(true))
                                 }
                         }
                     }
@@ -75,9 +81,9 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue>: V
                 TabView(selection: self.$navigator.currentStack) {
                     ForEach(self.navigator.screens.filter(\.isTabItem), id: \.self) { stack in
                         NavigationStack(path: self.navigator.getBindingPath(forStack: stack)) {
-                            stack.view(false)
+                            self.passthroughEnvironment(stack.view(false))
                                 .navigationDestination(for: Screen.self) { screen in
-                                    screen.view(true)
+                                    self.passthroughEnvironment(screen.view(true))
                                 }
                         }
                         .navigationViewStyle(.stack)
@@ -98,7 +104,13 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue>: V
 #if DEBUG
 struct NavigationStackView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStackView(stack: [] as [PreviewScreenType], sidebar: { Text("Sidebar") })
+        NavigationStackView(
+            stack: [] as [PreviewScreenType],
+            sidebar: { Text("Sidebar") },
+            passthroughEnvironment: { screen in
+                screen.padding()
+            }
+        )
     }
 }
 #endif

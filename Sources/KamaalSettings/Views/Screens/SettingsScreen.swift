@@ -10,31 +10,25 @@ import KamaalUI
 import KamaalNavigation
 
 public struct SettingsScreen<ScreenType: NavigatorStackValue>: View {
-    @StateObject private var store: Store
+    @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
 
-    let configuration: SettingsConfiguration
+    @EnvironmentObject private var store: Store
+
     let screenMapping: (_ settingsSelection: SettingsScreenSelection) -> ScreenType
 
-    public init(
-        configuration: SettingsConfiguration,
-        screenMapping: @escaping (_ settingsSelection: SettingsScreenSelection) -> ScreenType
-    ) {
-        self._store = StateObject(wrappedValue: Store(donations: configuration.donations))
-        self.configuration = configuration
+    public init(screenMapping: @escaping (_ settingsSelection: SettingsScreenSelection) -> ScreenType) {
         self.screenMapping = screenMapping
     }
 
     public var body: some View {
         SettingsScreenSelectionView<ScreenType>(screen: .root, screenMapping: self.screenMapping)
-            .accentColor(self.configuration.currentColor)
+            .accentColor(self.settingsConfiguration.currentColor)
         #if os(macOS)
             .padding(.vertical, .medium)
             .ktakeSizeEagerly(alignment: .topLeading)
         #endif
             .onAppear(perform: self.handleOnAppear)
             .frame(minWidth: 250)
-            .environmentObject(self.store)
-            .environment(\.settingsConfiguration, self.configuration)
     }
 
     private func handleOnAppear() {
