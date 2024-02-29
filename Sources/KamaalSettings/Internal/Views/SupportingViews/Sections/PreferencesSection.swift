@@ -8,18 +8,21 @@
 import SwiftUI
 import KamaalUI
 import KamaalLogger
+import KamaalNavigation
 
-private let logger = KamaalLogger(from: PreferencesSection.self)
+private let logger = KamaalLogger(label: "PreferencesSection")
 
-struct PreferencesSection: View {
+struct PreferencesSection<ScreenType: NavigatorStackValue>: View {
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
+
+    let screenMapping: (_ settingsSelection: SettingsScreenSelection) -> ScreenType
 
     var body: some View {
         KSection(header: "Preferences".localized(comment: "")) {
             ForEach(self.settingsConfiguration.preferences) { preference in
                 NavigationLinkValueRow(
                     label: preference.label,
-                    destination: .preferenceOptions(preference: preference)
+                    destination: self.screenMapping(.preferenceOptions(preference: preference))
                 ) {
                     AppText(string: preference.selectedOption.label)
                         .bold()
@@ -35,8 +38,8 @@ struct PreferencesSection: View {
     }
 }
 
-struct PreferencesSection_Previews: PreviewProvider {
-    static var previews: some View {
-        PreferencesSection()
-    }
-}
+// struct PreferencesSection_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PreferencesSection()
+//    }
+// }

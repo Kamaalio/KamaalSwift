@@ -1,14 +1,13 @@
 //
-//  ScreenSelection.swift
+//  SettingsScreenSelection.swift
 //
 //
 //  Created by Kamaal M Farah on 25/12/2022.
 //
 
 import SwiftUI
-import KamaalNavigation
 
-enum ScreenSelection: Codable, Hashable, CaseIterable, NavigatorStackValue {
+public enum SettingsScreenSelection: Hashable, Codable {
     case root
     case acknowledgements
     case appColor
@@ -17,14 +16,6 @@ enum ScreenSelection: Codable, Hashable, CaseIterable, NavigatorStackValue {
     case logs
     case supportAuthor
     case preferenceOptions(preference: Preference)
-
-    var isTabItem: Bool {
-        false
-    }
-
-    var imageSystemName: String {
-        ""
-    }
 
     var title: String {
         switch self {
@@ -45,19 +36,5 @@ enum ScreenSelection: Codable, Hashable, CaseIterable, NavigatorStackValue {
         case let .preferenceOptions(preference):
             return preference.label
         }
-    }
-
-    func view(_ isSub: Bool) -> some View {
-        MainView(screen: self).navigationTitle(title: self.title, displayMode: isSub ? .inline : .large)
-    }
-
-    static var allCases: [ScreenSelection] {
-        [
-            .acknowledgements,
-            .appColor,
-            .appIcon,
-            .logs,
-            .supportAuthor,
-        ]
     }
 }

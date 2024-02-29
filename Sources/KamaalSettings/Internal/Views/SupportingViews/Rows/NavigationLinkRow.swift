@@ -9,15 +9,15 @@ import SwiftUI
 import KamaalUI
 import KamaalNavigation
 
-struct NavigationLinkRow<Value: View>: View {
+struct NavigationLinkRow<Value: View, ScreenType: NavigatorStackValue>: View {
     @EnvironmentObject private var store: Store
 
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
 
-    let destination: ScreenSelection
+    let destination: ScreenType
     let value: () -> Value
 
-    init(destination: ScreenSelection, @ViewBuilder value: @escaping () -> Value) {
+    init(destination: ScreenType, @ViewBuilder value: @escaping () -> Value) {
         self.value = value
         self.destination = destination
     }
@@ -36,8 +36,8 @@ struct NavigationLinkRow<Value: View>: View {
     }
 }
 
-struct NavigationLinkRow_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationLinkRow(destination: .logs, value: { Text("Value") })
-    }
-}
+// struct NavigationLinkRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationLinkRow(destination: .logs, value: { Text("Value") })
+//    }
+// }

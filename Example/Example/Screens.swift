@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KamaalSettings
 import KamaalNavigation
 
 typealias AppNavigator = Navigator<Screens>
@@ -16,6 +17,7 @@ enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
     case settings
     case coreData
     case coreDataChild(parentID: Item.ID)
+    case settingsSelection(selection: SettingsScreenSelection)
 
     static var allCases: [Screens] {
         [.home, .other, .settings, .coreData]
@@ -23,16 +25,12 @@ enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
 
     var title: String {
         switch self {
-        case .home:
-            return "Home"
-        case .other:
-            return "Other"
-        case .settings:
-            return "Settings"
-        case .coreData:
-            return "Core Data"
-        case .coreDataChild:
-            return "Child"
+        case .home: return "Home"
+        case .other: return "Other"
+        case .settings: return "Settings"
+        case .coreData: return "Core Data"
+        case .coreDataChild: return "Child"
+        case .settingsSelection: return ""
         }
     }
 

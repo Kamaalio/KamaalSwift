@@ -10,13 +10,12 @@ import KamaalUI
 import KamaalLogger
 import KamaalNavigation
 
-private let logger = KamaalLogger(from: AppColorScreen.self)
+private let logger = KamaalLogger(label: "AppColorScreen")
 
-struct AppColorScreen: View {
+struct AppColorScreen<ScreenType: NavigatorStackValue>: View {
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
 
-    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
+    @EnvironmentObject private var navigator: Navigator<ScreenType>
 
     var body: some View {
         SelectionScreenWrapper(
@@ -32,16 +31,12 @@ struct AppColorScreen: View {
     private func changeAppColor(_ appColor: AppColor) {
         NotificationCenter.default.post(name: .appColorChanged, object: appColor)
         logger.info("app color changed to \(appColor)")
-        #if os(macOS)
         self.navigator.goBack()
-        #else
-        self.presentationMode.wrappedValue.dismiss()
-        #endif
     }
 }
 
-struct AppColorScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        AppColorScreen()
-    }
-}
+// struct AppColorScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AppColorScreen()
+//    }
+// }

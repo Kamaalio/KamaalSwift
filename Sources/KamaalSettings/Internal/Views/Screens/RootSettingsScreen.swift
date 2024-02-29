@@ -7,28 +7,31 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalNavigation
 
-struct RootSettingsScreen: View {
+struct RootSettingsScreen<ScreenType: NavigatorStackValue>: View {
     @Environment(\.settingsConfiguration) private var configuration: SettingsConfiguration
 
     @EnvironmentObject private var store: Store
 
+    let screenMapping: (_ settingsSelection: SettingsScreenSelection) -> ScreenType
+
     var body: some View {
         KScrollableForm {
             if self.configuration.donationsIsConfigured && self.store.hasDonations {
-                SupportAuthorSection()
+                SupportAuthorSection<ScreenType>(screenMapping: self.screenMapping)
                     .padding(.horizontal, .medium)
             }
             if self.configuration.feedbackIsConfigured {
-                FeedbackSection()
+                FeedbackSection<ScreenType>(screenMapping: self.screenMapping)
                     .padding(.horizontal, .medium)
             }
             if self.configuration.personalizationIsConfigured {
-                PersonalizationSection()
+                PersonalizationSection<ScreenType>(screenMapping: self.screenMapping)
                     .padding(.horizontal, .medium)
             }
             if self.configuration.preferencesIsConfigured {
-                PreferencesSection()
+                PreferencesSection<ScreenType>(screenMapping: self.screenMapping)
                     .padding(.horizontal, .medium)
             }
             if self.configuration.featuresIsConfigured {
@@ -36,12 +39,16 @@ struct RootSettingsScreen: View {
                     .padding(.horizontal, .medium)
             }
             if self.configuration.showLogs {
-                MiscellaneousSection()
+                MiscellaneousSection<ScreenType>(screenMapping: self.screenMapping)
                     .padding(.horizontal, .medium)
             }
             if self.versionText != nil || self.configuration.acknowledgementsAreConfigured {
-                AboutSection(versionText: self.versionText, buildNumber: self.buildNumber)
-                    .padding(.horizontal, .medium)
+                AboutSection<ScreenType>(
+                    versionText: self.versionText,
+                    buildNumber: self.buildNumber,
+                    screenMapping: self.screenMapping
+                )
+                .padding(.horizontal, .medium)
             }
         }
     }
@@ -55,8 +62,8 @@ struct RootSettingsScreen: View {
     }
 }
 
-struct RootSettingsScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        RootSettingsScreen()
-    }
-}
+// struct RootSettingsScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RootSettingsScreen()
+//    }
+// }

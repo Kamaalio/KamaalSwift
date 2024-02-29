@@ -11,12 +11,10 @@ import KamaalLogger
 import KamaalNavigation
 import KamaalAlgorithms
 
-private let logger = KamaalLogger(from: PreferenceOptionsScreen.self)
+private let logger = KamaalLogger(label: "PreferenceOptionsScreen")
 
-struct PreferenceOptionsScreen: View {
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
-
-    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
+struct PreferenceOptionsScreen<ScreenType: NavigatorStackValue>: View {
+    @EnvironmentObject private var navigator: Navigator<ScreenType>
 
     let preference: Preference
 
@@ -57,25 +55,21 @@ struct PreferenceOptionsScreen: View {
         let newPreference = self.preference.setOption(option)
         NotificationCenter.default.post(name: .preferenceChanged, object: newPreference)
         logger.info("preference changed to \(newPreference)")
-        #if os(macOS)
         self.navigator.goBack()
-        #else
-        self.presentationMode.wrappedValue.dismiss()
-        #endif
     }
 }
 
-struct PreferenceOptionsScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        PreferenceOptionsScreen(preference: Preference(
-            id: UUID(uuidString: "c3172625-3e27-4448-aa98-ff013f718bfe")!,
-            label: "Label",
-            selectedOption: options[0],
-            options: options
-        ))
-    }
-
-    static let options: [Preference.Option] = [
-        .init(id: UUID(uuidString: "4f139a2c-7d14-42ed-bfbe-b59228879875")!, label: "Option"),
-    ]
-}
+// struct PreferenceOptionsScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PreferenceOptionsScreen(preference: Preference(
+//            id: UUID(uuidString: "c3172625-3e27-4448-aa98-ff013f718bfe")!,
+//            label: "Label",
+//            selectedOption: options[0],
+//            options: options
+//        ))
+//    }
+//
+//    static let options: [Preference.Option] = [
+//        .init(id: UUID(uuidString: "4f139a2c-7d14-42ed-bfbe-b59228879875")!, label: "Option"),
+//    ]
+// }

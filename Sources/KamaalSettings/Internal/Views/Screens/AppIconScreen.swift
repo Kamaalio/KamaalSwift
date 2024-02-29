@@ -10,13 +10,12 @@ import KamaalUI
 import KamaalLogger
 import KamaalNavigation
 
-private let logger = KamaalLogger(from: AppIconScreen.self)
+private let logger = KamaalLogger(label: "AppIconScreen")
 
-struct AppIconScreen: View {
+struct AppIconScreen<ScreenType: NavigatorStackValue>: View {
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
 
-    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
+    @EnvironmentObject private var navigator: Navigator<ScreenType>
 
     var body: some View {
         SelectionScreenWrapper(
@@ -32,16 +31,6 @@ struct AppIconScreen: View {
     private func changeAppIcon(_ appIcon: AppIcon) {
         NotificationCenter.default.post(name: .appIconChanged, object: appIcon)
         logger.info("app icon changed to \(appIcon.title)")
-        #if os(macOS)
         self.navigator.goBack()
-        #else
-        self.presentationMode.wrappedValue.dismiss()
-        #endif
-    }
-}
-
-struct AppIconScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        AppIconScreen()
     }
 }

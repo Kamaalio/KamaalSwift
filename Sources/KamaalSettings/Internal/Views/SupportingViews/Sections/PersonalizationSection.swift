@@ -7,9 +7,12 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalNavigation
 
-struct PersonalizationSection: View {
+struct PersonalizationSection<ScreenType: NavigatorStackValue>: View {
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
+
+    let screenMapping: (_ settingsSelection: SettingsScreenSelection) -> ScreenType
 
     var body: some View {
         KSection(header: "Personalization".localized(comment: "")) {
@@ -18,7 +21,7 @@ struct PersonalizationSection: View {
                     localizedLabel: "App colors",
                     comment: "",
                     color: .accentColor,
-                    destination: .appColor
+                    destination: self.screenMapping(.appColor)
                 )
                 #if os(macOS)
                 if self.settingsConfiguration.appIconIsConfigured {
@@ -31,15 +34,15 @@ struct PersonalizationSection: View {
                     localizedLabel: "App icon",
                     comment: "",
                     imageName: self.settingsConfiguration.appIcon!.currentIcon.imageName,
-                    destination: .appIcon
+                    destination: self.screenMapping(.appColor)
                 )
             }
         }
     }
 }
 
-struct PersonalizationSection_Previews: PreviewProvider {
-    static var previews: some View {
-        PersonalizationSection()
-    }
-}
+// struct PersonalizationSection_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PersonalizationSection()
+//    }
+// }
