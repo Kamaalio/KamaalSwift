@@ -7,12 +7,14 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalNavigation
 
-struct AboutSection: View {
+struct AboutSection<ScreenType: NavigatorStackValue>: View {
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
 
     let versionText: String?
     let buildNumber: String?
+    let screenMapping: (_ settingsSelection: SettingsScreenSelection) -> ScreenType
 
     var body: some View {
         KSection(header: "About".localized(comment: "")) {
@@ -21,7 +23,7 @@ struct AboutSection: View {
                     localizedLabel: "Acknowledgements",
                     comment: "",
                     imageSystemName: self.acknowledgementsImageSystemName,
-                    destination: .acknowledgements
+                    destination: self.screenMapping(.acknowledgements)
                 )
                 #if os(macOS)
                 if versionText != nil {
@@ -43,15 +45,12 @@ struct AboutSection: View {
     }
 
     private var acknowledgementsImageSystemName: String {
-        if #available(macOS 13.0, iOS 16.0, *) {
-            return "medal.fill"
-        }
-        return "burst.fill"
+        "medal.fill"
     }
 }
 
-struct AboutSection_Previews: PreviewProvider {
-    static var previews: some View {
-        AboutSection(versionText: "1.0.0", buildNumber: "420")
-    }
-}
+// struct AboutSection_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AboutSection(versionText: "1.0.0", buildNumber: "420")
+//    }
+// }

@@ -7,8 +7,11 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalNavigation
 
-struct FeedbackSection: View {
+struct FeedbackSection<ScreenType: NavigatorStackValue>: View {
+    let screenMapping: (_ settingsSelection: SettingsScreenSelection) -> ScreenType
+
     var body: some View {
         KSection(header: "Feedback".localized(comment: "")) {
             ForEach(FeedbackStyles.allCases, id: \.title) { style in
@@ -16,7 +19,7 @@ struct FeedbackSection: View {
                     NavigationLinkImageRow(
                         label: style.title,
                         imageSystemName: style.imageSystemName,
-                        destination: .feedback(style: style, description: "")
+                        destination: self.screenMapping(.feedback(style: style, description: ""))
                     )
                     #if os(macOS)
                     if style != FeedbackStyles.allCases.last! {
@@ -29,8 +32,8 @@ struct FeedbackSection: View {
     }
 }
 
-struct FeedbackSection_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedbackSection()
-    }
-}
+// struct FeedbackSection_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FeedbackSection()
+//    }
+// }

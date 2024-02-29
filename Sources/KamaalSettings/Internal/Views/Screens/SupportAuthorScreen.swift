@@ -12,11 +12,10 @@ import KamaalLogger
 import ConfettiSwiftUI
 import KamaalNavigation
 
-struct SupportAuthorScreen: View {
-    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
+struct SupportAuthorScreen<ScreenType: NavigatorStackValue>: View {
+    @EnvironmentObject private var navigator: Navigator<ScreenType>
     @EnvironmentObject private var store: Store
 
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
     @StateObject private var viewModel = ViewModel()
@@ -89,14 +88,8 @@ struct SupportAuthorScreen: View {
         Task {
             let result = await store.requestProducts()
             switch result {
-            case .failure:
-                #if os(macOS)
-                self.navigator.goBack()
-                #else
-                self.presentationMode.wrappedValue.dismiss()
-                #endif
-            case .success:
-                break
+            case .failure: self.navigator.goBack()
+            case .success: break
             }
         }
     }
@@ -144,8 +137,8 @@ private final class ViewModel: ObservableObject {
     }
 }
 
-struct SupportAuthorScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        SupportAuthorScreen()
-    }
-}
+// struct SupportAuthorScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SupportAuthorScreen()
+//    }
+// }

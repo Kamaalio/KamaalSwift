@@ -7,22 +7,25 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalNavigation
 
-struct MiscellaneousSection: View {
+struct MiscellaneousSection<ScreenType: NavigatorStackValue>: View {
+    let screenMapping: (_ settingsSelection: SettingsScreenSelection) -> ScreenType
+
     var body: some View {
         KSection(header: "Miscellaneous".localized(comment: "")) {
             NavigationLinkImageRow(
                 localizedLabel: "Logs",
                 comment: "",
                 imageSystemName: "newspaper.fill",
-                destination: .logs
+                destination: self.screenMapping(.logs)
             )
         }
     }
 }
 
-struct MiscellaneousSection_Previews: PreviewProvider {
-    static var previews: some View {
-        MiscellaneousSection()
-    }
-}
+// struct MiscellaneousSection_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MiscellaneousSection()
+//    }
+// }

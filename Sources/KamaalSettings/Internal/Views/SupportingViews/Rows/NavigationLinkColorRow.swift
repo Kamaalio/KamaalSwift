@@ -6,19 +6,20 @@
 //
 
 import SwiftUI
+import KamaalNavigation
 
-struct NavigationLinkColorRow: View {
+struct NavigationLinkColorRow<ScreenType: NavigatorStackValue>: View {
     let label: String
     let color: Color
-    let destination: ScreenSelection
+    let destination: ScreenType
 
-    init(label: String, color: Color, destination: ScreenSelection) {
+    init(label: String, color: Color, destination: ScreenType) {
         self.label = label
         self.color = color
         self.destination = destination
     }
 
-    init(localizedLabel: String, comment _: String, color: Color, destination: ScreenSelection) {
+    init(localizedLabel: String, comment _: String, color: Color, destination: ScreenType) {
         self.init(label: localizedLabel.localized(comment: ""), color: color, destination: destination)
     }
 
@@ -29,8 +30,8 @@ struct NavigationLinkColorRow: View {
     }
 }
 
-struct NavigationLinkColorRow_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationLinkColorRow(label: "Label", color: .accentColor, destination: .appIcon)
-    }
-}
+// struct NavigationLinkColorRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationLinkColorRow(label: "Label", color: .accentColor, destination: .appIcon)
+//    }
+// }

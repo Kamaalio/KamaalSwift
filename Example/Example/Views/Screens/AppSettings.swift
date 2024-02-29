@@ -13,9 +13,11 @@ struct AppSettings: View {
     @State private var selectedLanguageOption = languageOptions[0]
 
     var body: some View {
-        SettingsScreen(configuration: self.configuration)
-            .onAppColorChange(self.handleOnAppColorChange)
-            .onSettingsPreferenceChange(self.handlePreferenceChange)
+        SettingsScreen<Screens>(configuration: self.configuration, screenMapping: { settingsSelection in
+            Screens.settingsSelection(selection: settingsSelection)
+        })
+        .onAppColorChange(self.handleOnAppColorChange)
+        .onSettingsPreferenceChange(self.handlePreferenceChange)
     }
 
     private var configuration: SettingsConfiguration {

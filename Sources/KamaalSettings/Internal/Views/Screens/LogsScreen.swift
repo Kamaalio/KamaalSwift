@@ -10,16 +10,17 @@ import KamaalUI
 import KamaalLogger
 import KamaalNavigation
 
-struct LogsScreen: View {
-    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
+struct LogsScreen<ScreenType: NavigatorStackValue>: View {
+    @EnvironmentObject private var navigator: Navigator<ScreenType>
 
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
 
     @State private var logs: [HoldedLog] = []
     @State private var selectedLog: HoldedLog?
     @State private var showSelectedLogSheet = false
-    @State private var screenToShow: Screens?
     @State private var bugDescription = ""
+
+    let screenMapping: (_ settingsSelection: SettingsScreenSelection) -> ScreenType
 
     private enum Screens: Hashable {
         case feedback
@@ -27,17 +28,6 @@ struct LogsScreen: View {
 
     var body: some View {
         ZStack {
-            #if !os(macOS)
-            NavigationLink(
-                tag: Screens.feedback,
-                selection: self.$screenToShow,
-                destination: {
-                    FeedbackScreen(style: .bug, description: self.bugDescription)
-                        .environment(\.settingsConfiguration, self.settingsConfiguration)
-                },
-                label: { EmptyView() }
-            )
-            #endif
             KScrollableForm {
                 KSection {
                     if self.logs.isEmpty {
@@ -85,11 +75,7 @@ struct LogsScreen: View {
         """
 
         self.bugDescription = predefinedDescription
-        #if os(macOS)
-        self.navigator.navigate(to: .feedback(style: .bug, description: predefinedDescription))
-        #else
-        self.screenToShow = .feedback
-        #endif
+        self.navigator.navigate(to: self.screenMapping(.feedback(style: .bug, description: predefinedDescription)))
     }
 
     private func onShowSelectedLogSheetChange(_ newValue: Bool) {
@@ -110,8 +96,8 @@ struct LogsScreen: View {
     }
 }
 
-struct LogsScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        LogsScreen()
-    }
-}
+// struct LogsScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LogsScreen()
+//    }
+// }

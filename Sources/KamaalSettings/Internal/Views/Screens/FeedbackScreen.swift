@@ -13,14 +13,13 @@ import KamaalExtensions
 import KamaalNavigation
 import KamaalAPIServices
 
-private let logger = KamaalLogger(from: FeedbackScreen.self)
+private let logger = KamaalLogger(label: "FeedbackScreen")
 
-struct FeedbackScreen: View {
+struct FeedbackScreen<ScreenType: NavigatorStackValue>: View {
     @Environment(\.settingsConfiguration) private var settingsConfiguration: SettingsConfiguration
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
 
-    @EnvironmentObject private var navigator: Navigator<ScreenSelection>
+    @EnvironmentObject private var navigator: Navigator<ScreenType>
 
     @ObservedObject private var viewModel: ViewModel
 
@@ -64,11 +63,7 @@ struct FeedbackScreen: View {
     private func onSendPress() {
         Task {
             await self.viewModel.submit(using: self.settingsConfiguration.feedback, dismiss: {
-                #if os(macOS)
                 self.navigator.goBack()
-                #else
-                self.presentationMode.wrappedValue.dismiss()
-                #endif
             })
         }
     }
@@ -221,8 +216,8 @@ private final class ViewModel: ObservableObject {
     }
 }
 
-struct FeedbackScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        FeedbackScreen(style: .bug)
-    }
-}
+// struct FeedbackScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FeedbackScreen(style: .bug)
+//    }
+// }

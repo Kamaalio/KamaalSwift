@@ -32,6 +32,10 @@ struct MainView: View {
                 CoreDataScreen()
             case let .coreDataChild(parentID):
                 CoreDataChildScreen(parentID: parentID)
+            case let .settingsSelection(selection: selection):
+                SettingsScreenSelectionView(screen: selection, screenMapping: { selection in
+                    Screens.settingsSelection(selection: selection)
+                })
             }
         }
         .navigationTitle(title: self.screen.title, displayMode: self.displayMode)
