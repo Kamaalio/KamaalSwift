@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KamaalExtensions
 
 public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject {
     @Published private var stacks: [StackValue: [StackValue]]
@@ -42,23 +43,34 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
     /// - Parameter destination: Where to navigate to.
     @MainActor
     public func navigate(to destination: StackValue) {
-        withAnimation { self.stacks[self.currentStack]?.append(destination) }
+        withAnimation {
+            let currentStack = self.currentStack
+            let stack = self.stacks[currentStack] ?? []
+            self.stacks[currentStack] = stack.appended(destination)
+        }
     }
 
     /// Navigates back.
     @MainActor
     public func goBack() {
-        withAnimation { _ = self.stacks[self.currentStack]?.popLast() }
+        withAnimation {
+            let currentStack = self.currentStack
+            let stack = self.stacks[currentStack] ?? []
+            self.stacks[currentStack] = stack.removedLast()
+        }
     }
 
     func getBindingPath(forStack stack: StackValue) -> Binding<[StackValue]> {
         Binding(
             get: { [weak self] in
                 guard let self else { return [] }
+
                 return self.stacks[stack] ?? []
             },
             set: { [weak self] newValue in
                 guard let self else { return }
+                guard stack == self.currentStack else { return }
+
                 self.stacks[stack] = newValue
             }
         )

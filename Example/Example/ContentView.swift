@@ -14,7 +14,7 @@ struct ContentView: View {
     @State private var selectedLanguageOption = languageOptions[0]
 
     var body: some View {
-        NavigationStackView(stack: [Screens](), sidebar: { Sidebar() }, passthroughEnvironment: { view in
+        NavigationStackView(initialStack: [Screens](), sidebar: { Sidebar() }, passthroughEnvironment: { view in
             view
                 .settingsEnvironment(configuration: self.configuration)
         })

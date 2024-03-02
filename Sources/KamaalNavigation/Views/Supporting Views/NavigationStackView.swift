@@ -9,18 +9,18 @@ import SwiftUI
 import KamaalUI
 
 public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, WrappedView: View>: View {
-    @ObservedObject private var navigator: Navigator<Screen>
+    @StateObject private var navigator: Navigator<Screen>
 
     let sidebar: () -> Sidebar
     let passthroughEnvironment: (_ view: Screen.ScreenView) -> WrappedView
 
     public init(
-        stack: [Screen],
+        initialStack: [Screen],
         @ViewBuilder sidebar: @escaping () -> Sidebar,
         @ViewBuilder passthroughEnvironment: @escaping (_ view: Screen.ScreenView) -> WrappedView
     ) {
         self.sidebar = sidebar
-        self._navigator = ObservedObject(wrappedValue: Navigator(stack: stack))
+        self._navigator = StateObject(wrappedValue: Navigator(stack: initialStack))
         self.passthroughEnvironment = passthroughEnvironment
     }
 
@@ -105,7 +105,7 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, Wr
 struct NavigationStackView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStackView(
-            stack: [] as [PreviewScreenType],
+            initialStack: [] as [PreviewScreenType],
             sidebar: { Text("Sidebar") },
             passthroughEnvironment: { screen in
                 screen.padding()
