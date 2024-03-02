@@ -9,13 +9,16 @@ import SwiftUI
 
 @main
 struct ExampleApp: App {
+    @StateObject private var userSettings = UserSettings()
+
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, self.persistenceController.container.viewContext)
                 .frame(minWidth: 300, minHeight: 300)
+                .environment(\.managedObjectContext, self.persistenceController.container.viewContext)
+                .environmentObject(self.userSettings)
         }
     }
 }
