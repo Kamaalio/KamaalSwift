@@ -4,13 +4,13 @@ WORKSPACE := "KamaalSwift.xcworkspace"
 EXAMPLE_SCHEME := "Example"
 
 test:
-    #!/bin/sh
+    #!/bin/zsh
 
     swift --version
     swift test --enable-code-coverage
 
 export-code-coverage:
-    #!/bin/sh
+    #!/bin/zsh
 
     APP_PATH=".build/debug/KamaalSwiftPackageTests.xctest/Contents/MacOS/KamaalSwiftPackageTests"
     PROFILE_PATH=".build/debug/codecov/default.profdata"
@@ -18,7 +18,7 @@ export-code-coverage:
     xcrun llvm-cov export -format="lcov" "$APP_PATH" -instr-profile "$PROFILE_PATH" > coverage.lcov
 
 xcode-test:
-    #!/bin/sh
+    #!/bin/zsh
 
     xcodebuild -scheme "$EXAMPLE_SCHEME" -configuration Debug -workspace  "$WORKSPACE" -sdk "$SDK" -destination "$DESTINATION" build test | xcpretty && exit ${PIPESTATUS[0]}
 
@@ -29,7 +29,7 @@ lint:
     python3 Scripts/swiftlint_checker/main.py
 
 build-example:
-    #!/bin/sh
+    #!/bin/zsh
 
     xcodebuild -configuration Debug -workspace "$WORKSPACE" -scheme $EXAMPLE_SCHEME -destination "$DESTINATION" | xcpretty && exit ${PIPESTATUS[0]}
 

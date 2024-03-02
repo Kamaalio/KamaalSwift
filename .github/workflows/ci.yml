@@ -5,10 +5,13 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  XCODE_APP_NAME: Xcode_15.2.app
+
 jobs:
   quality:
     name: quality
-    runs-on: macos-12
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v3
         with:
@@ -28,7 +31,7 @@ jobs:
 
   test:
     name: test
-    runs-on: macos-12
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v3
 
@@ -39,7 +42,7 @@ jobs:
           echo "listing available Xcode versions:"
           ls -d /Applications/Xcode*
 
-          sudo xcode-select --switch /Applications/Xcode_14.2.app/Contents/Developer
+          sudo xcode-select --switch /Applications/$XCODE_APP_NAME/Contents/Developer
 
       - name: Test
         run: |
