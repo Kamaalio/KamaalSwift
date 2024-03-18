@@ -28,26 +28,6 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, Wr
         self.navigationStackView
     }
 
-    private var macView: some View {
-        KJustStack {
-            switch self.navigator.currentScreen {
-            case .none:
-                self.passthroughEnvironment(self.navigator.currentStack.view(false))
-            case let .some(unwrapped):
-                self.passthroughEnvironment(unwrapped.view(true))
-                    .transition(.move(edge: .trailing))
-                    .toolbar {
-                        ToolbarItem(placement: .navigation) {
-                            Button(action: { self.navigator.goBack() }) {
-                                Image(systemName: "chevron.left")
-                                    .foregroundColor(.accentColor)
-                            }
-                        }
-                    }
-            }
-        }
-    }
-
     private var navigationStackView: some View {
         KJustStack {
             #if os(macOS)
@@ -55,9 +35,22 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, Wr
                 sidebar: { self.sidebar() },
                 detail: {
                     NavigationStack(path: self.navigator.getBindingPath()) {
-                        self.macView
+                        self.passthroughEnvironment(self.navigator.currentStack.view(false))
                             .navigationDestination(for: Screen.self) { screen in
-                                self.passthroughEnvironment(screen.view(true))
+                                ZStack {
+                                    Color(nsColor: .windowBackgroundColor)
+                                    self.passthroughEnvironment(screen.view(true))
+                                }
+                                .transition(.move(edge: .trailing))
+                                .navigationBarBackButtonHidden(true)
+                                .toolbar {
+                                    ToolbarItem(placement: .navigation) {
+                                        Button(action: { self.navigator.goBack() }) {
+                                            Image(systemName: "chevron.left")
+                                                .foregroundColor(.accentColor)
+                                        }
+                                    }
+                                }
                             }
                     }
                 }
