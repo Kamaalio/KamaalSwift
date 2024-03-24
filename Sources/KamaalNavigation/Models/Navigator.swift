@@ -18,7 +18,7 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
         self.currentStack = initialStack
     }
 
-    var currentScreen: StackValue? {
+    public var currentScreen: StackValue? {
         self.stacks[self.currentStack]?.last
     }
 
