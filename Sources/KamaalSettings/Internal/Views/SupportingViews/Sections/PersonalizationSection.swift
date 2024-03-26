@@ -34,7 +34,7 @@ struct PersonalizationSection<ScreenType: NavigatorStackValue>: View {
                     localizedLabel: "App icon",
                     comment: "",
                     imageName: self.settingsConfiguration.appIcon!.currentIcon.imageName,
-                    destination: self.screenMapping(.appColor)
+                    destination: self.screenMapping(.appIcon)
                 )
             }
         }
