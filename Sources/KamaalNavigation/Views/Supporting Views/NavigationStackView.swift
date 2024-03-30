@@ -11,17 +11,20 @@ import KamaalUI
 public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, WrappedView: View>: View {
     @StateObject private var navigator: Navigator<Screen>
 
+    let handleURLOpen: (_ url: URL) -> Screen?
     let sidebar: () -> Sidebar
     let passthroughEnvironment: (_ view: Screen.ScreenView) -> WrappedView
 
     public init(
         initialStack: [Screen],
+        handleURLOpen: @escaping (_ url: URL) -> Screen? = { _ in nil },
         @ViewBuilder sidebar: @escaping () -> Sidebar,
         @ViewBuilder passthroughEnvironment: @escaping (_ view: Screen.ScreenView) -> WrappedView
     ) {
         self.sidebar = sidebar
         self._navigator = StateObject(wrappedValue: Navigator(stack: initialStack))
         self.passthroughEnvironment = passthroughEnvironment
+        self.handleURLOpen = handleURLOpen
     }
 
     public var body: some View {
@@ -91,6 +94,10 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, Wr
             }
             #endif
         }
+        .onOpenURL(perform: { url in
+            guard let screen = handleURLOpen(url) else { return }
+            self.navigator.navigate(to: screen)
+        })
     }
 }
 
