@@ -99,6 +99,12 @@ extension Sequence {
         try first(where: predicate)
     }
 
+    /// Unpacks items in the sequence to only contain non optional values.
+    /// - Returns: An array without optionals.
+    public func unpacked<T>() -> [T] where Element == T? {
+        compactMap { $0 }
+    }
+
     /// Group results in to a tuple of successes and failures.
     /// - Returns: A tuple of successes and failures.
     public func grouped<Success, Failure: Error>() -> (
