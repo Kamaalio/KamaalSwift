@@ -98,4 +98,22 @@ extension Sequence {
     public func find(where predicate: (Element) throws -> Bool) rethrows -> Element? {
         try first(where: predicate)
     }
+
+    /// Group results in to a tuple of successes and failures.
+    /// - Returns: A tuple of successes and failures.
+    public func grouped<Success, Failure: Error>() -> (
+        successes: [Success],
+        failures: [Failure]
+    ) where Element == Result<Success, Failure> {
+        reduce((successes: [Success](), failures: [Failure]())) { results, result in
+            switch result {
+            case let .failure(failure):
+                let failures = results.failures.appended(failure)
+                return (results.successes, failures)
+            case let .success(success):
+                let successes = results.successes.appended(success)
+                return (successes, results.failures)
+            }
+        }
+    }
 }
