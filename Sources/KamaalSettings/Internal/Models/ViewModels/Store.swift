@@ -96,7 +96,6 @@ final class Store: NSObject, ObservableObject {
             }
 
             await self.setDonations(donations)
-            self.products = donations.compactMap(\.product)
             return .success(())
         })
     }
@@ -117,7 +116,10 @@ final class Store: NSObject, ObservableObject {
 
     @MainActor
     private func setDonations(_ donations: [CustomProduct]) {
+        let products = donations.compactMap(\.product)
         self.donations = donations
+        self.products = products
+        self.logger.info("Setting \(products.count) donations")
     }
 
     @MainActor

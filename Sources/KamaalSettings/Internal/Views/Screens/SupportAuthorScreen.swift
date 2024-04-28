@@ -22,7 +22,7 @@ struct SupportAuthorScreen<ScreenType: NavigatorStackValue>: View {
 
     var body: some View {
         ZStack {
-            KScrollableForm {
+            ScrollView(.vertical, showsIndicators: true) {
                 KJustStack {
                     if self.store.isLoading, !self.store.hasDonations {
                         KLoading()
