@@ -21,11 +21,11 @@ extension JSONFileUnpackerErrors: Equatable {
     private var stringValue: String {
         switch self {
         case .fileNotFound:
-            return "file_not_found"
+            "file_not_found"
         case let .cannotReadData(context):
-            return "cannot_read_data_\(context)"
+            "cannot_read_data_\(context)"
         case let .decodingFailure(context):
-            return "decoding_failure_\(context)"
+            "decoding_failure_\(context)"
         }
     }
 }

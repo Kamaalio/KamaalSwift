@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct HTTPMethod: RawRepresentable {
+public struct HTTPMethod: RawRepresentable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

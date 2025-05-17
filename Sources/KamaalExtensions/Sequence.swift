@@ -30,11 +30,11 @@ extension Sequence {
         self.sorted(by: {
             switch comparison {
             case .orderedAscending:
-                return $0[keyPath: keyPath] < $1[keyPath: keyPath]
+                $0[keyPath: keyPath] < $1[keyPath: keyPath]
             case .orderedDescending:
-                return $0[keyPath: keyPath] > $1[keyPath: keyPath]
+                $0[keyPath: keyPath] > $1[keyPath: keyPath]
             case .orderedSame:
-                return $0[keyPath: keyPath] == $1[keyPath: keyPath]
+                $0[keyPath: keyPath] == $1[keyPath: keyPath]
             }
         })
     }
@@ -102,7 +102,7 @@ extension Sequence {
     /// Unpacks items in the sequence to only contain non optional values.
     /// - Returns: An array without optionals.
     public func unpacked<T>() -> [T] where Element == T? {
-        compactMap { $0 }
+        compactMap(\.self)
     }
 
     /// Group results in to a tuple of successes and failures.

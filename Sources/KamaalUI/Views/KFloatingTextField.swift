@@ -37,9 +37,9 @@ public struct KFloatingTextField: View {
         #if canImport(UIKit) && !os(watchOS)
         var keyboardType: UIKeyboardType {
             switch self {
-            case .decimals: return .decimalPad
-            case .numbers: return .numberPad
-            case .text: return .default
+            case .decimals: .decimalPad
+            case .numbers: .numberPad
+            case .text: .default
             }
         }
         #endif

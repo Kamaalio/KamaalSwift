@@ -86,10 +86,10 @@ public class CloudAccountsModule {
 
     private func handleCKError(_ error: CKError) -> Errors {
         switch error.code {
-        case .notAuthenticated: return .unauthenticated
-        case .networkFailure, .networkUnavailable: return .networkFailure
-        case .quotaExceeded: return .quotaExceeded
-        default: return .unknownFailure(context: error)
+        case .notAuthenticated: .unauthenticated
+        case .networkFailure, .networkUnavailable: .networkFailure
+        case .quotaExceeded: .quotaExceeded
+        default: .unknownFailure(context: error)
         }
     }
 }

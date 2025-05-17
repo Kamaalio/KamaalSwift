@@ -7,8 +7,37 @@
 
 import Foundation
 import KamaalNetworker
+import KamaalExtensions
 
-public class GitHubReposClient: BaseGitHubClient {
+public struct GitHubReposClient: ConfigurableClient {
+    public private(set) var configuration: GitHubClientConfiguration?
+
+    private var networker = KamaalNetworker()
+
+    static let BASE_URL = URL(staticString: "https://api.github.com")
+
+    var defaultHeaders: [String: String] {
+        var headers = [
+            "accept": "application/vnd.github.v3+json",
+        ]
+
+        guard let configuration else {
+            assertionFailure("Should have configure client first")
+            return headers
+        }
+
+        if let login = "\(configuration.username):\(configuration.token)".data(using: .utf8) {
+            headers["Authorization"] = "Basic \(login.base64EncodedString())"
+        }
+
+        return headers
+    }
+
+    public mutating func configure(with configuration: GitHubClientConfiguration) {
+        self.configuration = configuration
+        self.networker = .init(urlSession: configuration.urlSession)
+    }
+
     /// Create issues on a specific repo.
     /// - Parameters:
     ///   - username: the owner of the repo.
@@ -48,7 +77,7 @@ public class GitHubReposClient: BaseGitHubClient {
             from: url,
             method: .post,
             payload: payload,
-            headers: defaultHeaders,
+            headers: self.defaultHeaders,
             config: config
         )
 

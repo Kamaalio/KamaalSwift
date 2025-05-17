@@ -14,11 +14,10 @@ public class KamaalCloud {
 
     public init(containerID: String, databaseType: DatabaseType) {
         let container = CKContainer(identifier: containerID)
-        let database: CKDatabase
-        switch databaseType {
-        case .public: database = container.publicCloudDatabase
-        case .shared: database = container.sharedCloudDatabase
-        case .private: database = container.privateCloudDatabase
+        let database: CKDatabase = switch databaseType {
+        case .public: container.publicCloudDatabase
+        case .shared: container.sharedCloudDatabase
+        case .private: container.privateCloudDatabase
         }
         let accounts = CloudAccountsModule(container: container)
         self.objects = CloudObjectsModule(accounts: accounts, database: database)

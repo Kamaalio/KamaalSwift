@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct AppIcon: Hashable, Identifiable, Codable {
+public struct AppIcon: Hashable, Identifiable, Codable, Sendable {
     public let id: UUID
     public let imageName: String
     public let title: String

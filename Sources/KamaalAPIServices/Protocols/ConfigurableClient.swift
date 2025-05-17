@@ -7,14 +7,10 @@
 
 import Foundation
 
-public protocol ConfigurableClient {
-    associatedtype Configuration
+public protocol ConfigurableClient: Sendable {
+    associatedtype Configuration: Sendable
 
-    var configuration: Configuration? { get set }
-}
+    var configuration: Configuration? { get }
 
-extension ConfigurableClient {
-    public mutating func configure(with configuration: Configuration) {
-        self.configuration = configuration
-    }
+    mutating func configure(with configuration: Configuration)
 }

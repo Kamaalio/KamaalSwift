@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct AppColor: Hashable, Identifiable {
+public struct AppColor: Hashable, Identifiable, Sendable {
     public let id: UUID
     public let name: String
     public let color: Color

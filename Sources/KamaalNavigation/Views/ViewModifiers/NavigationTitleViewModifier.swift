@@ -21,9 +21,9 @@ public enum DisplayMode {
     var navigationBarItemDisplayMode: NavigationBarItem.TitleDisplayMode {
         switch self {
         case .large:
-            return .large
+            .large
         case .inline:
-            return .inline
+            .inline
         }
     }
     #endif

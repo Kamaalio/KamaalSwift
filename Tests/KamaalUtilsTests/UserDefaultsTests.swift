@@ -10,57 +10,57 @@ import KamaalUtils
 
 final class UserDefaultsTests: XCTestCase {
     @UserDefaultsValue(key: "test_value")
-    static var testValue: String?
+    var testValue: String?
 
     @UserDefaultsObject(key: "test_object")
-    static var testObject: TestObject?
+    var testObject: TestObject?
 
     override func setUp() {
-        Self._testValue.removeValue()
-        Self._testObject.removeValue()
+        self._testValue.removeValue()
+        self._testObject.removeValue()
     }
 
     func testUserdefaultsValue() {
         let valueToSet = "Kamaal"
-        Self.testValue = valueToSet
+        self.testValue = valueToSet
 
-        XCTAssertEqual(Self.testValue, valueToSet)
+        XCTAssertEqual(self.testValue, valueToSet)
 
-        Self._testValue.removeValue()
+        self._testValue.removeValue()
 
-        XCTAssertNil(Self.testValue)
+        XCTAssertNil(self.testValue)
     }
 
     func testUserdefaultsValueSettingNil() {
         let valueToSet = "Niller"
-        Self.testValue = valueToSet
+        self.testValue = valueToSet
 
-        XCTAssertEqual(Self.testValue, valueToSet)
+        XCTAssertEqual(self.testValue, valueToSet)
 
-        Self.testValue = nil
+        self.testValue = nil
 
-        XCTAssertNil(Self.testValue)
+        XCTAssertNil(self.testValue)
     }
 
     func testUserDefaultsObject() {
         let objectToSet = TestObject(value: "Test")
-        Self.testObject = objectToSet
+        self.testObject = objectToSet
 
-        XCTAssertEqual(Self.testObject, objectToSet)
+        XCTAssertEqual(self.testObject, objectToSet)
 
-        Self._testObject.removeValue()
+        self._testObject.removeValue()
 
-        XCTAssertNil(Self.testObject)
+        XCTAssertNil(self.testObject)
     }
 
     func testUserDefaultsObjectSettingNil() {
         let objectToSet = TestObject(value: "Something")
-        Self.testObject = objectToSet
+        self.testObject = objectToSet
 
-        XCTAssertEqual(Self.testObject, objectToSet)
+        XCTAssertEqual(self.testObject, objectToSet)
 
-        Self.testObject = nil
+        self.testObject = nil
 
-        XCTAssertNil(Self.testObject)
+        XCTAssertNil(self.testObject)
     }
 }

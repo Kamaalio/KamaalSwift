@@ -11,7 +11,7 @@ import KamaalExtensions
 import Combine
 #endif
 
-public class KamaalNetworker {
+public struct KamaalNetworker: Sendable {
     private let urlSession: URLSession
 
     public init(urlSession: URLSession = .shared) {
@@ -70,7 +70,7 @@ public class KamaalNetworker {
     }
 
     @available(iOS 13.0.0, macOS 10.15.0, tvOS 13.0.0, watchOS 6.0.0, *)
-    public func request<T: Decodable>(
+    public func request<T: Decodable & Sendable>(
         from url: URL,
         method: HTTPMethod = .get,
         payload: Data?,
@@ -84,7 +84,7 @@ public class KamaalNetworker {
                 payload: payload,
                 headers: headers,
                 config: config,
-                completion: continuation.resume(returning:)
+                completion: { continuation.resume(returning: $0) }
             )
         }
     }
@@ -122,7 +122,7 @@ public class KamaalNetworker {
                 payload: payload,
                 headers: headers,
                 config: config,
-                completion: continuation.resume(returning:)
+                completion: { continuation.resume(returning: $0) }
             )
         }
     }
@@ -164,7 +164,7 @@ public class KamaalNetworker {
                 payload: payload,
                 headers: headers,
                 config: config,
-                completion: continuation.resume(returning:)
+                completion: { continuation.resume(returning: $0) }
             )
         }
     }
@@ -206,7 +206,7 @@ public class KamaalNetworker {
                 payload: payload,
                 headers: headers,
                 config: config,
-                completion: continuation.resume(returning:)
+                completion: { continuation.resume(returning: $0) }
             )
         }
     }

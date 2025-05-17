@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GitHubIssueReactions: Codable, Hashable {
+public struct GitHubIssueReactions: Codable, Hashable, Sendable {
     public let url: URL
     public let totalCount: Int
     public let plus1: Int

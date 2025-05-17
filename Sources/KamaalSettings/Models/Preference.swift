@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Preference: Hashable, Identifiable, Codable {
+public struct Preference: Hashable, Identifiable, Codable, Sendable {
     public let id: UUID
     public let label: String
     public let selectedOption: Option
@@ -20,7 +20,7 @@ public struct Preference: Hashable, Identifiable, Codable {
         self.options = options
     }
 
-    public struct Option: Hashable, Identifiable, Codable {
+    public struct Option: Hashable, Identifiable, Codable, Sendable {
         public let id: UUID
         public let label: String
 

@@ -5,7 +5,7 @@
 //  Created by Kamaal M Farah on 14/11/2022.
 //
 
-import CoreData
+@preconcurrency import CoreData
 import KamaalCoreData
 
 struct PersistenceController {
@@ -55,12 +55,12 @@ class Item: NSManagedObject, ManuallyManagedObject, Identifiable {
         try self.addChild(child, save: true)
     }
 
-    static let properties: [ManagedObjectPropertyConfiguration] = [
+    nonisolated(unsafe) static let properties: [ManagedObjectPropertyConfiguration] = [
         ManagedObjectPropertyConfiguration(name: \Item.id, type: .uuid, isOptional: false),
         ManagedObjectPropertyConfiguration(name: \Item.timestamp, type: .date, isOptional: false),
     ]
 
-    static let _relationships: [_RelationshipConfiguration] = [
+    nonisolated(unsafe) static let _relationships: [_RelationshipConfiguration] = [
         _RelationshipConfiguration(
             name: "children",
             destinationEntity: Child.self,
@@ -90,12 +90,12 @@ class Child: NSManagedObject, ManuallyManagedObject, Identifiable {
     @NSManaged var timestamp: Date
     @NSManaged var parent: Item
 
-    static let properties: [ManagedObjectPropertyConfiguration] = [
+    nonisolated(unsafe) static let properties: [ManagedObjectPropertyConfiguration] = [
         ManagedObjectPropertyConfiguration(name: \Child.id, type: .uuid, isOptional: false),
         ManagedObjectPropertyConfiguration(name: \Child.timestamp, type: .date, isOptional: false),
     ]
 
-    static let _relationships: [_RelationshipConfiguration] = [
+    nonisolated(unsafe) static let _relationships: [_RelationshipConfiguration] = [
         _RelationshipConfiguration(
             name: "parent",
             destinationEntity: Item.self,

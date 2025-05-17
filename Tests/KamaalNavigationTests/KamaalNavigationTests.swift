@@ -20,23 +20,25 @@ final class KamaalNavigationTests: XCTestCase {
     }
 
     #if os(macOS)
+    @MainActor
     func testNavigate() async {
         let stack = Navigator<PreviewScreenType>(stack: [.sub, .screen])
-        await stack.navigate(to: .screen)
+        stack.navigate(to: .screen)
         XCTAssertEqual(stack.currentScreen, .screen)
-        await stack.navigate(to: .sub)
+        stack.navigate(to: .sub)
         XCTAssertEqual(stack.currentScreen, .sub)
     }
 
+    @MainActor
     func testGoBack() async {
         let stack = Navigator<PreviewScreenType>(stack: [.screen, .sub])
-        await stack.goBack()
+        stack.goBack()
         XCTAssertEqual(stack.currentScreen, .screen)
-        await stack.goBack()
+        stack.goBack()
         XCTAssertNil(stack.currentScreen)
-        await stack.goBack()
+        stack.goBack()
         XCTAssertNil(stack.currentScreen)
-        await stack.navigate(to: .sub)
+        stack.navigate(to: .sub)
         XCTAssertEqual(stack.currentScreen, .sub)
     }
     #endif

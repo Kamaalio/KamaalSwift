@@ -8,7 +8,7 @@
 import Foundation
 import KamaalExtensions
 
-public struct StoreKitDonation: Hashable, Identifiable, Codable {
+public struct StoreKitDonation: Hashable, Identifiable, Codable, Sendable {
     public let id: String
     public let emoji: String
     public let weight: Int

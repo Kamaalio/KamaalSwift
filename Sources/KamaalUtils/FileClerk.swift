@@ -8,7 +8,7 @@
 import Foundation
 
 public struct FileClerk {
-    private static let fileManager = FileManager.default
+    private nonisolated(unsafe) static let fileManager = FileManager.default
 
     private init() { }
 

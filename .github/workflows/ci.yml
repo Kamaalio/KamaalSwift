@@ -6,12 +6,12 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  XCODE_APP_NAME: Xcode_15.2.app
+  XCODE_APP_NAME: Xcode_16.3.app
 
 jobs:
   quality:
     name: quality
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v3
         with:
@@ -31,7 +31,7 @@ jobs:
 
   test:
     name: test
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v3
 

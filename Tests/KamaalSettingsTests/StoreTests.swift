@@ -5,20 +5,21 @@
 //  Created by Kamaal M Farah on 25/12/2022.
 //
 
-import XCTest
+import Testing
 @testable import KamaalSettings
 
-final class StoreTests: XCTestCase {
-    var store: Store!
+@Test
+func getAllProducts() async throws {
+    var store = await setup()
 
-    override func setUpWithError() throws {
-        self.store = Store(donations: donations, productFetcher: MockProductFetcher())
-    }
+    try await store.requestProducts().get()
 
-    func testGetAllProducts() async throws {
-        try await self.store.requestProducts().get()
-        XCTAssertEqual(self.store.donations.count, donations.count)
-    }
+    await #expect(store.donations.count == donations.count)
+}
+
+@MainActor
+private func setup() -> Store {
+    Store(donations: donations, productFetcher: MockProductFetcher())
 }
 
 struct MockProductFetcher: ProductFetcher {

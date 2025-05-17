@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GitHubClientConfiguration {
+public struct GitHubClientConfiguration: Sendable {
     public var token: String
     public var username: String
     public var urlSession: URLSession

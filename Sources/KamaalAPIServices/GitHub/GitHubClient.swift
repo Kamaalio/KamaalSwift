@@ -9,17 +9,13 @@ import Foundation
 import KamaalExtensions
 
 public struct GitHubClient: ConfigurableClient {
-    public var configuration: GitHubClientConfiguration? {
-        didSet { self.configurationDidSet() }
-    }
+    public var configuration: GitHubClientConfiguration?
 
     public var repos = GitHubReposClient()
 
     init() { }
 
-    private mutating func configurationDidSet() {
-        if let configuration {
-            self.repos.configure(with: configuration)
-        }
+    public mutating func configure(with configuration: GitHubClientConfiguration) {
+        self.repos.configure(with: configuration)
     }
 }

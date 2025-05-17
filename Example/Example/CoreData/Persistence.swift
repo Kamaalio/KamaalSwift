@@ -30,7 +30,8 @@ struct PersistenceController {
 
     static let shared = PersistenceController()
 
-    static var preview: PersistenceController = {
+    #if DEBUG
+    nonisolated(unsafe) static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         for _ in 0 ..< 10 {
@@ -45,4 +46,5 @@ struct PersistenceController {
         }
         return result
     }()
+    #endif
 }

@@ -69,13 +69,14 @@ struct FeedbackScreen<ScreenType: NavigatorStackValue>: View {
     }
 }
 
+@MainActor
 private final class ViewModel: ObservableObject {
     @Published var title = ""
     @Published var description: String
     @Published private(set) var loading = false
     @Published var showToast = false
     @Published private(set) var toastType: ToastType? {
-        didSet { Task { await self.toastTypeDidSet() } }
+        didSet { self.toastTypeDidSet() }
     }
 
     @Published private(set) var lastToastType: ToastType?
@@ -99,27 +100,27 @@ private final class ViewModel: ObservableObject {
         private var title: String {
             switch self {
             case .failure:
-                return "Sorry, something went wrong".localized(comment: "")
+                "Sorry, something went wrong".localized(comment: "")
             case .success:
-                return "Feedback sent".localized(comment: "")
+                "Feedback sent".localized(comment: "")
             }
         }
 
         private var description: String? {
             switch self {
             case .failure:
-                return "Could not send feedback".localized(comment: "")
+                "Could not send feedback".localized(comment: "")
             case .success:
-                return nil
+                nil
             }
         }
 
         private var popUpType: KPopUpBottomType {
             switch self {
             case .failure:
-                return .error
+                .error
             case .success:
-                return .success
+                .success
             }
         }
     }
@@ -159,12 +160,12 @@ private final class ViewModel: ObservableObject {
                 ).get()
             } catch {
                 logger.error(label: "failed to send feedback", error: error)
-                await self.setToastType(to: .failure)
+                self.setToastType(to: .failure)
                 return
             }
 
             logger.info("feedback sent")
-            await self.setToastType(to: .success)
+            self.setToastType(to: .success)
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 dismiss()
@@ -190,11 +191,9 @@ private final class ViewModel: ObservableObject {
 
             self.showToast = true
             self.toastTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { [weak self] _ in
-                guard let self else { return }
-
-                self.toastTimer?.invalidate()
-                self.toastTimer = nil
-                Task { await self.setToastType(to: .none) }
+                Task.detached { @MainActor in
+                    self?.handleToastTimerTick()
+                }
             })
         } else {
             self.showToast = false
@@ -203,10 +202,16 @@ private final class ViewModel: ObservableObject {
         }
     }
 
-    private func withLoading<T>(completion: () async -> T) async -> T {
-        await self.setLoading(true)
+    private func handleToastTimerTick() {
+        self.toastTimer?.invalidate()
+        self.toastTimer = nil
+        self.setToastType(to: .none)
+    }
+
+    private func withLoading<T: Sendable>(completion: () async -> T) async -> T {
+        self.setLoading(true)
         let maybeResult = await completion()
-        await setLoading(false)
+        self.setLoading(false)
         return maybeResult
     }
 
