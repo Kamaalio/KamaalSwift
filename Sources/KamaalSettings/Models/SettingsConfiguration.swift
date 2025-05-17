@@ -8,7 +8,7 @@
 import SwiftUI
 import KamaalExtensions
 
-public struct SettingsConfiguration: Hashable {
+public struct SettingsConfiguration: Hashable, Sendable {
     public let donations: [StoreKitDonation]
     public let feedback: FeedbackConfiguration?
     public let color: ColorsConfiguration?
@@ -86,7 +86,7 @@ public struct SettingsConfiguration: Hashable {
         self.color?.currentColor.color ?? .accentColor
     }
 
-    public struct FeedbackConfiguration: Hashable, Codable {
+    public struct FeedbackConfiguration: Hashable, Codable, Sendable {
         public let token: String
         public let username: String
         public let repoName: String
@@ -114,7 +114,7 @@ public struct SettingsConfiguration: Hashable {
         }
     }
 
-    public struct ColorsConfiguration: Hashable {
+    public struct ColorsConfiguration: Hashable, Sendable {
         public let colors: [AppColor]
         public let currentColor: AppColor
 
@@ -124,7 +124,7 @@ public struct SettingsConfiguration: Hashable {
         }
     }
 
-    public struct AppIconConfiguration: Hashable, Codable {
+    public struct AppIconConfiguration: Hashable, Codable, Sendable {
         public let icons: [AppIcon]
         public let currentIcon: AppIcon
 

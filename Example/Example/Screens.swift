@@ -11,7 +11,7 @@ import KamaalNavigation
 
 typealias AppNavigator = Navigator<Screens>
 
-enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
+enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue, Sendable {
     case home
     case other
     case settings
@@ -25,41 +25,41 @@ enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
 
     var title: String {
         switch self {
-        case .home: return "Home"
-        case .other: return "Other"
-        case .settings: return "Settings"
-        case .coreData: return "Core Data"
-        case .coreDataChild: return "Child"
-        case .settingsSelection: return ""
+        case .home: "Home"
+        case .other: "Other"
+        case .settings: "Settings"
+        case .coreData: "Core Data"
+        case .coreDataChild: "Child"
+        case .settingsSelection: ""
         }
     }
 
     var imageSystemName: String {
         switch self {
         case .home:
-            return "house.fill"
+            "house.fill"
         case .settings:
-            return "gear"
+            "gear"
         default:
-            return ""
+            ""
         }
     }
 
     var isTabItem: Bool {
         switch self {
         case .home, .settings:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 
     var isSidebarItem: Bool {
         switch self {
         case .home, .settings:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 

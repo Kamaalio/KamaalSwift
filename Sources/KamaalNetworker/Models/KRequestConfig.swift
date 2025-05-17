@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct KRequestConfig {
+public struct KRequestConfig: Sendable {
     /// The relative priority at which you’d like a host to handle the task, specified as a floating point value between
     /// 0.0 (lowest priority) and 1.0 (highest priority).
     public let priority: Float

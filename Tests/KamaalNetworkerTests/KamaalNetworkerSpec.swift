@@ -98,7 +98,7 @@ struct MockResponse: Decodable, Hashable {
 }
 
 class MockURLProtocol: URLProtocol {
-    static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data?))?
+    nonisolated(unsafe) static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data?))?
 
     override class func canInit(with _: URLRequest) -> Bool { true }
 

@@ -11,6 +11,7 @@ import KamaalLogger
 import KamaalExtensions
 
 /// ViewModel to handle donations logic.
+@MainActor
 final class Store: NSObject, ObservableObject {
     /// Loading state. View should indicate there is a proccess loading.
     @Published private(set) var isLoading = false
@@ -95,7 +96,7 @@ final class Store: NSObject, ObservableObject {
                 donations = success
             }
 
-            await self.setDonations(donations)
+            self.setDonations(donations)
             return .success(())
         })
     }
@@ -123,7 +124,7 @@ final class Store: NSObject, ObservableObject {
     }
 
     @MainActor
-    private func withLoading<T>(completion: () async -> T) async -> T {
+    private func withLoading<T: Sendable>(completion: () async -> T) async -> T {
         self.isLoading = true
         let result = await completion()
         self.isLoading = false
@@ -131,7 +132,7 @@ final class Store: NSObject, ObservableObject {
     }
 
     @MainActor
-    private func withIsPurchasing<T>(completion: () async -> T) async -> T {
+    private func withIsPurchasing<T: Sendable>(completion: () async -> T) async -> T {
         self.isPurchasing = true
         let result = await completion()
         self.isPurchasing = false
@@ -152,12 +153,12 @@ final class Store: NSObject, ObservableObject {
     /// - Returns: a Task result that does not return anything and does not fail
     private func listenForTransactions() -> Task<Void, Never> {
         Task.detached { [weak self] in
-            guard let self, !self.storeKitDonations.isEmpty else { return }
+            guard let self, await !self.storeKitDonations.isEmpty else { return }
 
             // Iterate through any transactions which didn't come from a direct call to `purchase()`.
             for await result in Transaction.updates {
                 let transaction: Transaction
-                switch self.checkVerified(result) {
+                switch await self.checkVerified(result) {
                 case let .failure(failure):
                     self.logger.error(label: "failed to verify transaction", error: failure)
                     continue
@@ -210,9 +211,9 @@ final class Store: NSObject, ObservableObject {
     private func checkVerified<T>(_ result: VerificationResult<T>) -> Result<T, Errors> {
         switch result {
         // StoreKit has parsed the JWS but failed verification. Don't deliver content to the user.
-        case .unverified: return .failure(.failedVerification)
+        case .unverified: .failure(.failedVerification)
         // If the transaction is verified, unwrap and return it.
-        case let .verified(safe): return .success(safe)
+        case let .verified(safe): .success(safe)
         }
     }
 
@@ -237,7 +238,7 @@ final class Store: NSObject, ObservableObject {
     }
 }
 
-protocol ProductFetcher {
+protocol ProductFetcher: Sendable {
     func getProducts(by storeKitDonations: [StoreKitDonation.ID: StoreKitDonation]) async throws -> [CustomProduct]
 }
 

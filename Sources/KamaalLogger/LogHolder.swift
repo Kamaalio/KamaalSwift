@@ -32,7 +32,7 @@ public actor LogHolder {
 }
 
 /// An representation of a log.
-public struct HoldedLog: Hashable {
+public struct HoldedLog: Hashable, Sendable {
     /// The label of the log.
     public let label: String
     /// The type of the log as ``LogTypes``.

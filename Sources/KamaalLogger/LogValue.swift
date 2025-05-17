@@ -42,11 +42,11 @@ public class LogValue<Value> {
         var localized: String {
             switch self {
             case .initialize:
-                return "Initialized"
+                "Initialized"
             case .get:
-                return "Accessing"
+                "Accessing"
             case .set:
-                return "Updating"
+                "Updating"
             }
         }
     }

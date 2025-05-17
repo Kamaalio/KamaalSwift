@@ -95,6 +95,7 @@ struct SupportAuthorScreen<ScreenType: NavigatorStackValue>: View {
     }
 }
 
+@MainActor
 private final class ViewModel: ObservableObject {
     @Published var confettiTimesRun = 0
     @Published private(set) var numberOfConfettis = 20
@@ -104,16 +105,11 @@ private final class ViewModel: ObservableObject {
 
     func shootConfetti(for donation: CustomProduct) {
         let weight = donation.weight
-
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-
-            if weight > 0 {
-                self.confettiRepetitions = weight - 1
-            }
-            self.numberOfConfettis = 20 * weight
-            self.confettiTimesRun += 1
+        if weight > 0 {
+            self.confettiRepetitions = weight - 1
         }
+        self.numberOfConfettis = 20 * weight
+        self.confettiTimesRun += 1
     }
 
     func openToast() {
@@ -127,13 +123,17 @@ private final class ViewModel: ObservableObject {
 
             self.showToast = true
             self.toastTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { [weak self] _ in
-                guard let self else { return }
-
-                self.showToast = false
-                self.toastTimer?.invalidate()
-                self.toastTimer = nil
+                Task.detached { @MainActor in
+                    self?.handleToastTimerTick()
+                }
             })
         }
+    }
+
+    private func handleToastTimerTick() {
+        self.showToast = false
+        self.toastTimer?.invalidate()
+        self.toastTimer = nil
     }
 }
 

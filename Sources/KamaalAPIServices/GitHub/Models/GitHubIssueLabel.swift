@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GitHubIssueLabel: Codable, Hashable, Identifiable {
+public struct GitHubIssueLabel: Codable, Hashable, Identifiable, Sendable {
     public let id: Int
     public let url: URL
     public let name: String

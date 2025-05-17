@@ -14,9 +14,9 @@ public enum KPopUpStyles {
     var alignment: Alignment {
         switch self {
         case .bottom:
-            return .bottom
+            .bottom
         case .hud:
-            return .top
+            .top
         }
     }
 }
@@ -28,17 +28,17 @@ public enum KPopUpBottomType {
 
     var iconName: String {
         switch self {
-        case .success: return "checkmark.circle.fill"
-        case .warning: return "exclamationmark.triangle.fill"
-        case .error: return "x.circle.fill"
+        case .success: "checkmark.circle.fill"
+        case .warning: "exclamationmark.triangle.fill"
+        case .error: "x.circle.fill"
         }
     }
 
     var color: Color {
         switch self {
-        case .success: return .green
-        case .warning: return .yellow
-        case .error: return .red
+        case .success: .green
+        case .warning: .yellow
+        case .error: .red
         }
     }
 }

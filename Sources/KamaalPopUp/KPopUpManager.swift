@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 public final class KPopUpManager: ObservableObject {
     @Published var isShown = false
     @Published var style: KPopUpStyles = .bottom(title: "", type: .success, description: nil)
@@ -23,29 +24,29 @@ public final class KPopUpManager: ObservableObject {
 
     var title: String {
         switch self.style {
-        case .bottom(title: let title, type: _, description: _): return title
-        case .hud(title: let title, systemImageName: _, description: _): return title
+        case .bottom(title: let title, type: _, description: _): title
+        case .hud(title: let title, systemImageName: _, description: _): title
         }
     }
 
     var description: String? {
         switch self.style {
-        case .bottom(title: _, type: _, description: let description): return description
-        case .hud(title: _, systemImageName: _, description: let description): return description
+        case .bottom(title: _, type: _, description: let description): description
+        case .hud(title: _, systemImageName: _, description: let description): description
         }
     }
 
     var systemImageName: String? {
         switch self.style {
-        case .bottom: return nil
-        case .hud(title: _, systemImageName: let systemImageName, description: _): return systemImageName
+        case .bottom: nil
+        case .hud(title: _, systemImageName: let systemImageName, description: _): systemImageName
         }
     }
 
     var bottomType: KPopUpBottomType? {
         switch self.style {
-        case .bottom(title: _, type: let type, description: _): return type
-        case .hud: return nil
+        case .bottom(title: _, type: let type, description: _): type
+        case .hud: nil
         }
     }
 
@@ -53,13 +54,9 @@ public final class KPopUpManager: ObservableObject {
         style: KPopUpStyles,
         timeout: TimeInterval? = nil
     ) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-
-            self.style = style
-            withAnimation(.easeOut(duration: 0.5)) { self.isShown = true }
-            self.lastTimeout = timeout
-        }
+        self.style = style
+        withAnimation(.easeOut(duration: 0.5)) { self.isShown = true }
+        self.lastTimeout = timeout
     }
 
     public func hidePopUp() {

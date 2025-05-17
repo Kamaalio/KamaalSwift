@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Acknowledgements: Hashable, Codable {
+public struct Acknowledgements: Hashable, Codable, Sendable {
     public let packages: [Package]
     public let contributors: [Contributor]
 
@@ -16,7 +16,7 @@ public struct Acknowledgements: Hashable, Codable {
         self.contributors = contributors
     }
 
-    public struct Package: Hashable, Codable {
+    public struct Package: Hashable, Codable, Sendable {
         public let name: String
         public let url: URL
         public let author: String
@@ -30,7 +30,7 @@ public struct Acknowledgements: Hashable, Codable {
         }
     }
 
-    public struct Contributor: Hashable, Codable {
+    public struct Contributor: Hashable, Codable, Sendable {
         public let name: String
         public let contributions: Int
 

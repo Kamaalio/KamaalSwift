@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum LogLevels: String, CaseIterable {
+public enum LogLevels: String, CaseIterable, Sendable {
     case error
     case warning
     case info
@@ -17,13 +17,13 @@ public enum LogLevels: String, CaseIterable {
     public var color: Color {
         switch self {
         case .info:
-            return .green
+            .green
         case .warning:
-            return .yellow
+            .yellow
         case .error:
-            return .red
+            .red
         case .debug:
-            return .gray
+            .gray
         }
     }
 }

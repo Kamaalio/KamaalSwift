@@ -9,7 +9,7 @@ import OSLog
 import Foundation
 
 /// Utility library to handle logging.
-public struct KamaalLogger {
+public struct KamaalLogger: Sendable {
     private let logger: Logger
     let label: String
     let holder: LogHolder

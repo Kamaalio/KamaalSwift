@@ -33,7 +33,7 @@ final class GitHubReposSpec: QuickSpec {
         describe("createIssue") {
             let username = "kamaal111"
             let repoName = "GitHubAPI"
-            let apiURL = BaseGitHubClient.BASE_URL
+            let apiURL = GitHubReposClient.BASE_URL
                 .appendingPathComponent("repos")
                 .appendingPathComponent(username)
                 .appendingPathComponent(repoName)
@@ -235,7 +235,7 @@ let issueResponse = """
 """
 
 class MockURLProtocol: URLProtocol {
-    static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data?))?
+    nonisolated(unsafe) static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data?))?
 
     override class func canInit(with _: URLRequest) -> Bool { true }
 

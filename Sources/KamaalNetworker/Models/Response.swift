@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Response<T: Decodable> {
+public struct Response<T: Decodable & Sendable>: Sendable {
     public let data: T
     public let status: Int?
 

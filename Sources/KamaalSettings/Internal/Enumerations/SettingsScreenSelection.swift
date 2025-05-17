@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum SettingsScreenSelection: Hashable, Codable {
+public enum SettingsScreenSelection: Hashable, Codable, Sendable {
     case root
     case acknowledgements
     case appColor
@@ -20,21 +20,21 @@ public enum SettingsScreenSelection: Hashable, Codable {
     var title: String {
         switch self {
         case .root:
-            return "Settings".localized(comment: "")
+            "Settings".localized(comment: "")
         case .acknowledgements:
-            return "Acknowledgements".localized(comment: "")
+            "Acknowledgements".localized(comment: "")
         case .appColor:
-            return "App colors".localized(comment: "")
+            "App colors".localized(comment: "")
         case .appIcon:
-            return "App icon".localized(comment: "")
+            "App icon".localized(comment: "")
         case let .feedback(style, _):
-            return style.title
+            style.title
         case .logs:
-            return "Logs".localized(comment: "")
+            "Logs".localized(comment: "")
         case .supportAuthor:
-            return "Support Author".localized(comment: "")
+            "Support Author".localized(comment: "")
         case let .preferenceOptions(preference):
-            return preference.label
+            preference.label
         }
     }
 }

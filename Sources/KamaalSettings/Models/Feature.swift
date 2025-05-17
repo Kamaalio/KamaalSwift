@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Feature: Hashable, Identifiable {
+public struct Feature: Hashable, Identifiable, Sendable {
     public let id: UUID
     public let label: String
     public let isEnabled: Bool

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum FeedbackStyles: CaseIterable, Codable {
+public enum FeedbackStyles: CaseIterable, Codable, Sendable {
     case feature
     case bug
     case other
@@ -15,28 +15,27 @@ public enum FeedbackStyles: CaseIterable, Codable {
     var title: String {
         switch self {
         case .feature:
-            return "Feature request".localized(comment: "")
+            "Feature request".localized(comment: "")
         case .bug:
-            return "Report bug".localized(comment: "")
+            "Report bug".localized(comment: "")
         case .other:
-            return "Other feedback".localized(comment: "")
+            "Other feedback".localized(comment: "")
         }
     }
 
     var imageSystemName: String {
         switch self {
-        case .feature: return "paperplane"
-        case .bug: return "ant"
-        case .other: return "newspaper"
+        case .feature: "paperplane"
+        case .bug: "ant"
+        case .other: "newspaper"
         }
     }
 
     var labels: [String] {
-        let labels: [String]
-        switch self {
-        case .feature: labels = ["enhancement"]
-        case .bug: labels = ["bug"]
-        case .other: labels = []
+        let labels: [String] = switch self {
+        case .feature: ["enhancement"]
+        case .bug: ["bug"]
+        case .other: []
         }
         return labels + ["in app feedback"]
     }

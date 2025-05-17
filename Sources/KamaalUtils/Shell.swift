@@ -80,7 +80,7 @@ extension Shell {
         case readPipeError(context: Error, pipe: PipeTypes)
     }
 
-    public enum PipeTypes {
+    public enum PipeTypes: Sendable {
         case output
         case error
     }

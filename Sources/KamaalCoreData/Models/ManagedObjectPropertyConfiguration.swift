@@ -69,27 +69,27 @@ public class ManagedObjectPropertyConfiguration: ManagedObjectField {
         fileprivate var nsAttributeType: NSAttributeType {
             switch self {
             case .date:
-                return .dateAttributeType
+                .dateAttributeType
             case .uuid:
-                return .UUIDAttributeType
+                .UUIDAttributeType
             case .url:
-                return .URIAttributeType
+                .URIAttributeType
             case .data:
-                return .binaryDataAttributeType
+                .binaryDataAttributeType
             case .bool:
-                return .booleanAttributeType
+                .booleanAttributeType
             case .string:
-                return .stringAttributeType
+                .stringAttributeType
             case .float:
-                return .floatAttributeType
+                .floatAttributeType
             case .double:
-                return .doubleAttributeType
+                .doubleAttributeType
             case .int64:
-                return .integer64AttributeType
+                .integer64AttributeType
             case .int32:
-                return .integer32AttributeType
+                .integer32AttributeType
             case .int16:
-                return .integer16AttributeType
+                .integer16AttributeType
             }
         }
     }
