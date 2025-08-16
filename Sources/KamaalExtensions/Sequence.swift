@@ -8,25 +8,33 @@
 import Foundation
 
 extension Sequence {
-    /// Convert to an array.
+    /// Converts the sequence to an array.
+    ///
+    /// # Example
+    /// ```swift
+    /// let set: Set<Int> = [1, 2, 3]
+    /// let array = set.asArray() // [1, 2, 3] in some order
+    /// ```
     public func asArray() -> [Iterator.Element] {
         Array(self)
     }
 
-    /// Concatenates 2 arrays together.
+    /// Concatenates two arrays into a new array.
     /// - Parameter otherArray: The other array to add to the current one.
     /// - Returns: A concatenated array.
     public func concat(_ otherArray: [Element]) -> [Element] {
         self + otherArray
     }
 
-    /// Sorts array by given keyPath using the given comparision result.
+    /// Sorts array by given key path using the given comparison result.
     /// - Parameters:
     ///   - keyPath: The keyPath of the object to sort by.
     ///   - comparison: The comparison method.
     /// - Returns: A sorted array.
-    public func sorted(by keyPath: KeyPath<Element, some Comparable>,
-                       using comparison: ComparisonResult) -> [Element] {
+    public func sorted(
+        by keyPath: KeyPath<Element, some Comparable>,
+        using comparison: ComparisonResult,
+    ) -> [Element] {
         self.sorted(by: {
             switch comparison {
             case .orderedAscending:
@@ -39,21 +47,21 @@ extension Sequence {
         })
     }
 
-    /// Adds a new element at the end of the array and returns the result.
+    /// Returns a new array with `newElement` appended to the end.
     /// - Parameter newElement: The element to append to the array.
     /// - Returns: The result of the array with an appended element.
     public func appended(_ newElement: Element) -> [Element] {
         self + [newElement]
     }
 
-    /// Add a new element at the beginning of the array and returns the result.
+    /// Returns a new array with `element` inserted at the beginning.
     /// - Parameter element: The element to prepend to the array.
     /// - Returns: The result of the array with an prepended element.
     public func prepended(_ element: Element) -> [Element] {
         [element] + self
     }
 
-    /// Maps and limits by given predicate.
+    /// Maps each element and stops when `predicate` on the transformed value becomes `true`.
     /// - Parameters:
     ///   - transform: Transform function.
     ///   - predicate: Limit predicate.
@@ -81,7 +89,8 @@ extension Sequence {
     ///
     /// - Returns: The first element of the sequence that satisfies the given key path
     ///   and comparison value or nil if there is no element that satisfies the condition.
-    public func find<T: Equatable>(by keyPath: KeyPath<Element, T>, is comparisonValue: T) -> Element? {
+    public func find<T: Equatable>(by keyPath: KeyPath<Element, T>, is comparisonValue: T)
+        -> Element? {
         self.find(where: { $0[keyPath: keyPath] == comparisonValue })
     }
 
@@ -99,14 +108,28 @@ extension Sequence {
         try first(where: predicate)
     }
 
-    /// Unpacks items in the sequence to only contain non optional values.
+    /// Unpacks a sequence of optionals to only contain the non-`nil` values.
     /// - Returns: An array without optionals.
+    ///
+    /// # Example
+    /// ```swift
+    /// let vals: [Int?] = [1, nil, 3]
+    /// let unpacked: [Int] = vals.unpacked() // [1, 3]
+    /// ```
     public func unpacked<T>() -> [T] where Element == T? {
         compactMap(\.self)
     }
 
-    /// Group results in to a tuple of successes and failures.
+    /// Splits a sequence of `Result` values into arrays of successes and failures.
     /// - Returns: A tuple of successes and failures.
+    ///
+    /// # Example
+    /// ```swift
+    /// let results: [Result<Int, Error>] = [.success(1), .failure(MyError()), .success(2)]
+    /// let grouped: (successes: [Int], failures: [Error]) = results.grouped()
+    /// // grouped.successes == [1, 2]
+    /// // grouped.failures.count == 1
+    /// ```
     public func grouped<Success, Failure: Error>() -> (
         successes: [Success],
         failures: [Failure]

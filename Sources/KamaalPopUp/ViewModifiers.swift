@@ -9,6 +9,18 @@ import SwiftUI
 import KamaalUI
 
 extension View {
+    /// Adds popup support using a shared manager via environment.
+    /// - Parameter manager: The popup manager.
+    /// - Returns: A view configured with popup presentation.
+    ///
+    /// # Example
+    /// ```swift
+    /// @StateObject var popups = KPopUpManager()
+    /// var body: some View {
+    ///     Content()
+    ///         .withKPopUp(popups)
+    /// }
+    /// ```
     public func withKPopUp(@ObservedObject _ manager: KPopUpManager) -> some View {
         ktakeSizeEagerly()
             .kPopUp(
@@ -27,12 +39,14 @@ extension View {
         onClose: @escaping () -> Void,
     ) -> some View {
         ktakeSizeEagerly()
-            .modifier(KPopUpLiteModifier(
-                isPresented: isPresented,
-                style: style,
-                backgroundColor: backgroundColor,
-                onClose: onClose,
-            ))
+            .modifier(
+                KPopUpLiteModifier(
+                    isPresented: isPresented,
+                    style: style,
+                    backgroundColor: backgroundColor,
+                    onClose: onClose,
+                ),
+            )
     }
 
     public func kPopUpLite(
@@ -40,7 +54,9 @@ extension View {
         style: KPopUpStyles,
         backgroundColor: Color,
     ) -> some View {
-        self.kPopUpLite(isPresented: isPresented, style: style, backgroundColor: backgroundColor, onClose: { })
+        self.kPopUpLite(
+            isPresented: isPresented, style: style, backgroundColor: backgroundColor, onClose: { },
+        )
     }
 
     fileprivate func kPopUp(
@@ -49,12 +65,14 @@ extension View {
         backgroundColor: Color,
         onClose: @escaping () -> Void,
     ) -> some View {
-        modifier(KPopUpViewModifier(
-            isPresented: isPresented,
-            style: style,
-            backgroundColor: backgroundColor,
-            onClose: onClose,
-        ))
+        modifier(
+            KPopUpViewModifier(
+                isPresented: isPresented,
+                style: style,
+                backgroundColor: backgroundColor,
+                onClose: onClose,
+            ),
+        )
     }
 }
 
@@ -67,7 +85,10 @@ struct KPopUpLiteModifier: ViewModifier {
     let backgroundColor: Color
     let onClose: () -> Void
 
-    init(isPresented: Binding<Bool>, style: KPopUpStyles, backgroundColor: Color, onClose: @escaping () -> Void) {
+    init(
+        isPresented: Binding<Bool>, style: KPopUpStyles, backgroundColor: Color,
+        onClose: @escaping () -> Void,
+    ) {
         self._isPresented = isPresented
         self._definitiveIsPresented = State(initialValue: isPresented.wrappedValue)
         self.style = style
@@ -77,20 +98,26 @@ struct KPopUpLiteModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .onChange(of: _isPresented.wrappedValue, perform: { newValue in
-                if !newValue {
-                    self.close()
-                } else {
-                    self.open()
-                }
-            })
-            .onChange(of: self.definitiveIsPresented, perform: { newValue in
-                if !newValue {
-                    self.close()
-                } else {
-                    self.open()
-                }
-            })
+            .onChange(
+                of: _isPresented.wrappedValue,
+                perform: { newValue in
+                    if !newValue {
+                        self.close()
+                    } else {
+                        self.open()
+                    }
+                },
+            )
+            .onChange(
+                of: self.definitiveIsPresented,
+                perform: { newValue in
+                    if !newValue {
+                        self.close()
+                    } else {
+                        self.open()
+                    }
+                },
+            )
             .kPopUp(
                 isPresented: self.$definitiveIsPresented,
                 style: self.style,
@@ -128,15 +155,20 @@ struct KPopUpViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .overlay(GeometryReader(content: { geometry in
-                if self.isPresented {
-                    KPopupView(style: self.style, backgroundColor: self.backgroundColor, onClose: self.onClose)
+            .overlay(
+                GeometryReader(content: { geometry in
+                    if self.isPresented {
+                        KPopupView(
+                            style: self.style, backgroundColor: self.backgroundColor,
+                            onClose: self.onClose,
+                        )
                         .frame(
                             width: geometry.size.width,
                             height: geometry.size.height,
                             alignment: self.style.alignment,
                         )
-                }
-            }))
+                    }
+                }),
+            )
     }
 }

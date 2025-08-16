@@ -69,7 +69,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "2.0.0" ..< "3.0.0"),
-        .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", "2.0.0" ..< "3.0.0"),
+        .package(
+            url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", "2.0.0" ..< "3.0.0",
+        ),
     ],
     targets: [
         .target(
@@ -133,7 +135,7 @@ let package = Package(
         ),
         .target(
             name: "KamaalAlgorithms",
-            dependencies: [],
+            dependencies: ["KamaalExtensions"],
         ),
         .target(
             name: "KamaalUtils",
@@ -187,6 +189,10 @@ let package = Package(
         .testTarget(
             name: "KamaalCloudTests",
             dependencies: [],
+        ),
+        .testTarget(
+            name: "KamaalAlgorithmsTests",
+            dependencies: ["KamaalAlgorithms"],
         ),
     ],
 )
