@@ -55,7 +55,7 @@ struct SupportAuthorScreen<ScreenType: NavigatorStackValue>: View {
         .ktakeSizeEagerly(alignment: .topLeading)
         .onAppear(perform: self.handleAppear)
         .confettiCannon(
-            counter: self.$viewModel.confettiTimesRun,
+            trigger: self.$viewModel.confettiTimesRun,
             num: self.viewModel.numberOfConfettis,
             repetitions: self.viewModel.confettiRepetitions
         )

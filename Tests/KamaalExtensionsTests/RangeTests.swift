@@ -5,22 +5,19 @@
 //  Created by Kamaal M Farah on 17/12/2022.
 //
 
-import Quick
-import Nimble
+import Testing
 import KamaalExtensions
 
-final class RangeTests: QuickSpec {
-    override func spec() {
-        describe("asArray") {
-            it("transforms range to array") {
-                let range = 0 ..< 3
-                expect(range.asArray()) == [0, 1, 2]
-            }
+@Test("Transforms range to array")
+func transformsRangeToArray() {
+    let range = 0 ..< 3
 
-            it("transforms closed range to array") {
-                let range = 0 ... 3
-                expect(range.asArray()) == [0, 1, 2, 3]
-            }
-        }
-    }
+    #expect(range.asArray() == [0, 1, 2])
+}
+
+@Test("Transforms closed range to array")
+func transformsClosedRangeToArray() {
+    let range = 0 ... 3
+
+    #expect(range.asArray() == [0, 1, 2, 3])
 }
