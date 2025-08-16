@@ -68,9 +68,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/Quick/Quick.git", "4.0.0" ..< "5.0.0"),
-        .package(url: "https://github.com/Quick/Nimble.git", "9.0.0" ..< "10.0.0"),
-        .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "1.0.0" ..< "2.0.0"),
+        .package(url: "https://github.com/simibac/ConfettiSwiftUI.git", "2.0.0" ..< "3.0.0"),
         .package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", "2.0.0" ..< "3.0.0"),
     ],
     targets: [
@@ -151,7 +149,7 @@ let package = Package(
         ),
         .testTarget(
             name: "KamaalExtensionsTests",
-            dependencies: ["KamaalExtensions", "Quick", "Nimble"]
+            dependencies: ["KamaalExtensions"]
         ),
         .testTarget(
             name: "KamaalLoggerTests",
@@ -167,11 +165,11 @@ let package = Package(
         ),
         .testTarget(
             name: "KamaalNetworkerTests",
-            dependencies: ["KamaalNetworker", "Quick", "Nimble"]
+            dependencies: ["KamaalNetworker"]
         ),
         .testTarget(
             name: "KamaalAPIServicesTests",
-            dependencies: ["KamaalAPIServices", "Quick", "Nimble"]
+            dependencies: ["KamaalAPIServices"]
         ),
         .testTarget(
             name: "KamaalSettingsTests",

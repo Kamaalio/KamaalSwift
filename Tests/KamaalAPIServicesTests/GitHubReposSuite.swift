@@ -1,123 +1,115 @@
 //
-//  GitHubReposSpec.swift
+//  GitHubReposSuite.swift
 //
 //
 //  Created by Kamaal M Farah on 22/04/2023.
 //
 
-import Quick
-import Nimble
+import Testing
 import Foundation
 @testable import KamaalAPIServices
 
-final class GitHubReposSpec: QuickSpec {
-    override func spec() {
+@Suite("GitHub Repos", .serialized)
+struct GitHubReposSuite {
+    private let urlSession: URLSession
+    private let createIssueURL: URL
+    private let username: String
+    private let repoName: String
+
+    init() {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [MockURLProtocol.self]
-        let urlSession = URLSession(configuration: configuration)
+        self.urlSession = URLSession(configuration: configuration)
 
-        describe("defaultHeaders") {
-            it("creates default headers with encoded user") {
-                var githubAPI = KamaalAPIServices().gitHub
-                githubAPI
-                    .configure(with: GitHubClientConfiguration(token: "some token", username: "kamaal111",
-                                                               urlSession: urlSession))
+        self.username = "kamaal111"
+        self.repoName = "GitHubAPI"
+        self.createIssueURL = GitHubReposClient.BASE_URL
+            .appendingPathComponent("repos")
+            .appendingPathComponent(self.username)
+            .appendingPathComponent(self.repoName)
+            .appendingPathComponent("issues")
+    }
 
-                let headers = githubAPI.repos.defaultHeaders
-                expect(headers.count) == 2
-                expect(headers["Authorization"]) == "Basic a2FtYWFsMTExOnNvbWUgdG9rZW4="
-                expect(headers["accept"]) == "application/vnd.github.v3+json"
-            }
+    // - MARK: Default Headers
+
+    @Test("Create default headers with encoded user")
+    func createDefaultHeadersWithEncodedUser() {
+        var githubAPI = KamaalAPIServices().gitHub
+        githubAPI.configure(
+            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: urlSession)
+        )
+
+        let headers = githubAPI.repos.defaultHeaders
+
+        #expect(headers.count == 2)
+        #expect(headers["Authorization"] == "Basic a2FtYWFsMTExOnNvbWUgdG9rZW4=")
+        #expect(headers["accept"] == "application/vnd.github.v3+json")
+    }
+
+    // - MARK: Create issue
+
+    @Test("Creates a issue")
+    func createIssue() async throws {
+        MockURLProtocol.requestHandler = { _ in
+            let response = HTTPURLResponse(url: createIssueURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
+
+            let data = issueResponse.data(using: .utf8)
+            return (response, data)
         }
+        var githubAPI = KamaalAPIServices().gitHub
+        githubAPI.configure(
+            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: urlSession)
+        )
 
-        describe("createIssue") {
-            let username = "kamaal111"
-            let repoName = "GitHubAPI"
-            let apiURL = GitHubReposClient.BASE_URL
-                .appendingPathComponent("repos")
-                .appendingPathComponent(username)
-                .appendingPathComponent(repoName)
-                .appendingPathComponent("issues")
+        let result = await githubAPI.repos.createIssue(
+            username: username,
+            repoName: repoName,
+            title: "Testing",
+            description: "Something to test",
+            assignee: "kamaal111",
+            labels: ["Test"]
+        )
+        let issue = try result.get()
 
-            it("creates issue") {
-                MockURLProtocol.requestHandler = { _ in
-                    let response = HTTPURLResponse(
-                        url: apiURL,
-                        statusCode: 200,
-                        httpVersion: nil,
-                        headerFields: nil
-                    )!
+        #expect(issue.id == 1_182_606_460)
+        #expect(issue.url == URL(string: "https://api.github.com/repos/kamaal111/GitHubAPIPlay/issues/5"))
+    }
 
-                    let data = issueResponse.data(using: .utf8)
-                    return (response, data)
-                }
-
-                let expectation = self.expectation(description: "Expectation")
-                Task {
-                    var githubAPI = KamaalAPIServices().gitHub
-                    githubAPI
-                        .configure(with: GitHubClientConfiguration(token: "some token", username: "kamaal111",
-                                                                   urlSession: urlSession))
-
-                    let result = await githubAPI.repos.createIssue(
-                        username: username,
-                        repoName: repoName,
-                        title: "Testing",
-                        description: "Something to test",
-                        assignee: "kamaal111",
-                        labels: ["Test"]
-                    )
-                    let issue = try result.get()
-                    expect(issue.id) == 1_182_606_460
-                    expect(issue.url) ==
-                        URL(string: "https://api.github.com/repos/kamaal111/GitHubAPIPlay/issues/5")
-
-                    expectation.fulfill()
-                }
-                self.wait(for: [expectation], timeout: 2)
-            }
-
-            it("fails to create a issue") {
-                let statusCode = 400
-                let jsonString = """
-                {
-                    "message": "oh nooooo!"
-                }
-                """
-
-                MockURLProtocol.requestHandler = { _ in
-                    let response = HTTPURLResponse(
-                        url: apiURL,
-                        statusCode: statusCode,
-                        httpVersion: nil,
-                        headerFields: nil
-                    )!
-
-                    let data = jsonString.data(using: .utf8)
-                    return (response, data)
-                }
-
-                let expectation = self.expectation(description: "Expectation")
-                Task {
-                    var githubAPI = KamaalAPIServices().gitHub
-                    githubAPI
-                        .configure(with: GitHubClientConfiguration(token: "some token", username: "kamaal111",
-                                                                   urlSession: urlSession))
-
-                    let result = await githubAPI.repos.createIssue(
-                        username: username,
-                        repoName: repoName,
-                        title: "Testing"
-                    )
-                    expect { try result.get() }.to(throwError { error in
-                        let castedError = error as! GitHubErrors
-                        expect(castedError) == .responseError(message: jsonString, code: 400)
-                        expectation.fulfill()
-                    })
-                }
-                self.wait(for: [expectation], timeout: 1)
-            }
+    @Test("Fails to create a issue")
+    func failsToCreateAIssue() async throws {
+        let statusCode = 400
+        let jsonString = """
+        {
+            "message": "oh nooooo!"
         }
+        """
+        MockURLProtocol.requestHandler = { _ in
+            let response = HTTPURLResponse(
+                url: createIssueURL,
+                statusCode: statusCode,
+                httpVersion: nil,
+                headerFields: nil
+            )!
+
+            let data = jsonString.data(using: .utf8)
+            return (response, data)
+        }
+        var githubAPI = KamaalAPIServices().gitHub
+        githubAPI.configure(
+            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: urlSession)
+        )
+
+        let result = await githubAPI.repos.createIssue(
+            username: username,
+            repoName: repoName,
+            title: "Testing"
+        )
+
+        #expect(
+            throws: GitHubErrors.responseError(message: jsonString, code: 400),
+            "An error should be thrown when the API fails",
+            performing: { try result.get() }
+        )
     }
 }
 
