@@ -11,19 +11,19 @@ import KamaalExtensions
 public enum Retrier {
     public static func retryUntilSuccess<T>(
         intervalTimeInSeconds: TimeInterval,
-        completion: () async throws -> T
+        completion: () async throws -> T,
     ) async throws -> T {
         try await self.retryUntilSuccess(
             intervalTimeInSeconds: intervalTimeInSeconds,
             retries: 0,
-            completion: completion
+            completion: completion,
         )
     }
 
     private static func retryUntilSuccess<T>(
         intervalTimeInSeconds: TimeInterval,
         retries: Int,
-        completion: () async throws -> T
+        completion: () async throws -> T,
     ) async throws -> T {
         do {
             return try await completion()
@@ -34,7 +34,7 @@ public enum Retrier {
         return try await self.retryUntilSuccess(
             intervalTimeInSeconds: intervalTimeInSeconds,
             retries: newRetries,
-            completion: completion
+            completion: completion,
         )
     }
 }

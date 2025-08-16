@@ -23,7 +23,7 @@ struct AboutSection<ScreenType: NavigatorStackValue>: View {
                     localizedLabel: "Acknowledgements",
                     comment: "",
                     imageSystemName: self.acknowledgementsImageSystemName,
-                    destination: self.screenMapping(.acknowledgements)
+                    destination: self.screenMapping(.acknowledgements),
                 )
                 #if os(macOS)
                 if versionText != nil {

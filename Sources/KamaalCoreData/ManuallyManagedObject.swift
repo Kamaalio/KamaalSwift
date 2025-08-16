@@ -117,7 +117,7 @@ extension ManuallyManagedObject {
     public static func filter(
         by predicate: NSPredicate,
         limit: Int?,
-        from context: NSManagedObjectContext
+        from context: NSManagedObjectContext,
     ) throws -> [Self] {
         let request = self.fetchRequest()
         request.predicate = predicate

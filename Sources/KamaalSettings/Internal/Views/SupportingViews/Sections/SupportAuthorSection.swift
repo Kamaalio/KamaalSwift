@@ -18,7 +18,7 @@ struct SupportAuthorSection<ScreenType: NavigatorStackValue>: View {
                 localizedLabel: "Buy me coffee",
                 comment: "",
                 imageSystemName: "cup.and.saucer.fill",
-                destination: self.screenMapping(.supportAuthor)
+                destination: self.screenMapping(.supportAuthor),
             )
         }
     }

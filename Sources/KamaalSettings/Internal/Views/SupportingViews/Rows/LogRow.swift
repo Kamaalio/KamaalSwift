@@ -31,7 +31,7 @@ struct LogRow_Previews: PreviewProvider {
     static var previews: some View {
         LogRow(
             log: .init(label: "LogRow", level: .info, message: "Preview", timestamp: Date.distantPast),
-            action: { _ in }
+            action: { _ in },
         )
     }
 }

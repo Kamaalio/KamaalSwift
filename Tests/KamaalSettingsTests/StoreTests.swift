@@ -34,7 +34,7 @@ struct MockProductFetcher: ProductFetcher {
                     displayPrice: "420",
                     price: 420.0,
                     description: "Description",
-                    product: .none
+                    product: .none,
                 )
             }
     }

@@ -22,7 +22,7 @@ struct AppIconScreen<ScreenType: NavigatorStackValue>: View {
             navigationTitle: "App icon".localized(comment: ""),
             sectionTitle: "Icons".localized(comment: ""),
             items: self.settingsConfiguration.appIcon?.icons ?? [],
-            onItemPress: self.changeAppIcon
+            onItemPress: self.changeAppIcon,
         ) { item in
             ImageTextRow(label: item.title, imageName: item.imageName)
         }

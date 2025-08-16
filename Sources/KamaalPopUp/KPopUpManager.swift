@@ -52,7 +52,7 @@ public final class KPopUpManager: ObservableObject {
 
     public func showPopUp(
         style: KPopUpStyles,
-        timeout: TimeInterval? = nil
+        timeout: TimeInterval? = nil,
     ) {
         self.style = style
         withAnimation(.easeOut(duration: 0.5)) { self.isShown = true }
@@ -80,7 +80,7 @@ public final class KPopUpManager: ObservableObject {
             target: self,
             selector: #selector(self.handleTimeout),
             userInfo: nil,
-            repeats: false
+            repeats: false,
         )
         self.timeoutTimer = timeoutTimer
     }

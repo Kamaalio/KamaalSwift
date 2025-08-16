@@ -21,7 +21,7 @@ public struct _PersistentContainerBuilder {
         relationships: [_RelationshipConfiguration] = [],
         containerName: String,
         managedObjectModelURL: URL? = nil,
-        preview: Bool
+        preview: Bool,
     ) {
         self.entities = entities
         self.relationships = relationships
@@ -34,14 +34,14 @@ public struct _PersistentContainerBuilder {
         entities: [NSEntityDescription],
         containerName: String,
         managedObjectModelURL: URL? = nil,
-        relationships: [_RelationshipConfiguration] = []
+        relationships: [_RelationshipConfiguration] = [],
     ) {
         self.init(
             entities: entities,
             relationships: relationships,
             containerName: containerName,
             managedObjectModelURL: managedObjectModelURL,
-            preview: false
+            preview: false,
         )
     }
 

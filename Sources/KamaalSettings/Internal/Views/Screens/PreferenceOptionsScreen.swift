@@ -28,7 +28,7 @@ struct PreferenceOptionsScreen<ScreenType: NavigatorStackValue>: View {
             sectionTitle: "Options".localized(comment: ""),
             items: self.preference.options,
             searchFilter: self.searchFilter,
-            onItemPress: self.onPreferenceOptionChange
+            onItemPress: self.onPreferenceOptionChange,
         ) { option in
             HStack {
                 AppText(string: option.label)

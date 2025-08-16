@@ -85,7 +85,7 @@ struct CoreDataChildScreen: View {
         .onAppear(perform: {
             let parent = try! Item.find(
                 by: NSPredicate(format: "id = %@", self.parentID.nsString),
-                from: self.viewContext
+                from: self.viewContext,
             )!
             self.children = parent.childrenArray
                 .sorted(by: {

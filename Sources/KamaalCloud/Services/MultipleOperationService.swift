@@ -37,7 +37,7 @@ class MultipleOperationService {
         completion: @escaping ((Result<
             (recordsDeleted: [CKRecord.ID], recordsSaved: [CKRecord]),
             MultipleOperationErrors
-        >) -> Void)
+        >) -> Void),
     ) {
         let hasRecordsToOperateOn = !recordsToSave.concat(recordsToDelete).isEmpty
         guard hasRecordsToOperateOn else {

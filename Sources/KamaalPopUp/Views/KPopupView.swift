@@ -21,7 +21,7 @@ struct KPopupView: View {
                 description: description,
                 backgroundColor: self.backgroundColor,
                 bottomType: type,
-                close: self.onClose
+                close: self.onClose,
             )
         case let .hud(title, systemImageName, description):
             HudPopupView(
@@ -29,7 +29,7 @@ struct KPopupView: View {
                 description: description,
                 systemImageName: systemImageName,
                 backgroundColor: self.backgroundColor,
-                onClose: self.onClose
+                onClose: self.onClose,
             )
         }
     }

@@ -16,13 +16,13 @@ public class PersistenceController {
         containerName: String,
         entities: [NSEntityDescription],
         relationships: [_RelationshipConfiguration] = [],
-        inMemory: Bool = false
+        inMemory: Bool = false,
     ) {
         let persistentContainerBuilder = _PersistentContainerBuilder(
             entities: entities,
             relationships: relationships,
             containerName: containerName,
-            preview: inMemory
+            preview: inMemory,
         )
         self.container = persistentContainerBuilder.make()
 

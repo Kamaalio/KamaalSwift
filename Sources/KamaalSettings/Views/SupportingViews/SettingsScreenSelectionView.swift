@@ -15,7 +15,7 @@ public struct SettingsScreenSelectionView<ScreenType: NavigatorStackValue>: View
 
     public init(
         screen: SettingsScreenSelection,
-        screenMapping: @escaping (_ settingsSelection: SettingsScreenSelection) -> ScreenType
+        screenMapping: @escaping (_ settingsSelection: SettingsScreenSelection) -> ScreenType,
     ) {
         self.screen = screen
         self.screenMapping = screenMapping

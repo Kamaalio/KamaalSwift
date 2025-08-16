@@ -17,7 +17,7 @@ struct PersistenceController {
             entities: [Item.entity, Child.entity],
             relationships: Item._relationships + Child._relationships,
             containerName: "Example",
-            preview: inMemory
+            preview: inMemory,
         )
         self.container = persistentContainerBuilder.make()
         self.container.loadPersistentStores(completionHandler: { _, error in

@@ -46,7 +46,7 @@ struct RootSettingsScreen<ScreenType: NavigatorStackValue>: View {
                 AboutSection<ScreenType>(
                     versionText: self.versionText,
                     buildNumber: self.buildNumber,
-                    screenMapping: self.screenMapping
+                    screenMapping: self.screenMapping,
                 )
                 .padding(.horizontal, .medium)
             }

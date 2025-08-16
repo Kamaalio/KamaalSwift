@@ -22,7 +22,7 @@ struct KDeletableForEach<Data: RandomAccessCollection, ID: Hashable, Content: Vi
                 isDeleting: .constant(false),
                 enabled: self.isEditing,
                 deleteText: self.deleteText,
-                onDelete: { self.onDelete(element) }
+                onDelete: { self.onDelete(element) },
             ) {
                 self.content(element)
             }

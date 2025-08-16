@@ -18,7 +18,7 @@ public struct KTitledPicker<Item: Hashable, PickerItemView: View>: View {
         selection: Binding<Item>,
         title: String,
         items: [Item],
-        @ViewBuilder pickerItemView: @escaping (_ item: Item) -> PickerItemView
+        @ViewBuilder pickerItemView: @escaping (_ item: Item) -> PickerItemView,
     ) {
         self._selection = selection
         self.title = title

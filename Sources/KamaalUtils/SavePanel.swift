@@ -28,7 +28,7 @@ public struct SavePanel {
     @MainActor
     private static func save(
         filename: String,
-        beginHandler: @escaping (Result<NSSavePanel, Errors>) -> Void
+        beginHandler: @escaping (Result<NSSavePanel, Errors>) -> Void,
     ) {
         let panel = NSSavePanel()
         panel.canCreateDirectories = true

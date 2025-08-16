@@ -18,7 +18,7 @@ final class UserSettings: ObservableObject {
         .init(
             donations: donations,
             color: self.colors,
-            preferences: self.preferences
+            preferences: self.preferences,
         )
     }
 
@@ -40,7 +40,7 @@ final class UserSettings: ObservableObject {
                 id: UUID(uuidString: "66971130-a466-44cc-83f6-4759b51e7789")!,
                 label: "Language",
                 selectedOption: self.selectedLanguageOption,
-                options: languageOptions
+                options: languageOptions,
             ),
         ]
     }

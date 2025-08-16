@@ -22,7 +22,7 @@ public struct KMailView: UIViewControllerRepresentable {
         isShowing: Binding<Bool>,
         result: Binding<Result<MFMailComposeResult, Error>?>,
         emailAddress: String,
-        emailSubject: String
+        emailSubject: String,
     ) {
         self._isShowing = isShowing
         self._result = result
@@ -43,7 +43,7 @@ public struct KMailView: UIViewControllerRepresentable {
         public func mailComposeController(
             _: MFMailComposeViewController,
             didFinishWith result: MFMailComposeResult,
-            error: Error?
+            error: Error?,
         ) {
             defer {
                 isShowing = false
@@ -71,7 +71,7 @@ public struct KMailView: UIViewControllerRepresentable {
 
     public func updateUIViewController(
         _: MFMailComposeViewController,
-        context _: UIViewControllerRepresentableContext<KMailView>
+        context _: UIViewControllerRepresentableContext<KMailView>,
     ) { }
 }
 #endif

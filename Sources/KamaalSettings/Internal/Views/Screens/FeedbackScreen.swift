@@ -31,11 +31,11 @@ struct FeedbackScreen<ScreenType: NavigatorStackValue>: View {
         VStack {
             KFloatingTextField(
                 text: self.$viewModel.title,
-                title: "Title".localized(comment: "")
+                title: "Title".localized(comment: ""),
             )
             KTextView(
                 text: self.$viewModel.description,
-                title: "Description".localized(comment: "")
+                title: "Description".localized(comment: ""),
             )
             AppButton(action: self.onSendPress) {
                 AppText(localizedString: "Send", comment: "")
@@ -54,7 +54,7 @@ struct FeedbackScreen<ScreenType: NavigatorStackValue>: View {
                     style: self.viewModel.lastToastType?.pupUpStyle ?? .bottom(
                         title: "",
                         type: .warning,
-                        description: nil
+                        description: nil,
                     ),
                     backgroundColor: self.colorScheme == .dark ? .black : .white)
         .accentColor(self.settingsConfiguration.currentColor)
@@ -131,7 +131,7 @@ private final class ViewModel: ObservableObject {
 
     func submit(
         using feedbackConfiguration: SettingsConfiguration.FeedbackConfiguration?,
-        dismiss: @escaping () -> Void
+        dismiss: @escaping () -> Void,
     ) async {
         guard let feedbackConfiguration else { return }
 
@@ -156,7 +156,7 @@ private final class ViewModel: ObservableObject {
                     title: self.title,
                     description: descriptionWithAdditionalFeedback,
                     assignee: feedbackConfiguration.username,
-                    labels: feedbackConfiguration.additionalLabels.concat(self.style.labels)
+                    labels: feedbackConfiguration.additionalLabels.concat(self.style.labels),
                 ).get()
             } catch {
                 logger.error(label: "failed to send feedback", error: error)

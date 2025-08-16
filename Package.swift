@@ -12,59 +12,59 @@ let package = Package(
     products: [
         .library(
             name: "KamaalUI",
-            targets: ["KamaalUI"]
+            targets: ["KamaalUI"],
         ),
         .library(
             name: "KamaalExtensions",
-            targets: ["KamaalExtensions"]
+            targets: ["KamaalExtensions"],
         ),
         .library(
             name: "KamaalLogger",
-            targets: ["KamaalLogger"]
+            targets: ["KamaalLogger"],
         ),
         .library(
             name: "KamaalStructures",
-            targets: ["KamaalStructures"]
+            targets: ["KamaalStructures"],
         ),
         .library(
             name: "KamaalNavigation",
-            targets: ["KamaalNavigation"]
+            targets: ["KamaalNavigation"],
         ),
         .library(
             name: "KamaalBrowser",
-            targets: ["KamaalBrowser"]
+            targets: ["KamaalBrowser"],
         ),
         .library(
             name: "KamaalPopUp",
-            targets: ["KamaalPopUp"]
+            targets: ["KamaalPopUp"],
         ),
         .library(
             name: "KamaalNetworker",
-            targets: ["KamaalNetworker"]
+            targets: ["KamaalNetworker"],
         ),
         .library(
             name: "KamaalAPIServices",
-            targets: ["KamaalAPIServices"]
+            targets: ["KamaalAPIServices"],
         ),
         .library(
             name: "KamaalSettings",
-            targets: ["KamaalSettings"]
+            targets: ["KamaalSettings"],
         ),
         .library(
             name: "KamaalCoreData",
-            targets: ["KamaalCoreData"]
+            targets: ["KamaalCoreData"],
         ),
         .library(
             name: "KamaalAlgorithms",
-            targets: ["KamaalAlgorithms"]
+            targets: ["KamaalAlgorithms"],
         ),
         .library(
             name: "KamaalUtils",
-            targets: ["KamaalUtils"]
+            targets: ["KamaalUtils"],
         ),
         .library(
             name: "KamaalCloud",
-            targets: ["KamaalCloud"]
+            targets: ["KamaalCloud"],
         ),
     ],
     dependencies: [
@@ -74,40 +74,40 @@ let package = Package(
     targets: [
         .target(
             name: "KamaalUI",
-            dependencies: []
+            dependencies: [],
         ),
         .target(
             name: "KamaalExtensions",
-            dependencies: []
+            dependencies: [],
         ),
         .target(
             name: "KamaalLogger",
-            dependencies: ["KamaalStructures"]
+            dependencies: ["KamaalStructures"],
         ),
         .target(
             name: "KamaalStructures",
-            dependencies: []
+            dependencies: [],
         ),
         .target(
             name: "KamaalNavigation",
-            dependencies: ["KamaalUI", "KamaalExtensions"]
+            dependencies: ["KamaalUI", "KamaalExtensions"],
         ),
         .target(
             name: "KamaalBrowser",
-            dependencies: []
+            dependencies: [],
         ),
         .target(
             name: "KamaalPopUp",
             dependencies: ["KamaalUI"],
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
         ),
         .target(
             name: "KamaalNetworker",
-            dependencies: ["KamaalExtensions"]
+            dependencies: ["KamaalExtensions"],
         ),
         .target(
             name: "KamaalAPIServices",
-            dependencies: ["KamaalNetworker", "KamaalExtensions"]
+            dependencies: ["KamaalNetworker", "KamaalExtensions"],
         ),
         .target(
             name: "KamaalSettings",
@@ -124,69 +124,69 @@ let package = Package(
             ],
             resources: [
                 .process("Internal/Resources"),
-            ]
+            ],
         ),
         .target(
             name: "KamaalCoreData",
             dependencies: ["KamaalExtensions"],
-            exclude: ["README.md"]
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalAlgorithms",
-            dependencies: []
+            dependencies: [],
         ),
         .target(
             name: "KamaalUtils",
-            dependencies: ["KamaalExtensions"]
+            dependencies: ["KamaalExtensions"],
         ),
         .target(
             name: "KamaalCloud",
-            dependencies: ["KamaalExtensions"]
+            dependencies: ["KamaalExtensions"],
         ),
         .testTarget(
             name: "KamaalUITests",
-            dependencies: ["KamaalUI"]
+            dependencies: ["KamaalUI"],
         ),
         .testTarget(
             name: "KamaalExtensionsTests",
-            dependencies: ["KamaalExtensions"]
+            dependencies: ["KamaalExtensions"],
         ),
         .testTarget(
             name: "KamaalLoggerTests",
-            dependencies: ["KamaalLogger", "CwlPreconditionTesting", "KamaalExtensions"]
+            dependencies: ["KamaalLogger", "CwlPreconditionTesting", "KamaalExtensions"],
         ),
         .testTarget(
             name: "KamaalStructuresTests",
-            dependencies: ["KamaalStructures"]
+            dependencies: ["KamaalStructures"],
         ),
         .testTarget(
             name: "KamaalNavigationTests",
-            dependencies: ["KamaalNavigation"]
+            dependencies: ["KamaalNavigation"],
         ),
         .testTarget(
             name: "KamaalNetworkerTests",
-            dependencies: ["KamaalNetworker"]
+            dependencies: ["KamaalNetworker"],
         ),
         .testTarget(
             name: "KamaalAPIServicesTests",
-            dependencies: ["KamaalAPIServices"]
+            dependencies: ["KamaalAPIServices"],
         ),
         .testTarget(
             name: "KamaalSettingsTests",
-            dependencies: ["KamaalSettings"]
+            dependencies: ["KamaalSettings"],
         ),
         .testTarget(
             name: "KamaalCoreDataTests",
-            dependencies: ["KamaalCoreData", "KamaalExtensions"]
+            dependencies: ["KamaalCoreData", "KamaalExtensions"],
         ),
         .testTarget(
             name: "KamaalUtilsTests",
             dependencies: ["KamaalUtils", "KamaalExtensions"],
-            resources: [.process("Internal/Resources")]
+            resources: [.process("Internal/Resources")],
         ),
         .testTarget(
             name: "KamaalCloudTests",
-            dependencies: []
+            dependencies: [],
         ),
-    ]
+    ],
 )

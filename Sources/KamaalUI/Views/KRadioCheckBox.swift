@@ -37,7 +37,7 @@ public struct KRadioCheckBox: View {
             .padding(.all, self.spacing)
             .overlay(
                 RoundedRectangle(cornerRadius: self.size)
-                    .stroke(self.color, lineWidth: self.borderWidth)
+                    .stroke(self.color, lineWidth: self.borderWidth),
             )
     }
 

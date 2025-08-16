@@ -79,7 +79,7 @@ struct KFloatingDecimalField_Previews: PreviewProvider {
             value: .constant("0.0"),
             title: "Amount",
             fixButtonTitle: "Fix",
-            fixMessage: "Invalid value"
+            fixMessage: "Invalid value",
         )
     }
 }

@@ -43,7 +43,7 @@ class FetchService {
         var fetchedRecords: [CKRecord] = []
         func fetchWithQueryOperation(
             _ operation: CKQueryOperation,
-            completion: @escaping (Result<[CKRecord], FetchErrors>) -> Void
+            completion: @escaping (Result<[CKRecord], FetchErrors>) -> Void,
         ) {
             operation.recordMatchedBlock = { _, recordResult in
                 switch recordResult {

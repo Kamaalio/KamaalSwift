@@ -53,7 +53,7 @@ public struct GitHubReposClient: ConfigurableClient {
         title: String,
         description: String? = nil,
         assignee: String? = nil,
-        labels: [String]? = nil
+        labels: [String]? = nil,
     ) async -> Result<GitHubIssue, GitHubErrors> {
         let url = Self.BASE_URL
             .appendingPathComponent("repos")
@@ -78,7 +78,7 @@ public struct GitHubReposClient: ConfigurableClient {
             method: .post,
             payload: payload,
             headers: self.defaultHeaders,
-            config: config
+            config: config,
         )
 
         return result

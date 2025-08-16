@@ -34,8 +34,8 @@ final class JSONFileUnpackerTests: XCTestCase {
                     .Context(
                         codingPath: [],
                         debugDescription: "Expected to decode String but found a dictionary instead.",
-                        underlyingError: nil
-                    )
+                        underlyingError: nil,
+                    ),
             )
             XCTAssertEqual(error, .decodingFailure(context: decodingError))
         }

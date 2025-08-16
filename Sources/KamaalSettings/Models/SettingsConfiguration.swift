@@ -27,7 +27,7 @@ public struct SettingsConfiguration: Hashable, Sendable {
         acknowledgements: Acknowledgements? = nil,
         appIcon: AppIconConfiguration? = nil,
         preferences: [Preference] = [],
-        showLogs: Bool = true
+        showLogs: Bool = true,
     ) {
         self.donations = donations
         self.feedback = feedback
@@ -98,7 +98,7 @@ public struct SettingsConfiguration: Hashable, Sendable {
             username: String,
             repoName: String,
             additionalLabels: [String] = [],
-            additionalData: Data? = nil
+            additionalData: Data? = nil,
         ) {
             self.token = token
             self.username = username

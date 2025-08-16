@@ -6,8 +6,8 @@
 //
 
 import XCTest
-import KamaalExtensions
 @testable import KamaalCoreData
+import KamaalExtensions
 
 final class KamaalCoreDataTests: XCTestCase {
     let viewContext = PersistenceController.shared.container.viewContext
