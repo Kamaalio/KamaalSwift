@@ -44,6 +44,76 @@ extension Array {
         NSSet(array: self)
     }
 
+    /// Calculates the sum of values extracted from array elements using a key path.
+    ///
+    /// This method uses a key path to extract numeric values from each element in the array
+    /// and returns their sum. The extracted values must conform to `AdditiveArithmetic`.
+    ///
+    /// - Parameter keyPath: A key path to a property of the array elements that conforms to `AdditiveArithmetic`.
+    /// - Returns: The sum of all values extracted using the key path.
+    ///
+    /// - Complexity:
+    ///   - Time: O(n), where n is the number of elements in the array
+    ///   - Space: O(1), constant space complexity
+    ///
+    /// # Examples
+    ///
+    /// ```swift
+    /// struct Person {
+    ///     let age: Int
+    ///     let salary: Double
+    /// }
+    ///
+    /// let people = [
+    ///     Person(age: 25, salary: 50000.0),
+    ///     Person(age: 30, salary: 60000.0),
+    ///     Person(age: 35, salary: 70000.0)
+    /// ]
+    ///
+    /// let totalAge = people.sum(by: \.age)        // Returns 90
+    /// let totalSalary = people.sum(by: \.salary)  // Returns 180000.0
+    /// ```
+    public func sum<T: AdditiveArithmetic>(by keyPath: KeyPath<Element, T>) -> T {
+        reduce(.zero) { $0 + $1[keyPath: keyPath] }
+    }
+
+    /// Calculates the average (arithmetic mean) of floating-point values extracted from array elements using a key
+    /// path.
+    ///
+    /// - Parameter keyPath: A key path to a floating-point property of the array elements.
+    /// - Returns: The average of all values, or `.zero` if the array is empty.
+    ///
+    /// - Note: This overload applies when the property type conforms to `BinaryFloatingPoint`.
+    ///
+    /// # Examples
+    /// ```swift
+    /// struct Reading { let value: Double }
+    /// let readings = [Reading(value: 2.0), Reading(value: 4.0), Reading(value: 6.0)]
+    /// let avg = readings.average(of: \.value) // 4.0
+    /// ```
+    public func average<T: BinaryFloatingPoint>(of keyPath: KeyPath<Element, T>) -> T {
+        guard !isEmpty else { return .zero }
+        return self.sum(by: keyPath) / T(count)
+    }
+
+    /// Calculates the average (arithmetic mean) of integer values extracted from array elements using a key path.
+    ///
+    /// - Parameter keyPath: A key path to an integer property of the array elements.
+    /// - Returns: The average as a `Double`, or `0` if the array is empty.
+    ///
+    /// - Note: Returning a `Double` preserves fractional precision (e.g., average of 1 and 2 is 1.5).
+    ///
+    /// # Examples
+    /// ```swift
+    /// struct Person { let age: Int }
+    /// let people = [Person(age: 20), Person(age: 21), Person(age: 23)]
+    /// let averageAge = people.average(of: \.age) // 21.333333333333332
+    /// ```
+    public func average(of keyPath: KeyPath<Element, some BinaryInteger>) -> Double {
+        guard !isEmpty else { return .zero }
+        return Double(self.sum(by: keyPath)) / Double(count)
+    }
+
     /// Returns ranged array slice.
     /// - Parameters:
     ///   - start: Where to start the range.
@@ -105,7 +175,8 @@ extension Array {
     ///
     /// - Returns: The first index of the sequence that satisfies the given key path
     ///   and comparison value or nil if there is no element that satisfies the condition.
-    public func findIndex<T: Equatable>(by keyPath: KeyPath<Element, T>, is comparisonValue: T) -> Int? {
+    public func findIndex<T: Equatable>(by keyPath: KeyPath<Element, T>, is comparisonValue: T)
+        -> Int? {
         self.findIndex(where: { $0[keyPath: keyPath] == comparisonValue })
     }
 
