@@ -16,6 +16,15 @@ public struct SavePanel {
         case unknown(response: NSApplication.ModalResponse)
     }
 
+    /// Presents a macOS save panel and returns the configured `NSSavePanel` on success.
+    /// - Parameter filename: Suggested default filename.
+    /// - Returns: `.success(NSSavePanel)` when the user confirms, otherwise `.failure`.
+    ///
+    /// # Example
+    /// ```swift
+    /// let result = await SavePanel.save(filename: "Export.txt")
+    /// if case let .success(panel) = result, let url = panel.url { /* write file */ }
+    /// ```
     @MainActor
     public static func save(filename: String) async -> Result<NSSavePanel, Errors> {
         await withCheckedContinuation { continuation in

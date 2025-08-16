@@ -11,10 +11,29 @@ import Foundation
 public struct Shell {
     private init() { }
 
-    public static func zsh(_ command: String, at executionLocation: String? = nil) -> Result<String, Errors> {
+    /// Executes a command using `/bin/zsh` and returns the standard output or an error.
+    /// - Parameters:
+    ///   - command: The shell command to run.
+    ///   - executionLocation: Optional working directory to `cd` into before executing.
+    /// - Returns: `.success(stdout)` when the command succeeds, or `.failure` when an error occurs.
+    ///
+    /// # Example
+    /// ```swift
+    /// let result = Shell.zsh("echo hello")
+    /// if case let .success(output) = result { print(output) }
+    /// ```
+    public static func zsh(_ command: String, at executionLocation: String? = nil) -> Result<
+        String, Errors
+    > {
         self.shell("/bin/zsh", command, at: executionLocation)
     }
 
+    /// Executes a command using the provided shell path and returns the standard output or an error.
+    /// - Parameters:
+    ///   - launchPath: Absolute path to a shell executable (e.g., `/bin/zsh`, `/bin/bash`).
+    ///   - command: The command to run.
+    ///   - executionLocation: Optional working directory to `cd` into before executing.
+    /// - Returns: `.success(stdout)` when the command succeeds, or `.failure` when an error occurs.
     public static func shell(
         _ launchPath: String,
         _ command: String,
@@ -90,10 +109,12 @@ extension Shell.Errors: Equatable {
     public static func == (lhs: Shell.Errors, rhs: Shell.Errors) -> Bool {
         if case let .readPipeError(leftContext, leftPipe) = lhs,
            case let .readPipeError(rightContext, rightPipe) = rhs {
-            return leftPipe == rightPipe && leftContext.localizedDescription == rightContext.localizedDescription
+            return leftPipe == rightPipe
+                && leftContext.localizedDescription == rightContext.localizedDescription
         }
 
-        if case let .standardError(leftMessage) = lhs, case let .standardError(rightMessage) = rhs {
+        if case let .standardError(leftMessage) = lhs,
+           case let .standardError(rightMessage) = rhs {
             return leftMessage == rightMessage
         }
 

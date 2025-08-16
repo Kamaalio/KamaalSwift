@@ -13,8 +13,15 @@ extension Array where Element: Hashable {
         Set(self)
     }
 
-    /// Makes array only contain unique elements.
+    /// Returns a new array that contains only the unique elements of this array, preserving order.
+    ///
     /// - Returns: An array with only unique elements.
+    ///
+    /// # Example
+    /// ```swift
+    /// let numbers = [1, 2, 2, 3, 1]
+    /// let unique = numbers.uniques() // [1, 2, 3]
+    /// ```
     public func uniques() -> [Element] {
         var buffer: [Element] = []
         var added = Set<Element>()
@@ -29,6 +36,16 @@ extension Array where Element: Hashable {
 }
 
 extension Array where Element: Identifiable {
+    /// Returns a dictionary keyed by each element's `id`.
+    ///
+    /// If there are duplicate IDs, the last element with that ID wins.
+    ///
+    /// # Example
+    /// ```swift
+    /// struct User: Identifiable { let id: Int; let name: String }
+    /// let users = [User(id: 1, name: "A"), User(id: 2, name: "B")]
+    /// let map = users.mappedByID // [1: User(id: 1,...), 2: User(id: 2,...)]
+    /// ```
     public var mappedByID: [Element.ID: Element] {
         reduce([:]) {
             var result = $0
@@ -114,11 +131,18 @@ extension Array {
         return Double(self.sum(by: keyPath)) / Double(count)
     }
 
-    /// Returns ranged array slice.
+    /// Returns an array slice for the given bounds, clamping indices to the valid range.
     /// - Parameters:
     ///   - start: Where to start the range.
-    ///   - end: Where to end the range.
-    /// - Returns: Ranged array slice.
+    ///   - end: Where to end the range (exclusive). Defaults to `count`.
+    /// - Returns: The array slice within the given bounds.
+    ///
+    /// # Example
+    /// ```swift
+    /// let array = [10, 20, 30, 40]
+    /// let slice = array.ranged(from: 1, to: 3) // [20, 30]
+    /// let clamped = array.ranged(from: 2, to: 999) // [30, 40]
+    /// ```
     public func ranged(from start: Int, to end: Int? = nil) -> ArraySlice<Element> {
         var end = end ?? count
         if end > count {
@@ -132,9 +156,15 @@ extension Array {
         return self[start ..< end]
     }
 
-    /// Removes element at the given index and returns a new array.
+    /// Removes the element at the given index and returns a new array.
     /// - Parameter index: The index of the element to remove.
-    /// - Returns: The given array with the item removed.
+    /// - Returns: A copy of the array with the element removed (if index is in bounds).
+    ///
+    /// # Example
+    /// ```swift
+    /// let array = ["a", "b", "c"]
+    /// let removed = array.removed(at: 1) // ["a", "c"]
+    /// ```
     public func removed(at index: Int) -> [Element] {
         var array = self
         if index < count {
@@ -143,18 +173,32 @@ extension Array {
         return array
     }
 
-    /// Removes last element in array.
-    /// Doesn't remove anything if array is empty.
-    /// - Returns: An array with the last element removed
+    /// Removes the last element and returns a new array.
+    /// Doesn't remove anything if the array is empty.
+    /// - Returns: A copy with the last element removed.
+    ///
+    /// # Example
+    /// ```swift
+    /// let array = [1, 2, 3]
+    /// let result = array.removedLast() // [1, 2]
+    /// ```
     public func removedLast() -> [Element] {
         var array = self
         _ = array.popLast()
         return array
     }
 
-    /// Gets element at a specific given index. When a negative index has been given the indexing will be reversed.
-    /// - Parameter index: A positive or negative index to access elements of this array.
-    /// - Returns: Returns the element at the given index. If index is out of range, than this method will return nil.
+    /// Returns the element at the given index, supporting negative indexing from the end.
+    /// - Parameter index: A positive or negative index. `-1` is the last element.
+    /// - Returns: The element at the given index, or `nil` if out of range.
+    ///
+    /// # Examples
+    /// ```swift
+    /// let items = [10, 20, 30]
+    /// items.at(0)   // 10
+    /// items.at(-1)  // 30
+    /// items.at(99)  // nil
+    /// ```
     public func at(_ index: Int) -> Element? {
         guard index < count else { return nil }
         if index >= 0 {
@@ -194,6 +238,15 @@ extension Array {
         try firstIndex(where: predicate)
     }
 
+    /// Inserts the given element at the beginning of the array.
+    ///
+    /// - Parameter element: The element to insert at the front.
+    ///
+    /// # Example
+    /// ```swift
+    /// var items = [2, 3]
+    /// items.prepend(1) // items == [1, 2, 3]
+    /// ```
     public mutating func prepend(_ element: Element) {
         insert(element, at: 0)
     }

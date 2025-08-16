@@ -15,21 +15,25 @@ extension Date {
         case wednesday = 4
         case thursday = 5
         case friday = 6
-        case faturday = 7
+        case saturday = 7
     }
 
+    /// Bridge to `NSDate`.
     public var asNSDate: NSDate {
         self as NSDate
     }
 
+    /// The day number within the current week (Calendar.current).
     public var dayNumberOfWeek: Int {
         Calendar.current.component(.day, from: self)
     }
 
+    /// The ISO week number of the year.
     public var weekNumber: Int {
         Calendar.current.component(.weekOfYear, from: self)
     }
 
+    /// The year number used for ISO week dates.
     public var yearNumber: Int {
         Calendar.current.component(.yearForWeekOfYear, from: self)
     }
@@ -38,8 +42,8 @@ extension Date {
     public var isBeforeToday: Bool {
         let selfDate = self
         let today = Date()
-        return (selfDate.dayNumberOfWeek < (today.dayNumberOfWeek) || selfDate.weekNumber < today.weekNumber) &&
-            selfDate.yearNumber == today.yearNumber
+        return (selfDate.dayNumberOfWeek < (today.dayNumberOfWeek) || selfDate.weekNumber < today.weekNumber)
+            && selfDate.yearNumber == today.yearNumber
     }
 
     /// Is tomorrow
@@ -66,20 +70,37 @@ extension Date {
         return (date?.addingTimeInterval(-1))!
     }
 
+    /// Formats the date using the provided date format string.
+    /// - Parameter format: A date format pattern (e.g., "yyyy-MM-dd").
+    /// - Returns: The formatted string.
+    ///
+    /// # Example
+    /// ```swift
+    /// let text = Date().getFormattedDateString(withFormat: "yyyy-MM-dd")
+    /// ```
     public func getFormattedDateString(withFormat format: String) -> String {
         let dateformat = DateFormatter()
         dateformat.dateFormat = format
         return dateformat.string(from: self)
     }
 
+    /// Returns the next N days from this date (optionally offset first).
+    /// - Parameters:
+    ///   - amountOfDays: Amount of days to return (must be > 0).
+    ///   - offset: Optional offset applied before collecting the days.
+    /// - Returns: An array of dates.
     public func nextDays(till amountOfDays: Int, offset: Int = 0) -> [Date] {
         guard amountOfDays > 0,
-              let date = Calendar.current.date(byAdding: .day, value: offset, to: self) else { return [] }
+              let date = Calendar.current.date(byAdding: .day, value: offset, to: self)
+        else { return [] }
         return (0 ..< amountOfDays).compactMap {
             Calendar.current.date(byAdding: .day, value: $0, to: date)
         }
     }
 
+    /// Returns all days of the week containing this date.
+    /// - Parameter weekOffset: Offset in weeks relative to the current week.
+    /// - Returns: An array of 7 dates (Sunday..Saturday).
     public func datesOfWeek(weekOffset: Int = 0) -> [Date] {
         var dates = [Date]()
         for index in 1 ... 7 {
@@ -91,10 +112,12 @@ extension Date {
         return dates
     }
 
+    /// Adds the given number of minutes to the date.
     public func adding(minutes: Int) -> Date {
         Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
     }
 
+    /// Formats the date to an ISO-8601 string with fractional seconds.
     @available(OSX 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
     public func toIsoString() -> String {
         let formatter = ISO8601DateFormatter()
@@ -102,11 +125,13 @@ extension Date {
         return formatter.string(from: self)
     }
 
+    /// Whether this date is within the same ISO week as the given date.
     public func isFromSameWeek(as date: Date) -> Bool {
         let selfDate = self
         return selfDate.weekNumber == date.weekNumber && selfDate.yearNumber == date.yearNumber
     }
 
+    /// Whether this date's week is after the given date's week (considering ISO week/year).
     public func isFutureWeek(from date: Date) -> Bool {
         let selfDate = self
         if selfDate.yearNumber != date.yearNumber {
@@ -115,6 +140,7 @@ extension Date {
         return selfDate.weekNumber > date.weekNumber
     }
 
+    /// Whether both dates represent the same day within the same week/year.
     public func isSameDay(as date: Date) -> Bool {
         let selfDate = self
         return selfDate.dayNumberOfWeek == date.dayNumberOfWeek
@@ -122,6 +148,7 @@ extension Date {
             && selfDate.yearNumber == date.yearNumber
     }
 
+    /// Whether this date lies between two dates (exclusive) according to their compare ordering.
     public func isBetween(date date1: Date, andDate date2: Date) -> Bool {
         date1.compare(self) == compare(date2)
     }

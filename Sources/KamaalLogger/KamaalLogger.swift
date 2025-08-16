@@ -26,7 +26,10 @@ public struct KamaalLogger: Sendable {
         holder: LogHolder = .shared,
         failOnError: Bool = false,
     ) {
-        self.init(subsystem: subsystem, label: String(describing: type), holder: holder, failOnError: failOnError)
+        self.init(
+            subsystem: subsystem, label: String(describing: type), holder: holder,
+            failOnError: failOnError,
+        )
     }
 
     /// Initialize with custom label.
@@ -46,7 +49,7 @@ public struct KamaalLogger: Sendable {
         self.failOnError = failOnError
     }
 
-    /// To log errors
+    /// Logs an error message.
     /// - Parameter message: The message to log.
     public func error(_ message: String) {
         self.logger.error("\(message)")
@@ -56,42 +59,43 @@ public struct KamaalLogger: Sendable {
         }
     }
 
-    /// To log errors formatted with an extra label.
+    /// Logs an error with a label and Swift `Error`.
     /// - Parameters:
     ///   - label: The label to show before the error.
     ///   - error: The error to log.
     public func error(label: String, error: Error) {
-        let message = [label, "description='\(error.localizedDescription)'", "error='\(error)'"].joined(separator: "; ")
+        let message = [label, "description='\(error.localizedDescription)'", "error='\(error)'"]
+            .joined(separator: "; ")
         self.error(message)
     }
 
-    /// To log warnings.
+    /// Logs a warning message.
     /// - Parameter message: The message to log.
     public func warning(_ message: String) {
         self.logger.warning("\(message)")
         self.addLogToQueue(level: .warning, message: message)
     }
 
-    /// To log warnings.
+    /// Logs multiple warning messages as a single entry separated by `; `.
     /// - Parameter messages: The messages to log separated by a `; `.
     public func warning(_ messages: String...) {
         self.warning(messages.joined(separator: "; "))
     }
 
-    /// To log information.
+    /// Logs an informational message.
     /// - Parameter message: The message to log.
     public func info(_ message: String) {
         self.logger.info("\(message)")
         self.addLogToQueue(level: .info, message: message)
     }
 
-    /// To log information.
+    /// Logs multiple informational messages as a single entry separated by `; `.
     /// - Parameter messages: The messages to log separated by a `; `.
     public func info(_ messages: String...) {
         self.info(messages.joined(separator: "; "))
     }
 
-    /// To log debugging messages. Beaware of that logs only get stored when `DEBUG` compiler flag is turned on.
+    /// Logs a debug message. Only stored when the `DEBUG` compiler flag is enabled.
     /// - Parameter message: The message to log.
     public func debug(_ message: String) {
         #if DEBUG
@@ -102,7 +106,9 @@ public struct KamaalLogger: Sendable {
 
     private func addLogToQueue(level: LogLevels, message: String) {
         Task {
-            await self.holder.addLog(.init(label: self.label, level: level, message: message, timestamp: Date()))
+            await self.holder.addLog(
+                .init(label: self.label, level: level, message: message, timestamp: Date()),
+            )
         }
     }
 }
