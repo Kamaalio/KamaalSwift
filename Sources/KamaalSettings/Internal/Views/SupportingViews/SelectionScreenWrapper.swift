@@ -27,7 +27,7 @@ struct SelectionScreenWrapper<Row: View, Item: Hashable & Identifiable>: View {
         sectionTitle: String,
         items: [Item],
         onItemPress: @escaping (Item) -> Void,
-        @ViewBuilder row: @escaping (Item) -> Row
+        @ViewBuilder row: @escaping (Item) -> Row,
     ) {
         self.navigationTitle = navigationTitle
         self.sectionTitle = sectionTitle
@@ -44,7 +44,7 @@ struct SelectionScreenWrapper<Row: View, Item: Hashable & Identifiable>: View {
         items: [Item],
         searchFilter: @escaping (Item, String) -> Bool,
         onItemPress: @escaping (Item) -> Void,
-        @ViewBuilder row: @escaping (Item) -> Row
+        @ViewBuilder row: @escaping (Item) -> Row,
     ) {
         self.navigationTitle = navigationTitle
         self.sectionTitle = sectionTitle
@@ -94,7 +94,7 @@ struct SelectionScreenWrapper_Previews: PreviewProvider {
                 AppColor(id: UUID(uuidString: "15a20957-1d37-49bb-b463-b5a3cd5efd79")!, name: "Red", color: .red),
                 AppColor(id: UUID(uuidString: "c7fffbb9-28de-4b93-a7a8-d065ea57ad0b")!, name: "Green", color: .green),
             ],
-            onItemPress: { _ in }
+            onItemPress: { _ in },
         ) { item in
             Text(item.name)
         }

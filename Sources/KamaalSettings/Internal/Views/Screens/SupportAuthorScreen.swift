@@ -57,16 +57,16 @@ struct SupportAuthorScreen<ScreenType: NavigatorStackValue>: View {
         .confettiCannon(
             trigger: self.$viewModel.confettiTimesRun,
             num: self.viewModel.numberOfConfettis,
-            repetitions: self.viewModel.confettiRepetitions
+            repetitions: self.viewModel.confettiRepetitions,
         )
         .kPopUpLite(
             isPresented: self.$viewModel.showToast,
             style: .bottom(
                 title: "Sorry, something went wrong".localized(comment: ""),
                 type: .error,
-                description: "Failed to make purchase".localized(comment: "")
+                description: "Failed to make purchase".localized(comment: ""),
             ),
-            backgroundColor: self.colorScheme == .dark ? .black : .white
+            backgroundColor: self.colorScheme == .dark ? .black : .white,
         )
     }
 

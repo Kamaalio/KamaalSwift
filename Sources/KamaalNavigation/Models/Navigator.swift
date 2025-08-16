@@ -72,7 +72,7 @@ public final class Navigator<StackValue: NavigatorStackValue>: ObservableObject 
                 guard stack == self.currentStack else { return }
 
                 self.stacks[stack] = newValue
-            }
+            },
         )
     }
 

@@ -48,7 +48,7 @@ public struct KamaalNetworker: Sendable {
         payload: Data?,
         headers: [String: String]? = nil,
         config: KRequestConfig? = nil,
-        completion: @escaping (Result<Response<T>, Errors>) -> Void
+        completion: @escaping (Result<Response<T>, Errors>) -> Void,
     ) {
         let request = self.setupURLRequest(url: url, method: method, payload: payload, headers: headers)
 
@@ -58,7 +58,7 @@ public struct KamaalNetworker: Sendable {
                 response: response,
                 error: error,
                 kowalskiAnalysis: config?.kowalskiAnalysis ?? false,
-                completion: completion
+                completion: completion,
             )
         }
 
@@ -75,7 +75,7 @@ public struct KamaalNetworker: Sendable {
         method: HTTPMethod = .get,
         payload: Data?,
         headers: [String: String]? = nil,
-        config: KRequestConfig? = nil
+        config: KRequestConfig? = nil,
     ) async -> Result<Response<T>, Errors> {
         await withCheckedContinuation { continuation in
             self.request(
@@ -84,7 +84,7 @@ public struct KamaalNetworker: Sendable {
                 payload: payload,
                 headers: headers,
                 config: config,
-                completion: { continuation.resume(returning: $0) }
+                completion: { continuation.resume(returning: $0) },
             )
         }
     }
@@ -95,7 +95,7 @@ public struct KamaalNetworker: Sendable {
         payload: [String: Any]? = nil,
         headers: [String: String]? = nil,
         config: KRequestConfig? = nil,
-        completion: @escaping (Result<Response<T>, Errors>) -> Void
+        completion: @escaping (Result<Response<T>, Errors>) -> Void,
     ) {
         self.request(
             from: url,
@@ -103,7 +103,7 @@ public struct KamaalNetworker: Sendable {
             payload: payload?.asData,
             headers: headers,
             config: config,
-            completion: completion
+            completion: completion,
         )
     }
 
@@ -113,7 +113,7 @@ public struct KamaalNetworker: Sendable {
         method: HTTPMethod = .get,
         payload: [String: Any]? = nil,
         headers: [String: String]? = nil,
-        config: KRequestConfig? = nil
+        config: KRequestConfig? = nil,
     ) async -> Result<Response<T>, Errors> {
         await withCheckedContinuation { continuation in
             self.request(
@@ -122,7 +122,7 @@ public struct KamaalNetworker: Sendable {
                 payload: payload,
                 headers: headers,
                 config: config,
-                completion: { continuation.resume(returning: $0) }
+                completion: { continuation.resume(returning: $0) },
             )
         }
     }
@@ -133,7 +133,7 @@ public struct KamaalNetworker: Sendable {
         payload: Data?,
         headers: [String: String]? = nil,
         config: KRequestConfig? = nil,
-        completion: @escaping (Result<Response<T>, Errors>) -> Void
+        completion: @escaping (Result<Response<T>, Errors>) -> Void,
     ) {
         guard let url = URL(string: urlString) else {
             completion(.failure(.invalidURL(url: urlString)))
@@ -145,7 +145,7 @@ public struct KamaalNetworker: Sendable {
             payload: payload,
             headers: headers,
             config: config,
-            completion: completion
+            completion: completion,
         )
     }
 
@@ -155,7 +155,7 @@ public struct KamaalNetworker: Sendable {
         method: HTTPMethod = .get,
         payload: Data?,
         headers: [String: String]? = nil,
-        config: KRequestConfig? = nil
+        config: KRequestConfig? = nil,
     ) async -> Result<Response<T>, Errors> {
         await withCheckedContinuation { continuation in
             self.request(
@@ -164,7 +164,7 @@ public struct KamaalNetworker: Sendable {
                 payload: payload,
                 headers: headers,
                 config: config,
-                completion: { continuation.resume(returning: $0) }
+                completion: { continuation.resume(returning: $0) },
             )
         }
     }
@@ -175,7 +175,7 @@ public struct KamaalNetworker: Sendable {
         payload: [String: Any]? = nil,
         headers: [String: String]? = nil,
         config: KRequestConfig? = nil,
-        completion: @escaping (Result<Response<T>, Errors>) -> Void
+        completion: @escaping (Result<Response<T>, Errors>) -> Void,
     ) {
         guard let url = URL(string: urlString) else {
             completion(.failure(.invalidURL(url: urlString)))
@@ -187,7 +187,7 @@ public struct KamaalNetworker: Sendable {
             payload: payload,
             headers: headers,
             config: config,
-            completion: completion
+            completion: completion,
         )
     }
 
@@ -197,7 +197,7 @@ public struct KamaalNetworker: Sendable {
         method: HTTPMethod = .get,
         payload: [String: Any]? = nil,
         headers: [String: String]? = nil,
-        config: KRequestConfig? = nil
+        config: KRequestConfig? = nil,
     ) async -> Result<Response<T>, Errors> {
         await withCheckedContinuation { continuation in
             self.request(
@@ -206,7 +206,7 @@ public struct KamaalNetworker: Sendable {
                 payload: payload,
                 headers: headers,
                 config: config,
-                completion: { continuation.resume(returning: $0) }
+                completion: { continuation.resume(returning: $0) },
             )
         }
     }
@@ -218,7 +218,7 @@ public struct KamaalNetworker: Sendable {
         headers: [String: String]? = nil,
         config: KRequestConfig? = nil,
         responseType _: T.Type,
-        completion: @escaping (Result<Response<T>, Errors>) -> Void
+        completion: @escaping (Result<Response<T>, Errors>) -> Void,
     ) {
         self.request(
             from: url,
@@ -226,7 +226,7 @@ public struct KamaalNetworker: Sendable {
             payload: payload,
             headers: headers,
             config: config,
-            completion: completion
+            completion: completion,
         )
     }
 
@@ -237,7 +237,7 @@ public struct KamaalNetworker: Sendable {
         headers: [String: String]? = nil,
         config: KRequestConfig? = nil,
         responseType _: T.Type,
-        completion: @escaping (Result<Response<T>, Errors>) -> Void
+        completion: @escaping (Result<Response<T>, Errors>) -> Void,
     ) {
         self.request(
             from: urlString,
@@ -245,7 +245,7 @@ public struct KamaalNetworker: Sendable {
             payload: payload,
             headers: headers,
             config: config,
-            completion: completion
+            completion: completion,
         )
     }
 
@@ -256,7 +256,7 @@ public struct KamaalNetworker: Sendable {
         method: HTTPMethod = .get,
         payload: [String: Any]? = nil,
         headers: [String: String]? = nil,
-        config: KRequestConfig? = nil
+        config: KRequestConfig? = nil,
     ) -> AnyPublisher<Response<T>, Error> {
         let request = self.setupURLRequest(url: url, method: method, payload: payload?.asData, headers: headers)
 
@@ -265,7 +265,7 @@ public struct KamaalNetworker: Sendable {
                 let transformedResponseResult: Result<Response<T>, Errors> = self.transformResponseOutput(
                     response: output.response,
                     data: output.data,
-                    kowalskiAnalysis: config?.kowalskiAnalysis ?? false
+                    kowalskiAnalysis: config?.kowalskiAnalysis ?? false,
                 )
                 switch transformedResponseResult {
                 case let .failure(failure): throw failure
@@ -282,7 +282,7 @@ public struct KamaalNetworker: Sendable {
         payload: [String: Any]? = nil,
         headers: [String: String]? = nil,
         responseType _: T.Type,
-        config: KRequestConfig? = nil
+        config: KRequestConfig? = nil,
     ) -> AnyPublisher<Response<T>, Error> {
         self.requestPublisher(from: url, method: method, payload: payload, headers: headers, config: config)
     }
@@ -302,7 +302,7 @@ public struct KamaalNetworker: Sendable {
         response: URLResponse?,
         error: Error?,
         kowalskiAnalysis: Bool = false,
-        completion: @escaping (Result<Response<T>, Errors>) -> Void
+        completion: @escaping (Result<Response<T>, Errors>) -> Void,
     ) {
         if let error {
             completion(.failure(.generalError(error: error)))
@@ -317,7 +317,7 @@ public struct KamaalNetworker: Sendable {
         let transformedResponseResult: Result<Response<T>, Errors> = self.transformResponseOutput(
             response: response,
             data: data,
-            kowalskiAnalysis: kowalskiAnalysis
+            kowalskiAnalysis: kowalskiAnalysis,
         )
         switch transformedResponseResult {
         case let .failure(failure): completion(.failure(failure))
@@ -328,7 +328,7 @@ public struct KamaalNetworker: Sendable {
     private func transformResponseOutput<T: Decodable>(
         response: URLResponse,
         data: Data,
-        kowalskiAnalysis: Bool = false
+        kowalskiAnalysis: Bool = false,
     ) -> Result<Response<T>, Errors> {
         guard let jsonString = String(data: data, encoding: .utf8) else {
             return .failure(.notAValidJSON)

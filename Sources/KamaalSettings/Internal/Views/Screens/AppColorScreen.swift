@@ -22,7 +22,7 @@ struct AppColorScreen<ScreenType: NavigatorStackValue>: View {
             navigationTitle: "App colors".localized(comment: ""),
             sectionTitle: "Colors".localized(comment: ""),
             items: self.settingsConfiguration.color?.colors ?? [],
-            onItemPress: self.changeAppColor
+            onItemPress: self.changeAppColor,
         ) { appColor in
             ColorTextRow(label: appColor.name, color: appColor.color)
         }

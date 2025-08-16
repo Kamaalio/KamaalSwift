@@ -41,7 +41,7 @@ extension View {
             url: .constant(url),
             fallbackURL: url,
             color: color,
-            bindingWithURL: false
+            bindingWithURL: false,
         ))
     }
 
@@ -77,7 +77,7 @@ extension View {
             url: url,
             fallbackURL: fallbackURL,
             color: color,
-            bindingWithURL: true
+            bindingWithURL: true,
         ))
     }
 }

@@ -19,7 +19,7 @@ public struct FileClerk {
         let sourceFolderContent = try fileManager.contentsOfDirectory(
             at: sourceFolder,
             includingPropertiesForKeys: nil,
-            options: []
+            options: [],
         )
         for content in sourceFolderContent {
             let destinationURL = destinationFolder.appending(path: content.lastPathComponent)

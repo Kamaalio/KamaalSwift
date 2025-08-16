@@ -19,7 +19,7 @@ public struct KFloatingDatePicker: View {
         value: Binding<Date>,
         title: String,
         displayedComponents: DatePicker.Components = .date,
-        onChange: @escaping (_ newValue: Date) -> Void = { _ in }
+        onChange: @escaping (_ newValue: Date) -> Void = { _ in },
     ) {
         self._value = value
         self.title = title

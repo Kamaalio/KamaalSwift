@@ -48,7 +48,7 @@ struct HudPopupView: View {
         .gesture(
             DragGesture()
                 .onChanged(self.onDrag(_:))
-                .onEnded(self.onDragEnd(_:))
+                .onEnded(self.onDragEnd(_:)),
         )
     }
 
@@ -76,7 +76,7 @@ struct HudPopupView_Previews: PreviewProvider {
             description: "Description",
             systemImageName: "person",
             backgroundColor: KPopUpManager().config.backgroundColor,
-            onClose: { }
+            onClose: { },
         )
     }
 }

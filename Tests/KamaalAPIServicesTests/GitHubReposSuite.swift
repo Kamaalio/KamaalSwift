@@ -36,7 +36,7 @@ struct GitHubReposSuite {
     func createDefaultHeadersWithEncodedUser() {
         var githubAPI = KamaalAPIServices().gitHub
         githubAPI.configure(
-            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: urlSession)
+            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: self.urlSession),
         )
 
         let headers = githubAPI.repos.defaultHeaders
@@ -58,16 +58,16 @@ struct GitHubReposSuite {
         }
         var githubAPI = KamaalAPIServices().gitHub
         githubAPI.configure(
-            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: urlSession)
+            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: self.urlSession),
         )
 
         let result = await githubAPI.repos.createIssue(
-            username: username,
-            repoName: repoName,
+            username: self.username,
+            repoName: self.repoName,
             title: "Testing",
             description: "Something to test",
             assignee: "kamaal111",
-            labels: ["Test"]
+            labels: ["Test"],
         )
         let issue = try result.get()
 
@@ -88,7 +88,7 @@ struct GitHubReposSuite {
                 url: createIssueURL,
                 statusCode: statusCode,
                 httpVersion: nil,
-                headerFields: nil
+                headerFields: nil,
             )!
 
             let data = jsonString.data(using: .utf8)
@@ -96,19 +96,19 @@ struct GitHubReposSuite {
         }
         var githubAPI = KamaalAPIServices().gitHub
         githubAPI.configure(
-            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: urlSession)
+            with: GitHubClientConfiguration(token: "some token", username: "kamaal111", urlSession: self.urlSession),
         )
 
         let result = await githubAPI.repos.createIssue(
-            username: username,
-            repoName: repoName,
-            title: "Testing"
+            username: self.username,
+            repoName: self.repoName,
+            title: "Testing",
         )
 
         #expect(
             throws: GitHubErrors.responseError(message: jsonString, code: 400),
             "An error should be thrown when the API fails",
-            performing: { try result.get() }
+            performing: { try result.get() },
         )
     }
 }

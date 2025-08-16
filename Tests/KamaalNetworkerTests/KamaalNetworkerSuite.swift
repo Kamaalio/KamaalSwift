@@ -5,8 +5,8 @@
 //  Created by Kamaal M Farah on 22/04/2023.
 //
 
-import Foundation
 import Testing
+import Foundation
 
 @testable import KamaalNetworker
 
@@ -27,18 +27,19 @@ struct KamaalNetworkerSuite {
         let statusCode = 200
         MockURLProtocol.requestHandler = { _ in
             let response = HTTPURLResponse(
-                url: apiURL, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+                url: apiURL, statusCode: statusCode, httpVersion: nil, headerFields: nil,
+            )!
             let jsonString = """
-                {
-                    "message": "yes"
-                }
-                """
+            {
+                "message": "yes"
+            }
+            """
             let data = jsonString.data(using: .utf8)
             return (response, data)
         }
 
         let result: Result<Response<MockResponse>, KamaalNetworker.Errors> =
-            await networker.request(from: apiURL)
+            await networker.request(from: self.apiURL)
         let response = try result.get()
 
         #expect(response.data == MockResponse(message: "yes"))
@@ -49,25 +50,26 @@ struct KamaalNetworkerSuite {
     func makesFailingRequests() async throws {
         let statusCode = 400
         let jsonString = """
-            {
-                "message": "oh nooooo!"
-            }
-            """
+        {
+            "message": "oh nooooo!"
+        }
+        """
         MockURLProtocol.requestHandler = { _ in
             let response = HTTPURLResponse(
-                url: apiURL, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
+                url: apiURL, statusCode: statusCode, httpVersion: nil, headerFields: nil,
+            )!
 
             let data = jsonString.data(using: .utf8)
             return (response, data)
         }
 
         let result: Result<Response<MockResponse>, KamaalNetworker.Errors> =
-            await networker.request(from: apiURL)
+            await networker.request(from: self.apiURL)
 
         #expect(
             throws: KamaalNetworker.Errors.responseError(message: jsonString, code: 400),
             "Should throw when API fails",
-            performing: { try result.get() }
+            performing: { try result.get() },
         )
     }
 }
@@ -104,5 +106,5 @@ class MockURLProtocol: URLProtocol {
         client?.urlProtocolDidFinishLoading(self)
     }
 
-    override func stopLoading() {}
+    override func stopLoading() { }
 }

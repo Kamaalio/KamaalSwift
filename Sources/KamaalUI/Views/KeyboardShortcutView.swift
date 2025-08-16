@@ -16,7 +16,7 @@ public struct KeyboardShortcutView<Content: View>: View {
     public init(
         shortcuts: [KeyboardShortcutConfiguration],
         onEmit: @escaping (_ shortcut: KeyboardShortcutConfiguration) -> Void,
-        @ViewBuilder content: () -> Content
+        @ViewBuilder content: () -> Content,
     ) {
         self.shortcuts = shortcuts
         self.content = content()

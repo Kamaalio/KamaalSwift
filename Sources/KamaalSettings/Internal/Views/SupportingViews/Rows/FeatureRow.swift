@@ -41,9 +41,9 @@ struct FeatureRow_Previews: PreviewProvider {
             feature: .init(
                 id: UUID(uuidString: "d103d65d-585b-450e-8fcf-5fcece1d1250")!,
                 label: "Fly away",
-                isEnabled: false
+                isEnabled: false,
             ),
-            onChange: { _ in }
+            onChange: { _ in },
         )
     }
 }

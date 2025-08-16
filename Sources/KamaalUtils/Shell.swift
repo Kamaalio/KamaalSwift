@@ -18,7 +18,7 @@ public struct Shell {
     public static func shell(
         _ launchPath: String,
         _ command: String,
-        at executionLocation: String? = nil
+        at executionLocation: String? = nil,
     ) -> Result<String, Errors> {
         let commandToUse: String
         var previousPath: String?

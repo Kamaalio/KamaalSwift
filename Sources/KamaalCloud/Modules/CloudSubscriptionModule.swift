@@ -77,7 +77,7 @@ public class CloudSubscriptionModule {
 
     private func subscribeToChanges(
         ofTypes objectTypes: [String],
-        completion: @escaping (Result<[CKSubscription], Errors>) -> Void
+        completion: @escaping (Result<[CKSubscription], Errors>) -> Void,
     ) {
         self.accounts.getStatus { [weak self] result in
             guard let self else { return }
@@ -100,7 +100,7 @@ public class CloudSubscriptionModule {
                     recordType: objectType,
                     predicate: predicate,
                     subscriptionID: "\(objectType)-changes",
-                    options: subscriptionOptions
+                    options: subscriptionOptions,
                 )
                 let notification = CKSubscription.NotificationInfo()
                 notification.shouldSendContentAvailable = true
@@ -110,7 +110,7 @@ public class CloudSubscriptionModule {
 
             let operation = CKModifySubscriptionsOperation(
                 subscriptionsToSave: subscriptionQuerys,
-                subscriptionIDsToDelete: nil
+                subscriptionIDsToDelete: nil,
             )
             var subscriptions: [CKSubscription] = []
             operation.modifySubscriptionsResultBlock = { operationResult in

@@ -24,7 +24,7 @@ public class _RelationshipConfiguration: ManagedObjectField {
         inverseRelationshipName: String,
         inverseRelationshipEntityName: String,
         isOptional: Bool,
-        relationshipType: RelationshipType
+        relationshipType: RelationshipType,
     ) {
         self.name = name
         self.destinationEntityName = destinationEntity
@@ -40,7 +40,7 @@ public class _RelationshipConfiguration: ManagedObjectField {
         inverseRelationshipName: String,
         inverseRelationshipEntity: (some ManuallyManagedObject).Type,
         isOptional: Bool,
-        relationshipType: RelationshipType
+        relationshipType: RelationshipType,
     ) {
         self.init(
             name: name,
@@ -48,7 +48,7 @@ public class _RelationshipConfiguration: ManagedObjectField {
             inverseRelationshipName: inverseRelationshipName,
             inverseRelationshipEntityName: inverseRelationshipEntity.entityName,
             isOptional: isOptional,
-            relationshipType: relationshipType
+            relationshipType: relationshipType,
         )
     }
 
@@ -78,7 +78,7 @@ public class _RelationshipConfiguration: ManagedObjectField {
             inverseRelationshipName: inverseRelationshipName,
             inverseRelationshipEntityName: inverseRelationshipEntityName,
             isOptional: isOptional,
-            relationshipType: relationshipType
+            relationshipType: relationshipType,
         )
         configuration.destinationEntity = destinationEntity
         return configuration

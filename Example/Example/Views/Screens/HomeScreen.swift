@@ -35,7 +35,7 @@ struct HomeScreen: View {
             Button(action: {
                 self.popUpManager.showPopUp(
                     style: .bottom(title: "Title", type: .success, description: "Description"),
-                    timeout: 3
+                    timeout: 3,
                 )
             }) {
                 Text("Bottom popup")
@@ -46,7 +46,7 @@ struct HomeScreen: View {
             Button(action: {
                 self.popUpManager.showPopUp(
                     style: .hud(title: "Empty thing", systemImageName: "airpodspro", description: "Below thing"),
-                    timeout: nil
+                    timeout: nil,
                 )
             }) {
                 Text("Hud popup")
@@ -66,7 +66,7 @@ struct HomeScreen: View {
         .kPopUpLite(
             isPresented: self.$showPopUp,
             style: .bottom(title: "Title", type: .success, description: "Description"),
-            backgroundColor: self.colorScheme == .dark ? .black : .white
+            backgroundColor: self.colorScheme == .dark ? .black : .white,
         )
     }
 }

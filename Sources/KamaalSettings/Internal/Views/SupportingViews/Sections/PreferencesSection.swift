@@ -22,7 +22,7 @@ struct PreferencesSection<ScreenType: NavigatorStackValue>: View {
             ForEach(self.settingsConfiguration.preferences) { preference in
                 NavigationLinkValueRow(
                     label: preference.label,
-                    destination: self.screenMapping(.preferenceOptions(preference: preference))
+                    destination: self.screenMapping(.preferenceOptions(preference: preference)),
                 ) {
                     AppText(string: preference.selectedOption.label)
                         .bold()

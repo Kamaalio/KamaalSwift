@@ -15,7 +15,7 @@ extension View {
                 isPresented: $manager.isShown,
                 style: manager.style,
                 backgroundColor: manager.config.backgroundColor,
-                onClose: manager.hidePopUp
+                onClose: manager.hidePopUp,
             )
             .environmentObject(manager)
     }
@@ -24,21 +24,21 @@ extension View {
         isPresented: Binding<Bool>,
         style: KPopUpStyles,
         backgroundColor: Color,
-        onClose: @escaping () -> Void
+        onClose: @escaping () -> Void,
     ) -> some View {
         ktakeSizeEagerly()
             .modifier(KPopUpLiteModifier(
                 isPresented: isPresented,
                 style: style,
                 backgroundColor: backgroundColor,
-                onClose: onClose
+                onClose: onClose,
             ))
     }
 
     public func kPopUpLite(
         isPresented: Binding<Bool>,
         style: KPopUpStyles,
-        backgroundColor: Color
+        backgroundColor: Color,
     ) -> some View {
         self.kPopUpLite(isPresented: isPresented, style: style, backgroundColor: backgroundColor, onClose: { })
     }
@@ -47,13 +47,13 @@ extension View {
         isPresented: Binding<Bool>,
         style: KPopUpStyles,
         backgroundColor: Color,
-        onClose: @escaping () -> Void
+        onClose: @escaping () -> Void,
     ) -> some View {
         modifier(KPopUpViewModifier(
             isPresented: isPresented,
             style: style,
             backgroundColor: backgroundColor,
-            onClose: onClose
+            onClose: onClose,
         ))
     }
 }
@@ -95,7 +95,7 @@ struct KPopUpLiteModifier: ViewModifier {
                 isPresented: self.$definitiveIsPresented,
                 style: self.style,
                 backgroundColor: self.backgroundColor,
-                onClose: self.close
+                onClose: self.close,
             )
     }
 
@@ -134,7 +134,7 @@ struct KPopUpViewModifier: ViewModifier {
                         .frame(
                             width: geometry.size.width,
                             height: geometry.size.height,
-                            alignment: self.style.alignment
+                            alignment: self.style.alignment,
                         )
                 }
             }))

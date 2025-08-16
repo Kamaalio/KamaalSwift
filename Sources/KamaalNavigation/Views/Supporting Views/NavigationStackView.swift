@@ -19,7 +19,7 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, Wr
         initialStack: [Screen],
         handleURLOpen: @escaping (_ url: URL) -> Screen? = { _ in nil },
         @ViewBuilder sidebar: @escaping () -> Sidebar,
-        @ViewBuilder passthroughEnvironment: @escaping (_ view: Screen.ScreenView) -> WrappedView
+        @ViewBuilder passthroughEnvironment: @escaping (_ view: Screen.ScreenView) -> WrappedView,
     ) {
         self.sidebar = sidebar
         self._navigator = StateObject(wrappedValue: Navigator(stack: initialStack))
@@ -56,7 +56,7 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, Wr
                                 }
                             }
                     }
-                }
+                },
             )
             .environmentObject(self.navigator)
             #else
@@ -70,7 +70,7 @@ public struct NavigationStackView<Sidebar: View, Screen: NavigatorStackValue, Wr
                                     self.passthroughEnvironment(screen.view(true))
                                 }
                         }
-                    }
+                    },
                 )
                 .environmentObject(self.navigator)
             } else {
@@ -109,7 +109,7 @@ struct NavigationStackView_Previews: PreviewProvider {
             sidebar: { Text("Sidebar") },
             passthroughEnvironment: { screen in
                 screen.padding()
-            }
+            },
         )
     }
 }

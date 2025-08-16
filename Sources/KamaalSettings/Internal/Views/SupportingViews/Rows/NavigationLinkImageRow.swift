@@ -36,7 +36,7 @@ struct NavigationLinkImageRow<ScreenType: NavigatorStackValue>: View {
         self.init(
             label: localizedLabel.localized(comment: comment),
             imageSystemName: imageSystemName,
-            destination: destination
+            destination: destination,
         )
     }
 

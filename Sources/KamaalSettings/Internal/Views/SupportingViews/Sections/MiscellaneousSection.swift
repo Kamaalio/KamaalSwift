@@ -18,7 +18,7 @@ struct MiscellaneousSection<ScreenType: NavigatorStackValue>: View {
                 localizedLabel: "Logs",
                 comment: "",
                 imageSystemName: "newspaper.fill",
-                destination: self.screenMapping(.logs)
+                destination: self.screenMapping(.logs),
             )
         }
     }

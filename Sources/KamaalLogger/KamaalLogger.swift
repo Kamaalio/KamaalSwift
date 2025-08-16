@@ -24,7 +24,7 @@ public struct KamaalLogger: Sendable {
         subsystem: String = Bundle.main.bundleIdentifier ?? "",
         from type: (some Any).Type,
         holder: LogHolder = .shared,
-        failOnError: Bool = false
+        failOnError: Bool = false,
     ) {
         self.init(subsystem: subsystem, label: String(describing: type), holder: holder, failOnError: failOnError)
     }
@@ -38,7 +38,7 @@ public struct KamaalLogger: Sendable {
         subsystem: String = Bundle.main.bundleIdentifier ?? "",
         label: String,
         holder: LogHolder = .shared,
-        failOnError: Bool = false
+        failOnError: Bool = false,
     ) {
         self.label = label
         self.logger = .init(subsystem: subsystem, category: label)

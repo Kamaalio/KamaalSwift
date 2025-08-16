@@ -42,7 +42,7 @@ class Item: NSManagedObject, ManuallyManagedObject, Identifiable {
             inverseRelationshipName: "parent",
             inverseRelationshipEntity: Item.self,
             isOptional: true,
-            relationshipType: .toMany
+            relationshipType: .toMany,
         ),
     ]
 }
@@ -65,7 +65,7 @@ class Child: NSManagedObject, ManuallyManagedObject, Identifiable {
             inverseRelationshipName: "children",
             inverseRelationshipEntity: Child.self,
             isOptional: false,
-            relationshipType: .toOne
+            relationshipType: .toOne,
         ),
     ]
 }

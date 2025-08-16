@@ -29,7 +29,7 @@ public struct GitHubIssueReactions: Codable, Hashable, Sendable {
         confused: Int,
         heart: Int,
         rocket: Int,
-        eyes: Int
+        eyes: Int,
     ) {
         self.url = url
         self.totalCount = totalCount

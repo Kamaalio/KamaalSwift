@@ -21,7 +21,7 @@ struct BottomPopupView: View {
         description: String?,
         backgroundColor: Color,
         bottomType: KPopUpBottomType?,
-        close: @escaping () -> Void
+        close: @escaping () -> Void,
     ) {
         self.title = title
         self.description = description
@@ -71,7 +71,7 @@ struct BottomPopupView_Previews: PreviewProvider {
             title: "Title",
             description: "Description",
             backgroundColor: KPopUpConfig().backgroundColor,
-            bottomType: .error, close: { }
+            bottomType: .error, close: { },
         )
     }
 }

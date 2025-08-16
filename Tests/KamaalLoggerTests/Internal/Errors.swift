@@ -10,7 +10,7 @@ import Foundation
 enum TestError: LocalizedError {
     case test
 
-    public var errorDescription: String? {
+    var errorDescription: String? {
         "something horrible happened"
     }
 }

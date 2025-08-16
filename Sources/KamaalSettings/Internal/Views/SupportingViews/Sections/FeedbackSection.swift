@@ -19,7 +19,7 @@ struct FeedbackSection<ScreenType: NavigatorStackValue>: View {
                     NavigationLinkImageRow(
                         label: style.title,
                         imageSystemName: style.imageSystemName,
-                        destination: self.screenMapping(.feedback(style: style, description: ""))
+                        destination: self.screenMapping(.feedback(style: style, description: "")),
                     )
                     #if os(macOS)
                     if style != FeedbackStyles.allCases.last! {

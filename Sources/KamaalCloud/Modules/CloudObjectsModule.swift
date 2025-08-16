@@ -69,7 +69,7 @@ public class CloudObjectsModule {
 
         return await self.multipleOperationsService.execute(
             recordsToDelete: recordsToDelete,
-            recordsToSave: recordsToSave
+            recordsToSave: recordsToSave,
         )
         .mapError { error in .multipleOperationsFailure(context: error) }
     }

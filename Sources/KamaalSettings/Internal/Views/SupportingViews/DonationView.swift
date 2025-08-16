@@ -22,7 +22,7 @@ struct DonationView: View {
                 AppText(
                     localizedString: "Buy me a %@",
                     comment: "%@ as in the item to buy",
-                    with: [self.donation.displayName]
+                    with: [self.donation.displayName],
                 )
                 .textCase(.uppercase)
                 .font(.headline)
@@ -48,7 +48,7 @@ struct DonationView: View {
 struct DonationView_Previews: PreviewProvider {
     static var previews: some View {
         DonationView(
-            donation: .carrot
+            donation: .carrot,
         )
     }
 }

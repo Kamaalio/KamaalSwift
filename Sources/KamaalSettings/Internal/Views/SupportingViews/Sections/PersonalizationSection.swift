@@ -21,7 +21,7 @@ struct PersonalizationSection<ScreenType: NavigatorStackValue>: View {
                     localizedLabel: "App colors",
                     comment: "",
                     color: .accentColor,
-                    destination: self.screenMapping(.appColor)
+                    destination: self.screenMapping(.appColor),
                 )
                 #if os(macOS)
                 if self.settingsConfiguration.appIconIsConfigured {
@@ -34,7 +34,7 @@ struct PersonalizationSection<ScreenType: NavigatorStackValue>: View {
                     localizedLabel: "App icon",
                     comment: "",
                     imageName: self.settingsConfiguration.appIcon!.currentIcon.imageName,
-                    destination: self.screenMapping(.appIcon)
+                    destination: self.screenMapping(.appIcon),
                 )
             }
         }

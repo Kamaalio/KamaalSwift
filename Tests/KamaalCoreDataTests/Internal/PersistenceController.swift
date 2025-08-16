@@ -15,7 +15,7 @@ struct PersistenceController {
         let persistentContainerBuilder = _PersistentContainerBuilder(
             entities: PersistenceController.entities,
             containerName: "KamaalCoreDataTests",
-            preview: true
+            preview: true,
         )
         self.container = persistentContainerBuilder.make()
         self.container.loadPersistentStores(completionHandler: { _, error in
@@ -67,7 +67,7 @@ class Item: NSManagedObject, ManuallyManagedObject, Identifiable {
             inverseRelationshipName: "parent",
             inverseRelationshipEntity: Item.self,
             isOptional: true,
-            relationshipType: .toMany
+            relationshipType: .toMany,
         ),
     ]
 
@@ -102,7 +102,7 @@ class Child: NSManagedObject, ManuallyManagedObject, Identifiable {
             inverseRelationshipName: "children",
             inverseRelationshipEntity: Child.self,
             isOptional: false,
-            relationshipType: .toOne
+            relationshipType: .toOne,
         ),
     ]
 }

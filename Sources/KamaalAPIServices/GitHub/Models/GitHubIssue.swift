@@ -45,7 +45,7 @@ public struct GitHubIssue: Codable, Hashable, Identifiable, Sendable {
         closedAt: String?,
         rawAuthorAssociation: String,
         body: String?,
-        reactions: GitHubIssueReactions
+        reactions: GitHubIssueReactions,
     ) {
         self.id = id
         self.url = url

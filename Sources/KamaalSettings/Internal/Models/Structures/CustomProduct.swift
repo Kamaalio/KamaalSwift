@@ -26,7 +26,7 @@ struct CustomProduct: Hashable, Identifiable {
         displayPrice: String,
         price: Decimal,
         description: String,
-        product: Product?
+        product: Product?,
     ) {
         self.id = id
         self.emoji = emoji
@@ -47,7 +47,7 @@ struct CustomProduct: Hashable, Identifiable {
             displayPrice: product.displayPrice,
             price: product.price,
             description: product.description,
-            product: product
+            product: product,
         )
     }
 
@@ -63,6 +63,6 @@ struct CustomProduct: Hashable, Identifiable {
         displayPrice: "$420.69",
         price: 420.69,
         description: "Carrots are good for the eyes",
-        product: .none
+        product: .none,
     )
 }

@@ -36,7 +36,7 @@ public class ManagedObjectPropertyConfiguration: ManagedObjectField {
     public convenience init(
         name: KeyPath<some ManuallyManagedObject, some Any>,
         type: PropertyTypes,
-        isOptional: Bool
+        isOptional: Bool,
     ) {
         self.init(name: NSExpression(forKeyPath: name).keyPath, type: type, isOptional: isOptional)
     }

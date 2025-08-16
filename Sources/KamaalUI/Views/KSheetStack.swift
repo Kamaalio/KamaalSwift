@@ -35,7 +35,7 @@ public struct KSheetStack<LeadingNavButton: View, TrailingNavButton: View, Conte
                     .frame(
                         minWidth: self.navigationButtonWidth,
                         maxWidth: self.navigationButtonWidth,
-                        alignment: .leading
+                        alignment: .leading,
                     )
                 Spacer()
                 if !self.title.isEmpty {
@@ -48,7 +48,7 @@ public struct KSheetStack<LeadingNavButton: View, TrailingNavButton: View, Conte
                     .frame(
                         minWidth: self.navigationButtonWidth,
                         maxWidth: self.navigationButtonWidth,
-                        alignment: .trailing
+                        alignment: .trailing,
                     )
             }
             .padding(.horizontal, self.horizontalPadding)
