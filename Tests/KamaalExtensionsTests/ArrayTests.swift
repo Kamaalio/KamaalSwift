@@ -50,7 +50,11 @@ private let mapsAndLimitsUntilPredicateArguments: [([Int], Character, [Character
 
 @Test("Maps and limits until predicate", arguments: mapsAndLimitsUntilPredicateArguments)
 func mapsAndLimitsUntilPredicate(_ array: [Int], _ limit: Character, _ expectedArray: [Character]) {
-    let array = array.map({ Character(String($0)) }, until: { $0 == limit })
+    let array = array.map {
+        Character(String($0))
+    } until: {
+        $0 == limit
+    }
 
     #expect(array == expectedArray)
 }
