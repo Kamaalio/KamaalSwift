@@ -19,6 +19,38 @@ extension Sequence {
         Array(self)
     }
 
+    /// Splits the sequence into chunks of the specified size.
+    ///
+    /// - Parameters:
+    ///   - chunkSize: The maximum number of elements per chunk.
+    ///   - includeRemainder: Whether to include the remaining elements that don't fill a complete chunk. Defaults to
+    /// `true`.
+    /// - Returns: An array of arrays, where each inner array contains up to `chunkSize` elements.
+    ///
+    /// # Example
+    /// ```swift
+    /// let numbers = [1, 2, 3, 4, 5]
+    /// numbers.chunked(2) // [[1, 2], [3, 4], [5]]
+    /// numbers.chunked(2, includeRemainder: false) // [[1, 2], [3, 4]]
+    /// ```
+    public func chunked(_ chunkSize: Int, includeRemainder: Bool = true) -> [[Element]] {
+        var buffer: [Element] = []
+        var chunks: [[Element]] = []
+        for (index, element) in self.enumerated() {
+            buffer.append(element)
+            guard (index % chunkSize) == (chunkSize - 1) else { continue }
+
+            chunks.append(buffer)
+            buffer = []
+        }
+
+        if includeRemainder, buffer.count > 0 {
+            return chunks.appended(buffer)
+        }
+
+        return chunks
+    }
+
     /// Concatenates two arrays into a new array.
     /// - Parameter otherArray: The other array to add to the current one.
     /// - Returns: A concatenated array.
