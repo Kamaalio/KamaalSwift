@@ -1,41 +1,22 @@
 # KamaalSwift
 
-A description of this package.
+Swift libraries for building Apple apps. Add the products your target uses.
 
-## Structured logs
+[Get started](docs/getting-started.md) · [Develop and test](docs/development.md) · [License](LICENSE)
 
-`KamaalLogger` accepts ordered fields with any severity. Mark values that
-can be displayed or copied as public. Omitted privacy defaults to private.
-
-```swift
-import KamaalLogger
-
-struct Page: Encodable {
-    let resultCount: Int
-    let isCached: Bool
-}
-
-let holder = LogHolder()
-let logger = KamaalLogger(label: "Collection", holder: holder)
-logger.info("Collection loaded", fields: [
-    .init("source", "cache", privacy: .public),
-    .init("page", object: Page(resultCount: 12, isCached: true), privacy: .public),
-])
-let entries = await holder.logs
-let displayFields = entries.last?.fields()
-let jsonObjects = try entries.last?.jsonObjects()
-```
-
-`fields()` preserves order and repeated names. Object fields contain
-pretty-printed JSON data that a viewer can render, copy, or decode via
-`JSONDecoder`. Public fields also appear in console messages. A trusted
-developer view can request `fields(includingPrivate: true)` for the
-original field values. Keep secrets out of logs and use safe text for the
-message and field names.
-Existing string messages retain their original format. App-specific
-redaction still applies to legacy messages.
-
-
-`jsonObjects()` returns the visible payloads in field order. When an
-entry has no visible JSON payloads, it returns one object with the
-original message under the `message` key.
+| Product | Guide |
+| --- | --- |
+| KamaalAlgorithms | [Fuzzy matching and search](Sources/KamaalAlgorithms/README.md) |
+| KamaalAPIServices | [GitHub issue reporting](Sources/KamaalAPIServices/README.md) |
+| KamaalBrowser | [Open links from SwiftUI](Sources/KamaalBrowser/README.md) |
+| KamaalCloud | [CloudKit records and subscriptions](Sources/KamaalCloud/README.md) |
+| KamaalCoreData | [Code-first Core Data](Sources/KamaalCoreData/README.md) |
+| KamaalExtensions | [Swift and Foundation extensions](Sources/KamaalExtensions/README.md) |
+| KamaalLogger | [Logs, visibility, and JSON](Sources/KamaalLogger/README.md) |
+| KamaalNavigation | [Navigation stacks and screen routing](Sources/KamaalNavigation/README.md) |
+| KamaalNetworker | [HTTP requests and response decoding](Sources/KamaalNetworker/README.md) |
+| KamaalPopUp | [HUDs and bottom pop-ups](Sources/KamaalPopUp/README.md) |
+| KamaalSettings | [Configurable settings screens](Sources/KamaalSettings/README.md) |
+| KamaalStructures | [Queues, stacks, and linked nodes](Sources/KamaalStructures/README.md) |
+| KamaalUI | [SwiftUI controls and modifiers](Sources/KamaalUI/README.md) |
+| KamaalUtils | [Files, preferences, Keychain, and processes](Sources/KamaalUtils/README.md) |
