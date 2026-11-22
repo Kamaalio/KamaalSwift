@@ -77,39 +77,48 @@ let package = Package(
         .target(
             name: "KamaalUI",
             dependencies: [],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalExtensions",
             dependencies: [],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalLogger",
             dependencies: ["KamaalStructures"],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalStructures",
             dependencies: [],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalNavigation",
             dependencies: ["KamaalUI", "KamaalExtensions"],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalBrowser",
             dependencies: [],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalPopUp",
             dependencies: ["KamaalUI"],
+            exclude: ["README.md"],
             resources: [.process("Resources")],
         ),
         .target(
             name: "KamaalNetworker",
             dependencies: ["KamaalExtensions"],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalAPIServices",
             dependencies: ["KamaalNetworker", "KamaalExtensions"],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalSettings",
@@ -124,6 +133,7 @@ let package = Package(
                 "KamaalPopUp",
                 "KamaalAlgorithms",
             ],
+            exclude: ["README.md"],
             resources: [
                 .process("Internal/Resources"),
             ],
@@ -136,14 +146,17 @@ let package = Package(
         .target(
             name: "KamaalAlgorithms",
             dependencies: ["KamaalExtensions"],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalUtils",
             dependencies: ["KamaalExtensions"],
+            exclude: ["README.md"],
         ),
         .target(
             name: "KamaalCloud",
             dependencies: ["KamaalExtensions"],
+            exclude: ["README.md"],
         ),
         .testTarget(
             name: "KamaalUITests",
