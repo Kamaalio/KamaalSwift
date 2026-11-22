@@ -52,11 +52,11 @@ public struct KamaalLogger: Sendable {
     /// Logs an error message.
     /// - Parameter message: The message to log.
     public func error(_ message: String) {
-        self.logger.error("\(message)")
-        self.addLogToQueue(level: .error, message: message)
-        if self.failOnError {
-            assertionFailure(message)
-        }
+        self.error(message, fields: [])
+    }
+
+    public func error(_ message: String, fields: [LogField]) {
+        self.log(message, level: .error, fields: fields)
     }
 
     /// Logs an error with a label and Swift `Error`.
@@ -72,8 +72,11 @@ public struct KamaalLogger: Sendable {
     /// Logs a warning message.
     /// - Parameter message: The message to log.
     public func warning(_ message: String) {
-        self.logger.warning("\(message)")
-        self.addLogToQueue(level: .warning, message: message)
+        self.warning(message, fields: [])
+    }
+
+    public func warning(_ message: String, fields: [LogField]) {
+        self.log(message, level: .warning, fields: fields)
     }
 
     /// Logs multiple warning messages as a single entry separated by `; `.
@@ -85,8 +88,11 @@ public struct KamaalLogger: Sendable {
     /// Logs an informational message.
     /// - Parameter message: The message to log.
     public func info(_ message: String) {
-        self.logger.info("\(message)")
-        self.addLogToQueue(level: .info, message: message)
+        self.info(message, fields: [])
+    }
+
+    public func info(_ message: String, fields: [LogField]) {
+        self.log(message, level: .info, fields: fields)
     }
 
     /// Logs multiple informational messages as a single entry separated by `; `.
@@ -98,17 +104,35 @@ public struct KamaalLogger: Sendable {
     /// Logs a debug message. Only stored when the `DEBUG` compiler flag is enabled.
     /// - Parameter message: The message to log.
     public func debug(_ message: String) {
+        self.debug(message, fields: [])
+    }
+
+    public func debug(_ message: String, fields: [LogField]) {
         #if DEBUG
-        self.logger.debug("\(message)")
-        self.addLogToQueue(level: .debug, message: message)
+        self.log(message, level: .debug, fields: fields)
         #endif
     }
 
-    private func addLogToQueue(level: LogLevels, message: String) {
-        Task {
-            await self.holder.addLog(
-                .init(label: self.label, level: level, message: message, timestamp: Date()),
-            )
+    private func log(_ message: String, level: LogLevels, fields: [LogField]) {
+        let entry = HoldedLog(
+            label: self.label,
+            level: level,
+            message: message,
+            timestamp: Date(),
+            fields: fields,
+        )
+        let consoleFields = entry.fields().map { "\($0.name): \($0.value.displayText)" }
+        let consoleMessage = ([message] + consoleFields).joined(separator: "\n")
+        switch level {
+        case .error: self.logger.error("\(consoleMessage)")
+        case .warning: self.logger.warning("\(consoleMessage)")
+        case .info: self.logger.info("\(consoleMessage)")
+        case .debug: self.logger.debug("\(consoleMessage)")
+        }
+
+        self.holder.addLog(entry)
+        if level == .error, self.failOnError {
+            assertionFailure(message)
         }
     }
 }
